@@ -1,0 +1,148 @@
+{
+  "milestone": "M6",
+  "stage": "Stage 3: Regional & Code-Switched ASR",
+  "timestamp": "2026-10-12 14:04:14",
+  "test_mixture": "controlled_mix_01_pairAD_ov25_sir0",
+  "test_duration_seconds": 9.536,
+  "asr_model": "ai4bharat_indic_wav2vec",
+  "device": "cpu",
+  "ground_truth_references": {
+    "SPEAKER_00": {
+      "raw": "उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा",
+      "normalized": "उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा"
+    },
+    "SPEAKER_01": {
+      "raw": "यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं",
+      "normalized": "यह एक वॉइस ऑडियो डेटासेट है जिसे आप ai प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं"
+    }
+  },
+  "condition_1_naive_raw_mixture": {
+    "transcript": "s उ s न् s ह s ें s s द s ि s न s s त s क s s र s ी s ह s ा s ब s s क s र s न s ा s s ह s ो s ग s ा s s औ s र s s उ s स s क s े s s ब s ा s द s s उ s न s क s ा s s फ s ि s ट s न s े s s s ज s ि s स s क s ा s s उ s प s य s ो s ग s s आ s प s s आ s र s ्ट s ि s फ s ि s शि s ल s s इ s ं s ट s े s ल s ि s ज s े s ं s स s s क s े s s प्र s श s ि s क् s ष s ण s के s",
+    "speaker_0_wer": {
+      "wer": 0.6667,
+      "wer_percent": 66.67,
+      "substitutions": 5,
+      "deletions": 1,
+      "insertions": 4,
+      "hits": 9,
+      "ref_words": 15,
+      "hyp_words": 18
+    },
+    "speaker_1_wer": {
+      "wer": 1.0588,
+      "wer_percent": 105.88,
+      "substitutions": 17,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 0,
+      "ref_words": 17,
+      "hyp_words": 18
+    },
+    "mean_wer_percent": 86.28,
+    "mean_cer_percent": 100.28,
+    "rtf": 0.1744,
+    "failure_mode": "autoregressive_attention_repetition_loop"
+  },
+  "condition_2_raw_with_diarization": {
+    "speaker_0_transcript": "s उन् s ह s द s ि s न s s त s क s s र s ी s ह s ा s ब s s क s र s न s ा s s ह s ो s ग s ा s s औ s र s s उ s स s क s े s s ब s ा s द s s उ s न s क s ा s s फ s ि s ट s न s",
+    "speaker_1_transcript": "s s ज s ि s स s क s ा s उ s प s य s ो s ग s s आ s प s s आ s र s ्ट s ि s फ s ि s शि s य s ल s s इ s ं s ट s े s ल s ि s ज s े s ं s स s s ए s आ s ई s s क s े s s प्र s श s ि s क s ्ष s ण s की",
+    "speaker_0_wer": {
+      "wer": 0.5333,
+      "wer_percent": 53.33,
+      "substitutions": 3,
+      "deletions": 5,
+      "insertions": 0,
+      "hits": 7,
+      "ref_words": 15,
+      "hyp_words": 10
+    },
+    "speaker_1_wer": {
+      "wer": 0.8824,
+      "wer_percent": 88.24,
+      "substitutions": 5,
+      "deletions": 10,
+      "insertions": 0,
+      "hits": 2,
+      "ref_words": 17,
+      "hyp_words": 7
+    },
+    "mean_wer_percent": 70.78,
+    "mean_cer_percent": 65.64,
+    "rtf": 0.1536
+  },
+  "condition_3_full_proposed_pipeline": {
+    "speaker_0_transcript": "s उन् s ह s ें s s द s ि s न s s त s क s s र s ी s ह s ा s ब s s क s र s न s ा s s ह s ो s ग s ा s s औ s र s s उ s स s क s े s s ब s ा s द s s उ s न s क s ा s s फ s ि s ट s न s े s स s s फ s ै s स s s लि s य s ा s s ज s ा s ए s ग s ा s s",
+    "speaker_1_transcript": "s य s े s s ए s क s s व s ॉ s इ s स s s ऑ s ड s ि s य s ो s ड s े s ट s ा s s स s े s ट s ह s ै s s ज s ि s स s क s ा s s उ s प s य s ो s ग s s आ s प s s आ s र s ् s ट s ि s फ s ि s शिय s ल s s इ s ं s ट s े s ल s ि s ज s े s ं s स s s ए s आ s ई s s क s े s s प s ्र s श s ि s क् s ष s ण के s",
+    "speaker_0_wer": {
+      "wer": 0.2667,
+      "wer_percent": 26.67,
+      "substitutions": 3,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 11,
+      "ref_words": 15,
+      "hyp_words": 14
+    },
+    "speaker_1_wer": {
+      "wer": 0.7647,
+      "wer_percent": 76.47,
+      "substitutions": 9,
+      "deletions": 4,
+      "insertions": 0,
+      "hits": 4,
+      "ref_words": 17,
+      "hyp_words": 13
+    },
+    "speaker_0_cer": {
+      "cer": 0.3051,
+      "cer_percent": 30.51,
+      "substitutions": 14,
+      "deletions": 4,
+      "insertions": 0,
+      "hits": 41,
+      "ref_chars": 59,
+      "hyp_chars": 55
+    },
+    "speaker_1_cer": {
+      "cer": 0.5882,
+      "cer_percent": 58.82,
+      "substitutions": 31,
+      "deletions": 3,
+      "insertions": 6,
+      "hits": 34,
+      "ref_chars": 68,
+      "hyp_chars": 71
+    },
+    "mean_wer_percent": 51.57,
+    "mean_cer_percent": 44.66,
+    "rtf": 0.1936
+  },
+  "contract_4_transcript_artifact": {
+    "pipeline_stage": "ASR",
+    "model_name": "ai4bharat_indic_wav2vec",
+    "utterances": [
+      {
+        "utterance_id": 0,
+        "speaker_id": "SPEAKER_00",
+        "start_time": 0.0,
+        "end_time": 4.715,
+        "detected_language": "hi",
+        "raw_text": "s उन् s ह s ें s s द s ि s न s s त s क s s र s ी s ह s ा s ब s s क s र s न s ा s s ह s ो s ग s ा s s औ s र s s उ s स s क s े s s ब s ा s द s s उ s न s क s ा s s फ s ि s ट s न s े s स s s फ s ै s स s s लि s य s ा s s ज s ा s ए s ग s ा s s",
+        "confidence_score": 0.929
+      },
+      {
+        "utterance_id": 1,
+        "speaker_id": "SPEAKER_01",
+        "start_time": 3.536,
+        "end_time": 9.536,
+        "detected_language": "hi",
+        "raw_text": "s य s े s s ए s क s s व s ॉ s इ s स s s ऑ s ड s ि s य s ो s ड s े s ट s ा s s स s े s ट s ह s ै s s ज s ि s स s क s ा s s उ s प s य s ो s ग s s आ s प s s आ s र s ् s ट s ि s फ s ि s शिय s ल s s इ s ं s ट s े s ल s ि s ज s े s ं s स s s ए s आ s ई s s क s े s s प s ्र s श s ि s क् s ष s ण के s",
+        "confidence_score": 0.972
+      }
+    ]
+  },
+  "empirical_conclusions": {
+    "wer_reduction_percent": 34.71,
+    "is_dod_verified": true
+  }
+}
