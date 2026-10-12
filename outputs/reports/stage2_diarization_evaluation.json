@@ -1,0 +1,302 @@
+{
+  "timestamp": "2026-10-12 10:54:15",
+  "collar_seconds": 0.25,
+  "overall_metrics": {
+    "mean_raw_spectral_der_percent": 40.52,
+    "mean_raw_gmm_der_percent": 55.51,
+    "mean_pipeline_separated_der_percent": 23.97,
+    "mean_pipeline_separated_jer_percent": 23.3,
+    "absolute_der_reduction_percent": 16.55,
+    "mean_real_time_factor": 0.006
+  },
+  "per_mixture_results": [
+    {
+      "mixture_id": "controlled_mix_01_pairAD_ov25_sir0",
+      "overlap_ratio_percent": 25,
+      "duration_seconds": 9.536,
+      "condition_raw_spectral": {
+        "der_percent": 42.53,
+        "jer_percent": 68.73,
+        "missed_seconds": 0.7,
+        "confusion_seconds": 3.0,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.009
+      },
+      "condition_raw_gmm": {
+        "der_percent": 42.53,
+        "jer_percent": 17.05,
+        "missed_seconds": 0.2,
+        "confusion_seconds": 0.7,
+        "false_alarm_seconds": 2.8,
+        "speakers_detected": 3,
+        "rtf": 0.127
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 9.2,
+        "jer_percent": 10.47,
+        "missed_seconds": 0.0,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 0.8,
+        "speakers_detected": 2,
+        "rtf": 0.01
+      }
+    },
+    {
+      "mixture_id": "controlled_mix_02_pairAD_ov50_sir0",
+      "overlap_ratio_percent": 50,
+      "duration_seconds": 8.357,
+      "condition_raw_spectral": {
+        "der_percent": 44.25,
+        "jer_percent": 66.24,
+        "missed_seconds": 2.0,
+        "confusion_seconds": 1.85,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.007
+      },
+      "condition_raw_gmm": {
+        "der_percent": 66.67,
+        "jer_percent": 47.4,
+        "missed_seconds": 1.15,
+        "confusion_seconds": 3.5,
+        "false_alarm_seconds": 1.15,
+        "speakers_detected": 4,
+        "rtf": 0.04
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 9.2,
+        "jer_percent": 11.7,
+        "missed_seconds": 0.15,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 0.65,
+        "speakers_detected": 2,
+        "rtf": 0.005
+      }
+    },
+    {
+      "mixture_id": "controlled_mix_03_pairAD_ov50_sir6",
+      "overlap_ratio_percent": 50,
+      "duration_seconds": 8.357,
+      "condition_raw_spectral": {
+        "der_percent": 44.25,
+        "jer_percent": 66.24,
+        "missed_seconds": 2.0,
+        "confusion_seconds": 1.85,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.005
+      },
+      "condition_raw_gmm": {
+        "der_percent": 66.67,
+        "jer_percent": 47.4,
+        "missed_seconds": 1.15,
+        "confusion_seconds": 3.5,
+        "false_alarm_seconds": 1.15,
+        "speakers_detected": 4,
+        "rtf": 0.034
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 9.2,
+        "jer_percent": 11.7,
+        "missed_seconds": 0.15,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 0.65,
+        "speakers_detected": 2,
+        "rtf": 0.004
+      }
+    },
+    {
+      "mixture_id": "controlled_mix_04_pairBC_ov25_sir0",
+      "overlap_ratio_percent": 25,
+      "duration_seconds": 9.157,
+      "condition_raw_spectral": {
+        "der_percent": 30.0,
+        "jer_percent": 63.26,
+        "missed_seconds": 0.35,
+        "confusion_seconds": 2.05,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.008
+      },
+      "condition_raw_gmm": {
+        "der_percent": 58.75,
+        "jer_percent": 29.18,
+        "missed_seconds": 0.0,
+        "confusion_seconds": 1.15,
+        "false_alarm_seconds": 3.55,
+        "speakers_detected": 3,
+        "rtf": 0.032
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 37.5,
+        "jer_percent": 27.53,
+        "missed_seconds": 0.0,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 3.0,
+        "speakers_detected": 2,
+        "rtf": 0.004
+      }
+    },
+    {
+      "mixture_id": "controlled_mix_05_pairBC_ov50_sir0",
+      "overlap_ratio_percent": 50,
+      "duration_seconds": 8.309,
+      "condition_raw_spectral": {
+        "der_percent": 30.0,
+        "jer_percent": 58.67,
+        "missed_seconds": 1.3,
+        "confusion_seconds": 1.1,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.006
+      },
+      "condition_raw_gmm": {
+        "der_percent": 56.25,
+        "jer_percent": 37.69,
+        "missed_seconds": 0.6,
+        "confusion_seconds": 1.6,
+        "false_alarm_seconds": 2.3,
+        "speakers_detected": 3,
+        "rtf": 0.039
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 30.0,
+        "jer_percent": 26.61,
+        "missed_seconds": 0.1,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 2.3,
+        "speakers_detected": 2,
+        "rtf": 0.004
+      }
+    },
+    {
+      "mixture_id": "controlled_mix_06_pairBC_ov50_sir_neg6",
+      "overlap_ratio_percent": 50,
+      "duration_seconds": 8.309,
+      "condition_raw_spectral": {
+        "der_percent": 30.0,
+        "jer_percent": 58.67,
+        "missed_seconds": 1.3,
+        "confusion_seconds": 1.1,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.008
+      },
+      "condition_raw_gmm": {
+        "der_percent": 68.75,
+        "jer_percent": 48.1,
+        "missed_seconds": 0.1,
+        "confusion_seconds": 2.6,
+        "false_alarm_seconds": 2.8,
+        "speakers_detected": 4,
+        "rtf": 0.062
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 16.25,
+        "jer_percent": 18.8,
+        "missed_seconds": 0.1,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 1.2,
+        "speakers_detected": 2,
+        "rtf": 0.004
+      }
+    },
+    {
+      "mixture_id": "controlled_mix_07_pairAE_ov75_sir0",
+      "overlap_ratio_percent": 75,
+      "duration_seconds": 9.477,
+      "condition_raw_spectral": {
+        "der_percent": 35.91,
+        "jer_percent": 58.74,
+        "missed_seconds": 3.3,
+        "confusion_seconds": 0.65,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.006
+      },
+      "condition_raw_gmm": {
+        "der_percent": 49.55,
+        "jer_percent": 38.78,
+        "missed_seconds": 1.75,
+        "confusion_seconds": 2.7,
+        "false_alarm_seconds": 1.0,
+        "speakers_detected": 4,
+        "rtf": 0.044
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 8.18,
+        "jer_percent": 11.59,
+        "missed_seconds": 0.25,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 0.65,
+        "speakers_detected": 2,
+        "rtf": 0.005
+      }
+    },
+    {
+      "mixture_id": "controlled_mix_08_trioADF_panel",
+      "overlap_ratio_percent": 50,
+      "duration_seconds": 12.129,
+      "condition_raw_spectral": {
+        "der_percent": 62.07,
+        "jer_percent": 83.33,
+        "missed_seconds": 2.15,
+        "confusion_seconds": 5.05,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.008
+      },
+      "condition_raw_gmm": {
+        "der_percent": 45.26,
+        "jer_percent": 48.97,
+        "missed_seconds": 1.45,
+        "confusion_seconds": 2.1,
+        "false_alarm_seconds": 1.7,
+        "speakers_detected": 3,
+        "rtf": 0.024
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 49.57,
+        "jer_percent": 60.03,
+        "missed_seconds": 0.0,
+        "confusion_seconds": 3.55,
+        "false_alarm_seconds": 2.2,
+        "speakers_detected": 2,
+        "rtf": 0.004
+      }
+    },
+    {
+      "mixture_id": "controlled_mix_09_pairBG_noise10",
+      "overlap_ratio_percent": 50,
+      "duration_seconds": 9.472,
+      "condition_raw_spectral": {
+        "der_percent": 45.63,
+        "jer_percent": 63.26,
+        "missed_seconds": 2.6,
+        "confusion_seconds": 2.1,
+        "false_alarm_seconds": 0.0,
+        "speakers_detected": 1,
+        "rtf": 0.003
+      },
+      "condition_raw_gmm": {
+        "der_percent": 45.15,
+        "jer_percent": 30.96,
+        "missed_seconds": 2.6,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 2.05,
+        "speakers_detected": 2,
+        "rtf": 0.014
+      },
+      "condition_pipeline_separated": {
+        "der_percent": 46.6,
+        "jer_percent": 31.31,
+        "missed_seconds": 0.25,
+        "confusion_seconds": 0.0,
+        "false_alarm_seconds": 4.55,
+        "speakers_detected": 2,
+        "rtf": 0.01
+      }
+    }
+  ]
+}
