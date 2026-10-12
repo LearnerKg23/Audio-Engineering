@@ -1,8 +1,13 @@
 # Core Deep Learning & Audio Processing
 torch>=2.0.0
+torchaudio>=2.0.0
 soundfile>=0.12.1
 scipy>=1.10.0
 numpy>=1.24.0
+demucs>=4.0.0
+
+# Speech Recognition & Transformer Models
+transformers>=4.30.0
 
 # LLM & NLP Providers
 groq>=0.9.0
@@ -16,3 +21,4 @@ pyyaml>=6.0
 pytest>=7.0.0
 psutil>=5.9.0
 matplotlib>=3.7.0
+scikit-learn>=1.3.0
