@@ -357,12 +357,62 @@ def main():
       box-shadow: var(--shadow-extruded-sm);
       text-decoration: none;
       color: inherit;
-      transition: transform 250ms ease-out, box-shadow 250ms ease-out;
+      border: 1.5px solid transparent;
+      transition: all 250ms ease-out;
     }}
 
     .pipeline-step-card:hover {{
       transform: translateY(-2px);
       box-shadow: var(--shadow-extruded);
+    }}
+
+    /* Highlighted Focus Stages (Stage 1 Separation & Stage 2 Diarization) */
+    .pipeline-step-card.highlighted {{
+      border: 1.5px solid rgba(255, 122, 0, 0.55);
+      background: linear-gradient(135deg, #f0f4f9, #e6ecf4);
+      box-shadow: 6px 6px 14px rgba(163, 177, 198, 0.55), -6px -6px 14px rgba(255, 255, 255, 0.95), 0 0 16px rgba(255, 122, 0, 0.22);
+      transform: translateY(-2px);
+    }}
+
+    .pipeline-step-card.highlighted .step-icon-well {{
+      background: linear-gradient(135deg, #ff8800, #ea580c);
+      color: #ffffff;
+      box-shadow: 2px 2px 8px rgba(234, 88, 12, 0.35), inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+    }}
+
+    .pipeline-step-card.highlighted .step-title {{
+      color: var(--fg-heading);
+      font-weight: 800;
+    }}
+
+    .pipeline-step-card.highlighted .step-sub {{
+      color: var(--accent);
+      font-weight: 700;
+    }}
+
+    /* Subdued Stages (Stage 3 Multilingual ASR & Stage 4 LLM Intelligence) */
+    .pipeline-step-card.subdued {{
+      opacity: 0.65;
+    }}
+
+    .pipeline-step-card.subdued .step-icon-well {{
+      color: var(--muted);
+    }}
+
+    .pipeline-step-card.subdued:hover {{
+      opacity: 1;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-extruded);
+    }}
+
+    .pipeline-step-card.subdued:hover .step-icon-well {{
+      color: var(--accent);
+    }}
+
+    .step-arrow.active-arrow {{
+      color: var(--accent);
+      opacity: 0.9;
+      font-weight: 900;
     }}
 
     .step-icon-well {{
@@ -1188,10 +1238,10 @@ def main():
         </svg>
       </div>
 
-      <!-- Pipeline Sequence Flow (Highlighted Speech Separation & Speaker Diarization) -->
+      <!-- Pipeline Sequence Flow (Stage 1 & Stage 2 Highlighted, Stages 3 & 4 Subdued) -->
       <div class="hero-pipeline-row">
-        <!-- Stage 1 -->
-        <a href="#bss" class="pipeline-step-card" title="Audition Stage 1 Source Separation">
+        <!-- Stage 1 (Highlighted) -->
+        <a href="#bss" class="pipeline-step-card highlighted" title="Audition Stage 1 Source Separation (Active Demonstration)">
           <div class="step-icon-well">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 10v4M6 6v12M10 3v18M14 8v8M18 5v14M22 10v4"/>
@@ -1203,10 +1253,10 @@ def main():
           </div>
         </a>
 
-        <div class="step-arrow">→</div>
+        <div class="step-arrow active-arrow">→</div>
 
-        <!-- Stage 2 -->
-        <a href="#diarization" class="pipeline-step-card" title="Inspect Stage 2 Diarization Timeline">
+        <!-- Stage 2 (Highlighted) -->
+        <a href="#diarization" class="pipeline-step-card highlighted" title="Inspect Stage 2 Diarization Timeline (Active Demonstration)">
           <div class="step-icon-well">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
@@ -1218,6 +1268,41 @@ def main():
           <div class="step-meta">
             <span class="step-title">Speaker Diarization</span>
             <span class="step-sub">Stage 2 • Hyperspherical</span>
+          </div>
+        </a>
+
+        <div class="step-arrow">→</div>
+
+        <!-- Stage 3 (Subdued) -->
+        <a href="#asr" class="pipeline-step-card subdued" title="Stage 3 Code-Switched ASR">
+          <div class="step-icon-well">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <div class="step-meta">
+            <span class="step-title">Multilingual ASR</span>
+            <span class="step-sub">Stage 3 • AI4Bharat Indic</span>
+          </div>
+        </a>
+
+        <div class="step-arrow">→</div>
+
+        <!-- Stage 4 (Subdued) -->
+        <a href="#terminal" class="pipeline-step-card subdued" title="Stage 4 Dialect Insights & LLM Intelligence">
+          <div class="step-icon-well">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04z"/>
+              <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z"/>
+            </svg>
+          </div>
+          <div class="step-meta">
+            <span class="step-title">LLM Intelligence</span>
+            <span class="step-sub">Stage 4 • Dialect Insights</span>
           </div>
         </a>
       </div>
