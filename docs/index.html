@@ -387,7 +387,7 @@
     /* Key Telemetry Summary Grid */
     .telemetry-summary-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin-bottom: 36px;
     }
@@ -1054,10 +1054,9 @@
       </div>
 
       <nav class="nav-tabs-pill">
-        <a href="#bss" class="nav-tab-item active">Stage 1: BSS</a>
-        <a href="#diarization" class="nav-tab-item">Stage 2: Diarize</a>
-        <a href="#asr" class="nav-tab-item">Stage 3: ASR</a>
-        <a href="#terminal" class="nav-tab-item">Terminal</a>
+        <a href="#bss" class="nav-tab-item active">Stage 1: Separation</a>
+        <a href="#diarization" class="nav-tab-item">Stage 2: Diarization</a>
+        <a href="#terminal" class="nav-tab-item">Benchmark Console</a>
       </nav>
 
       <button class="header-cta" onclick="document.getElementById('bss').scrollIntoView({behavior: 'smooth'})">
@@ -1107,7 +1106,7 @@
         </svg>
       </div>
 
-      <!-- Pipeline Sequence Flow (4 Connected Soft Cards) -->
+      <!-- Pipeline Sequence Flow (Highlighted Speech Separation & Speaker Diarization) -->
       <div class="hero-pipeline-row">
         <!-- Stage 1 -->
         <a href="#bss" class="pipeline-step-card" title="Audition Stage 1 Source Separation">
@@ -1139,41 +1138,6 @@
             <span class="step-sub">Stage 2 • Hyperspherical</span>
           </div>
         </a>
-
-        <div class="step-arrow">→</div>
-
-        <!-- Stage 3 -->
-        <a href="#asr" class="pipeline-step-card" title="Evaluate Stage 3 Code-Switched ASR">
-          <div class="step-icon-well">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-              <polyline points="10 9 9 9 8 9"/>
-            </svg>
-          </div>
-          <div class="step-meta">
-            <span class="step-title">Multilingual ASR</span>
-            <span class="step-sub">Stage 3 • AI4Bharat Indic</span>
-          </div>
-        </a>
-
-        <div class="step-arrow">→</div>
-
-        <!-- Stage 4 -->
-        <a href="#terminal" class="pipeline-step-card" title="Downstream Insights & LLM Intelligence">
-          <div class="step-icon-well">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04z"/>
-              <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z"/>
-            </svg>
-          </div>
-          <div class="step-meta">
-            <span class="step-title">LLM Intelligence</span>
-            <span class="step-sub">Stage 4 • Dialect Insights</span>
-          </div>
-        </a>
       </div>
 
       <!-- Project Team Divider & Members -->
@@ -1195,27 +1159,22 @@
       </div>
     </section>
 
-    <!-- KEY EMPIRICAL TELEMETRY CARDS -->
+    <!-- KEY EMPIRICAL TELEMETRY CARDS (Separation & Diarization Focus) -->
     <section class="telemetry-summary-grid">
       <div class="telemetry-card-soft">
         <div class="t-val orange">+21.77 dB</div>
         <div class="t-label">Conv-TasNet SI-SDR Gain</div>
-        <div class="t-sub">Monaural Waveform BSS</div>
+        <div class="t-sub">Monaural Waveform Separation</div>
+      </div>
+      <div class="telemetry-card-soft">
+        <div class="t-val green">9.20% DER</div>
+        <div class="t-label">Diarization Error Rate</div>
+        <div class="t-sub">-33.3% Error Reduction vs Raw</div>
       </div>
       <div class="telemetry-card-soft">
         <div class="t-val teal">0.006 RTF</div>
-        <div class="t-label">166x Diarization Speed</div>
-        <div class="t-sub">Hyperspherical Clustering</div>
-      </div>
-      <div class="telemetry-card-soft">
-        <div class="t-val green">51.57% WER</div>
-        <div class="t-label">AI4Bharat Indic ASR</div>
-        <div class="t-sub">-34.7% Error Reduction</div>
-      </div>
-      <div class="telemetry-card-soft">
-        <div class="t-val blue">36 / 36</div>
-        <div class="t-label">Unit Tests Passing</div>
-        <div class="t-sub">100% Pipeline Verified</div>
+        <div class="t-label">166.7× Diarization Speed</div>
+        <div class="t-sub">Hyperspherical Spectral Clustering</div>
       </div>
     </section>
 
@@ -1409,8 +1368,6 @@
         <div class="terminal-tab-pill-row">
           <button class="t-pill-btn active" id="tabTerm1" onclick="switchTerminal('stage1')">evaluate_stage1_separation.py</button>
           <button class="t-pill-btn" id="tabTerm2" onclick="switchTerminal('stage2')">evaluate_stage2_diarization.py</button>
-          <button class="t-pill-btn" id="tabTerm3" onclick="switchTerminal('stage3')">evaluate_stage3_asr.py</button>
-          <button class="t-pill-btn" id="tabTerm4" onclick="switchTerminal('pytest')">pytest -v (36 Tests Passing)</button>
         </div>
 
         <div class="terminal-carved-screen" id="termBody"></div>
@@ -1438,7 +1395,7 @@
     <footer class="footer-soft">
       <p style="font-weight: 700; color: var(--fg-heading); font-size: 13px;">Advanced Computational Speech Engineering — “Who Spoke What and When”</p>
       <p style="margin-top: 6px; color: var(--muted); font-size: 12px;">Project Team: Kushal Gupta • Vansh • Dorothy • Pranav</p>
-      <p style="margin-top: 6px; color: var(--muted); font-size: 11px;">End-to-End Pipeline for Multi-Speaker Indian Conversational Audio • Conv-TasNet • Hyperspherical Diarization • AI4Bharat IndicWav2Vec</p>
+      <p style="margin-top: 6px; color: var(--muted); font-size: 11px;">End-to-End Pipeline for Multi-Speaker Indian Conversational Audio • Conv-TasNet • Hyperspherical Diarization</p>
     </footer>
 
   </main>
@@ -1883,13 +1840,13 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
       if (!grid) return;
 
       if (track === 'A') {
-        if (asrSubtitle) asrSubtitle.textContent = "Ablation Matrix: Overcoming Autoregressive Attention Collapse (2 Speakers)";
+        if (asrSubtitle) asrSubtitle.textContent = "Downstream Recognition: Comparing Unseparated vs Decoupled Stems (2 Speakers)";
         grid.innerHTML = `
           <!-- Condition 1: Naive Mixture -->
           <div class="asr-soft-card">
             <div class="asr-cond-badge badge-bad">Condition 1 • Naive Baseline</div>
             <div class="card-title-soft" style="font-size:16px;">Direct Mixture ASR (No Separation)</div>
-            <div style="font-family:var(--font-mono); font-weight:700; color:#dc2626; margin:6px 0 10px;">WER: 86.3% | CER: 100.3%</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#dc2626; margin:6px 0 10px;">Severe Attention Collapse • Unintelligible</div>
             <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Both speakers collide acoustically in the 25% overlap window. AI4Bharat encoder collapses from competing acoustic formants, hallucinating and dropping 86% of vocabulary.
             </p>
@@ -1907,7 +1864,7 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
           <div class="asr-soft-card">
             <div class="asr-cond-badge badge-warn">Condition 2 • Diarization Only</div>
             <div class="card-title-soft" style="font-size:16px;">Diarized Slices (No Separation)</div>
-            <div style="font-family:var(--font-mono); font-weight:700; color:#d97706; margin:6px 0 10px;">WER: 70.8% | CER: 65.6%</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#d97706; margin:6px 0 10px;">Cross-Talk Formant Bleed • Deletions</div>
             <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Time-domain segmentation fails inside the 2.40s collision window. Both voices leak into Speaker 0 and Speaker 1 slices, causing severe deletion and phonetic confusion.
             </p>
@@ -1926,7 +1883,7 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
           <div class="asr-soft-card">
             <div class="asr-cond-badge badge-good">Condition 3 • Full Proposed System</div>
             <div class="card-title-soft" style="font-size:16px;">Separation-Aware Dual ASR</div>
-            <div style="font-family:var(--font-mono); font-weight:700; color:#059669; margin:6px 0 10px;">WER: 51.6% | CER: 44.7% (-34.7% Gain)</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#059669; margin:6px 0 10px;">Acoustically Decoupled • Native Devanagari</div>
             <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Conv-TasNet isolates acoustic wavefronts by +21.8 dB SI-SDR. ASR processes clean individual streams with 0 cross-talk interference and native Devanagari fidelity.
             </p>
@@ -1944,13 +1901,13 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
           </div>
         `;
       } else {
-        if (asrSubtitle) asrSubtitle.textContent = "Ablation Matrix: 3-Speaker Real-World Broadcast Recognition";
+        if (asrSubtitle) asrSubtitle.textContent = "Downstream Recognition: 3-Speaker Real-World Broadcast";
         grid.innerHTML = `
           <!-- Condition 1: Naive Mixture -->
           <div class="asr-soft-card">
             <div class="asr-cond-badge badge-bad">Condition 1 • Naive Baseline</div>
             <div class="card-title-soft" style="font-size:16px;">Direct 3-Speaker Mixture ASR</div>
-            <div style="font-family:var(--font-mono); font-weight:700; color:#dc2626; margin:6px 0 10px;">Severe Scramble | >90% WER</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#dc2626; margin:6px 0 10px;">3-Speaker Acoustic Scramble • Corrupted</div>
             <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Host and two guests speak concurrently with room reverberation and broadcast compression. Without separation, the CTC decoder scrambles all three voices together.
             </p>
@@ -1968,7 +1925,7 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
           <div class="asr-soft-card">
             <div class="asr-cond-badge badge-warn">Condition 2 • Diarization Only</div>
             <div class="card-title-soft" style="font-size:16px;">Diarized Slices (Without Separation)</div>
-            <div style="font-family:var(--font-mono); font-weight:700; color:#d97706; margin:6px 0 10px;">Boundary Collision Bleed</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#d97706; margin:6px 0 10px;">Boundary Overlap Bleed (OV1 & OV2)</div>
             <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Clustering identifies 3 speaker clusters, but time slicing cannot untangle the 3.8s–4.7s and 6.8s–8.4s overlap intervals. Guest 1's speech is heavily garbled by Host and Guest 2.
             </p>
@@ -1988,7 +1945,7 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
           <div class="asr-soft-card">
             <div class="asr-cond-badge badge-good">Condition 3 • Full Proposed System</div>
             <div class="card-title-soft" style="font-size:16px;">Disentangled 3-Speaker Transcripts</div>
-            <div style="font-family:var(--font-mono); font-weight:700; color:#059669; margin:6px 0 10px;">Clean Multi-Speaker Isolation</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#059669; margin:6px 0 10px;">Clean Decoupled Stems • High Fidelity</div>
             <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Conv-TasNet separates concurrent wavefronts into discrete stems (Stem 01: Host & Guest 2; Stem 02: Guest 1). Full ASR yields accurate Devanagari transcripts for all 3 participants!
             </p>
@@ -2101,14 +2058,12 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
     }
 
     function switchTerminal(tabKey) {
-      ['tabTerm1', 'tabTerm2', 'tabTerm3', 'tabTerm4'].forEach(id => {
+      ['tabTerm1', 'tabTerm2'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.remove('active');
       });
       if (tabKey === 'stage1' && document.getElementById('tabTerm1')) document.getElementById('tabTerm1').classList.add('active');
       if (tabKey === 'stage2' && document.getElementById('tabTerm2')) document.getElementById('tabTerm2').classList.add('active');
-      if (tabKey === 'stage3' && document.getElementById('tabTerm3')) document.getElementById('tabTerm3').classList.add('active');
-      if (tabKey === 'pytest' && document.getElementById('tabTerm4')) document.getElementById('tabTerm4').classList.add('active');
 
       const body = document.getElementById('termBody');
       if (body) body.innerHTML = TERMINAL_LOGS[tabKey];
