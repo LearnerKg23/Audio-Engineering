@@ -627,6 +627,9 @@
     /* ==========================================================================
        STAGE 2: DIARIZATION TIMELINE (Carved Inset Well)
        ========================================================================== */
+    /* ==========================================================================
+       STAGE 2: SPEAKER DIARIZATION (Multi-Lane DAW & Turn Table)
+       ========================================================================== */
     .timeline-soft-container {
       background: var(--bg);
       border-radius: var(--radius-card);
@@ -635,87 +638,223 @@
       margin-bottom: 36px;
     }
 
-    .timeline-carved-track {
-      height: 54px;
+    .daw-tracks-wrapper {
+      background: var(--bg);
+      border-radius: var(--radius-inner);
+      box-shadow: var(--shadow-inset);
+      padding: 18px 24px 20px;
+      position: relative;
+    }
+
+    .daw-ruler-row {
+      display: flex;
+      justify-content: space-between;
+      margin-left: 140px;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      border-bottom: 1px dashed rgba(163, 177, 198, 0.4);
+      padding-bottom: 4px;
+      user-select: none;
+    }
+
+    .daw-lanes-area {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .daw-lane-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .daw-lane-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .daw-lane-label {
+      width: 124px;
+      flex-shrink: 0;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--bg);
+      box-shadow: var(--shadow-extruded-sm);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--fg-heading);
+      user-select: none;
+    }
+
+    .daw-lane-track {
+      flex: 1;
+      height: 42px;
       border-radius: var(--radius-pill);
       background: var(--bg);
       box-shadow: var(--shadow-inset-deep);
       position: relative;
-      cursor: pointer;
       overflow: hidden;
-      padding: 6px;
-      display: flex;
-      align-items: center;
+      padding: 4px;
     }
 
-    .timeline-spk-pill {
+    .daw-block {
       position: absolute;
-      top: 6px;
-      bottom: 6px;
+      top: 4px;
+      bottom: 4px;
       border-radius: var(--radius-pill);
       display: flex;
       align-items: center;
-      padding: 0 14px;
-      font-family: var(--font-display);
-      font-weight: 700;
+      justify-content: center;
+      font-family: var(--font-mono);
       font-size: 11px;
-      letter-spacing: 0.04em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
       box-shadow: var(--shadow-extruded-sm);
       cursor: pointer;
-      transition: all 200ms ease;
+      transition: all 180ms ease;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 0 12px;
+      color: #ffffff;
+      user-select: none;
+      z-index: 2;
     }
-
-    .timeline-spk-pill:hover {
+    .daw-block:hover {
       filter: brightness(1.15);
       transform: translateY(-1px);
     }
 
-    .spk0-pill {
-      background: #3B82F6;
-      color: #ffffff;
-    }
+    .spk0-block { background: #3B82F6; }
+    .spk1-block { background: #8B5CF6; }
+    .spk2-block { background: #10B981; }
 
-    .spk1-pill {
-      background: #8B5CF6;
-      color: #ffffff;
-    }
-
-    .spk2-pill {
-      background: #10B981;
-      color: #ffffff;
-    }
-
-    .overlap-pill {
-      background: var(--accent);
-      color: #ffffff;
-      box-shadow: 0 0 12px rgba(255, 136, 0, 0.5);
-      z-index: 3;
-    }
-
-    .timeline-scrub-cursor {
+    .overlap-overlay-strip {
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 4px;
+      background: rgba(255, 136, 0, 0.18);
+      border-left: 2px dashed rgba(255, 136, 0, 0.8);
+      border-right: 2px dashed rgba(255, 136, 0, 0.8);
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 5;
+      box-shadow: 0 0 16px rgba(255, 136, 0, 0.25);
+    }
+
+    .daw-playhead-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 3px;
       background: var(--accent);
       border-radius: var(--radius-pill);
-      box-shadow: 0 0 8px rgba(255, 136, 0, 0.8);
+      box-shadow: 0 0 12px rgba(255, 136, 0, 0.95);
       pointer-events: none;
       left: 0%;
+      z-index: 10;
       transition: left 80ms linear;
     }
 
-    .timeline-bottom-meta {
+    /* Diarization Turn-by-Turn Table */
+    .diar-table-wrapper {
+      margin-top: 28px;
+      overflow-x: auto;
+    }
+    .diar-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 8px;
+      font-family: var(--font-display);
+      font-size: 13px;
+    }
+    .diar-table th {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 16px;
+      text-align: left;
+    }
+    .diar-table td {
+      background: var(--bg);
+      padding: 12px 16px;
+      color: var(--fg-heading);
+      box-shadow: var(--shadow-extruded-sm);
+      vertical-align: middle;
+    }
+    .diar-table tr td:first-child {
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .diar-table tr td:last-child {
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+    .play-turn-btn {
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--bg);
+      box-shadow: var(--shadow-extruded-sm);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 180ms ease;
+    }
+    .play-turn-btn:hover {
+      box-shadow: var(--shadow-inset-sm);
+      color: var(--accent-hover);
+      transform: translateY(1px);
+    }
+
+    /* Accordion Toggle for Stage 3 ASR */
+    .accordion-toggle-card {
+      background: var(--bg);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-extruded);
+      padding: 24px 30px;
+      cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 16px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--muted);
+      transition: all 250ms ease;
+      margin-bottom: 24px;
+      user-select: none;
+    }
+    .accordion-toggle-card:hover {
+      box-shadow: var(--shadow-extruded-hover);
+      transform: translateY(-2px);
+    }
+    .accordion-icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg);
+      box-shadow: var(--shadow-extruded-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--accent);
+      transition: transform 250ms ease;
+      flex-shrink: 0;
+    }
+    .accordion-body {
+      margin-top: -12px;
+      margin-bottom: 36px;
+      transition: all 300ms ease;
     }
 
     /* ==========================================================================
@@ -1157,40 +1296,102 @@
       </div>
     </section>
 
-    <!-- STAGE 2: SPEAKER DIARIZATION -->
+    <!-- STAGE 2: SPEAKER DIARIZATION SHOWCASE -->
     <section id="diarization">
       <div class="section-head">
         <div class="section-icon-well">⏱️</div>
         <div class="section-title-wrap">
-          <h2>Stage 2: Speaker Diarization Timeline</h2>
-          <p id="diarSubtitle">Who Spoke When — Interactive Click-to-Scrub Timeline</p>
+          <h2>Stage 2: Acoustic Speaker Diarization Showcase</h2>
+          <p id="diarSubtitle">Who Spoke When — Multi-Track DAW Timeline & Chronological Turn Inspection</p>
+        </div>
+      </div>
+
+      <!-- Diarization Telemetry Summary Grid -->
+      <div class="telemetry-summary-grid" style="margin-bottom: 24px;">
+        <div class="telemetry-card-soft">
+          <div class="t-val teal" id="diarCardSpeakers">2 Speakers</div>
+          <div class="t-label">Identified Talkers</div>
+          <div class="t-sub" id="diarCardSpeakersSub">Eigengap Spectral Clustering (k=2)</div>
+        </div>
+        <div class="telemetry-card-soft">
+          <div class="t-val green" id="diarCardDER">9.20% DER</div>
+          <div class="t-label">Diarization Error Rate</div>
+          <div class="t-sub" id="diarCardDERSub">-33.3% Error Reduction vs Raw</div>
+        </div>
+        <div class="telemetry-card-soft">
+          <div class="t-val orange" id="diarCardOverlap">2.40s (25.2%)</div>
+          <div class="t-label">Overlap Collision</div>
+          <div class="t-sub" id="diarCardOverlapSub">Cross-Talk Interference Zone</div>
+        </div>
+        <div class="telemetry-card-soft">
+          <div class="t-val blue" id="diarCardRTF">0.006 RTF</div>
+          <div class="t-label">Inference Latency</div>
+          <div class="t-sub" id="diarCardRTFSub">166.7x Faster than Real-Time</div>
         </div>
       </div>
 
       <div class="timeline-soft-container">
-        <div class="timeline-carved-track" id="timelineBar" onclick="scrubTimeline(event)">
-          <!-- Dynamic Timeline Pills Rendered Here by renderDiarization() -->
+        <!-- Multi-Track DAW Visualizer Header -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+          <div style="font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--fg-heading);">
+            Interactive Multi-Track Speaker Timeline
+          </div>
+          <span id="timeReadout" style="font-weight: 700; color: var(--accent); font-family:var(--font-mono); font-size:13px;">00:00 / 09:32</span>
         </div>
 
-        <div class="timeline-bottom-meta">
-          <span id="timelineHint">Click any speaker turn to seek playback, or drag across the track.</span>
-          <span id="timeReadout" style="font-weight: 700; color: var(--accent);">00:00 / 09:32</span>
+        <div class="daw-tracks-wrapper" id="dawLanesContainer">
+          <!-- Rendered dynamically by renderDiarization(track) -->
+        </div>
+
+        <div class="timeline-bottom-meta" style="margin-top: 14px;">
+          <span id="timelineHint">Click any speaker block to jump and play their voice, or drag across the timeline to scrub.</span>
+          <span style="color:var(--muted); font-size:11px;">Resolution: 500ms sliding step • Collar: 250ms</span>
+        </div>
+
+        <!-- Speaker Turn Breakdown Table -->
+        <div class="diar-table-wrapper">
+          <div style="font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--fg-heading); margin: 24px 0 12px;">
+            Chronological Speaker Turns & Activity Log
+          </div>
+          <table class="diar-table">
+            <thead>
+              <tr>
+                <th style="width: 70px;">Turn</th>
+                <th style="width: 170px;">Speaker</th>
+                <th style="width: 170px;">Time Interval</th>
+                <th style="width: 100px;">Duration</th>
+                <th>Acoustic Nature</th>
+                <th style="width: 120px; text-align: right;">Audition</th>
+              </tr>
+            </thead>
+            <tbody id="diarTableBody">
+              <!-- Rendered dynamically by renderDiarization(track) -->
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- STAGE 3: CODE-SWITCHED ASR MATRIX -->
+    <!-- STAGE 3: CODE-SWITCHED ASR MATRIX (Collapsible Accordion) -->
     <section id="asr">
-      <div class="section-head">
-        <div class="section-icon-well">🎙️</div>
-        <div class="section-title-wrap">
-          <h2>Stage 3: Regional & Code-Switched ASR</h2>
-          <p id="asrSubtitle">Ablation Matrix: Overcoming Autoregressive Attention Collapse</p>
+      <div class="accordion-toggle-card" onclick="toggleASRAccordion()">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div class="section-icon-well" style="margin:0;">🎙️</div>
+          <div class="section-title-wrap">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <h2 style="font-size:18px;">Stage 3: Regional & Code-Switched ASR</h2>
+              <span class="card-pill-tag" style="color:var(--accent); font-size:10px;">Next Stage • Collapsed</span>
+            </div>
+            <p id="asrSubtitle">Ablation Matrix: Overcoming Autoregressive Attention Collapse (Click to Expand / Collapse)</p>
+          </div>
         </div>
+        <div class="accordion-icon-btn" id="asrAccordionIcon">▼</div>
       </div>
 
-      <div class="asr-cards-grid" id="asrCardsGrid">
-        <!-- Dynamic ASR Cards Rendered Here by renderASR() -->
+      <div class="accordion-body" id="asrAccordionContent" style="display: none;">
+        <div class="asr-cards-grid" id="asrCardsGrid">
+          <!-- Dynamic ASR Cards Rendered Here by renderASR() -->
+        </div>
       </div>
     </section>
 
@@ -1270,9 +1471,9 @@
         metrics: "Live Broadcast Separation | 0.082 RTF",
         nameMix: "Mixture: 3-Speaker Panel Debate",
         nameSpk0: "Stem 01: Host & Guest 2 (Interleaved)",
-        nameSpk1: "Stem 02: Guest 1 (Female Hindi)",
+        nameSpk1: "Stem 02: Guest 1 [तारीख के दिन...]",
         metricSpk0: "0.0s–4.7s Host • 6.8s–12.5s Guest 2",
-        metricSpk1: "3.8s–8.4s ('इस योजना के अंतर्गत...')",
+        metricSpk1: "3.8s–8.4s ('तारीख के दिन मेरे स्वामी जाएंगे...')",
         descMix: "Raw uncurated studio broadcast with 2 overlap zones"
       }
     };
@@ -1406,51 +1607,273 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
       player.currentTime = sec;
     }
 
+    function toggleASRAccordion() {
+      const content = document.getElementById('asrAccordionContent');
+      const icon = document.getElementById('asrAccordionIcon');
+      if (!content) return;
+      const isHidden = content.style.display === 'none' || content.style.display === '';
+      content.style.display = isHidden ? 'block' : 'none';
+      if (icon) icon.textContent = isHidden ? '▲' : '▼';
+    }
+
     function renderDiarization(track) {
-      const bar = document.getElementById('timelineBar');
+      const container = document.getElementById('dawLanesContainer');
       const diarSubtitle = document.getElementById('diarSubtitle');
       const timelineHint = document.getElementById('timelineHint');
       const timeReadout = document.getElementById('timeReadout');
-      if (!bar) return;
+      const diarTableBody = document.getElementById('diarTableBody');
+      const cSpeakers = document.getElementById('diarCardSpeakers');
+      const cSpeakersSub = document.getElementById('diarCardSpeakersSub');
+      const cDER = document.getElementById('diarCardDER');
+      const cDERSub = document.getElementById('diarCardDERSub');
+      const cOverlap = document.getElementById('diarCardOverlap');
+      const cOverlapSub = document.getElementById('diarCardOverlapSub');
+      const cRTF = document.getElementById('diarCardRTF');
+      const cRTFSub = document.getElementById('diarCardRTFSub');
+
+      if (!container) return;
 
       if (track === 'A') {
-        if (diarSubtitle) diarSubtitle.textContent = "Who Spoke When — Female Hinglish + Male Hindi (25% Overlap)";
-        if (timelineHint) timelineHint.textContent = "Click any speaker turn to jump to that timestamp and audition the isolated voice.";
+        if (diarSubtitle) diarSubtitle.textContent = "Who Spoke When — Multi-Track DAW Timeline & Turn Telemetry (2 Speakers, 25% Overlap)";
+        if (timelineHint) timelineHint.textContent = "Click any speaker track block or turn button to audition the isolated speech, or click anywhere on the ruler/lanes to scrub.";
         if (timeReadout) timeReadout.textContent = "00:00 / 09:32";
-        bar.innerHTML = `
-          <div class="timeline-spk-pill spk0-pill" style="left: 0%; width: 60%;" onclick="event.stopPropagation(); seekTurn(0.0, 'spk0')">
-            SPEAKER 00: Female Hinglish (0.0s – 5.7s)
+
+        if (cSpeakers) cSpeakers.textContent = "2 Speakers";
+        if (cSpeakersSub) cSpeakersSub.textContent = "Eigengap Spectral Clustering (k=2)";
+        if (cDER) cDER.textContent = "9.20% DER";
+        if (cDERSub) cDERSub.innerHTML = '<span class="t-green">-33.3% Error Reduction</span> vs Raw';
+        if (cOverlap) cOverlap.textContent = "2.40s (25.2%)";
+        if (cOverlapSub) cOverlapSub.textContent = "Cross-Talk Collision (3.32s – 5.72s)";
+        if (cRTF) cRTF.textContent = "0.006 RTF";
+        if (cRTFSub) cRTFSub.textContent = "166.7x Faster than Real-Time";
+
+        container.innerHTML = `
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <!-- Left Labels Column -->
+            <div style="width: 136px; display: flex; flex-direction: column; gap: 12px; margin-top: 24px; flex-shrink: 0;">
+              <div class="daw-lane-label" title="Female Hinglish (Stem 01)">
+                <span style="color:#3B82F6;">●</span> SPEAKER_00
+              </div>
+              <div class="daw-lane-label" title="Male Hindi (Stem 02)">
+                <span style="color:#8B5CF6;">●</span> SPEAKER_01
+              </div>
+            </div>
+
+            <!-- Right DAW Tracks Column -->
+            <div id="dawTracksArea" style="flex: 1; position: relative; cursor: pointer;" onclick="scrubTimeline(event)">
+              <!-- Time Ruler -->
+              <div class="daw-ruler-row" style="margin-left: 0;">
+                <span>0.0s</span>
+                <span>2.0s</span>
+                <span>4.0s</span>
+                <span>6.0s</span>
+                <span>8.0s</span>
+                <span>9.5s</span>
+              </div>
+
+              <!-- Track Lanes Stack -->
+              <div style="display: flex; flex-direction: column; gap: 12px; position: relative;">
+                <!-- Lane 0 -->
+                <div class="daw-lane-track">
+                  <div class="daw-block spk0-block" style="left: 0%; width: 59.9%;" onclick="event.stopPropagation(); seekTurn(0.0, 'spk0')">
+                    SPEAKER 00: Female Hinglish (0.00s – 5.72s)
+                  </div>
+                </div>
+
+                <!-- Lane 1 -->
+                <div class="daw-lane-track">
+                  <div class="daw-block spk1-block" style="left: 34.8%; width: 65.2%;" onclick="event.stopPropagation(); seekTurn(3.32, 'spk1')">
+                    SPEAKER 01: Male Hindi (3.32s – 9.54s)
+                  </div>
+                </div>
+
+                <!-- Overlap Collision Overlay Strip -->
+                <div class="overlap-overlay-strip" style="left: 34.8%; width: 25.1%;">
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 800; color: #d97706; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(255, 237, 213, 0.95); padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.5); white-space: nowrap;">
+                    ⚡ 25% Overlap Collision (3.32s – 5.72s)
+                  </div>
+                </div>
+
+                <!-- Playhead Scrub Line -->
+                <div class="daw-playhead-line" id="playheadLine"></div>
+              </div>
+            </div>
           </div>
-          <div class="timeline-spk-pill overlap-pill" style="left: 34.8%; width: 25.2%;" onclick="event.stopPropagation(); seekTurn(3.32, 'mix')">
-            OVERLAP: Cross-Talk (3.3s – 5.7s)
-          </div>
-          <div class="timeline-spk-pill spk1-pill" style="left: 34.8%; width: 65.2%;" onclick="event.stopPropagation(); seekTurn(3.32, 'spk1')">
-            SPEAKER 01: Male Hindi (3.3s – 9.5s)
-          </div>
-          <div class="timeline-scrub-cursor" id="playheadLine"></div>
         `;
+
+        if (diarTableBody) {
+          diarTableBody.innerHTML = `
+            <tr>
+              <td>#01</td>
+              <td><span style="color:#3B82F6; font-weight:700;">● SPEAKER_00</span><br><span style="font-size:11px; color:var(--muted);">Female Hinglish (Stem 01)</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700;">0.00s – 3.32s</span></td>
+              <td><span style="font-family:var(--font-mono);">3.32s</span></td>
+              <td><span class="card-pill-tag" style="background:rgba(59,130,246,0.12); color:#2563eb;">Solo Speech</span></td>
+              <td style="text-align: right;">
+                <button class="play-turn-btn" onclick="seekTurn(0.0, 'spk0')">▶ Play Turn</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#02</td>
+              <td><span style="color:#d97706; font-weight:700;">⚡ SPK_00 & SPK_01</span><br><span style="font-size:11px; color:var(--muted);">Dual Concurrent Voices</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700; color:#d97706;">3.32s – 5.72s</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700; color:#d97706;">2.40s</span></td>
+              <td><span class="card-pill-tag" style="background:rgba(245,158,11,0.15); color:#d97706;">⚡ Cross-Talk (25% Overlap)</span></td>
+              <td style="text-align: right;">
+                <button class="play-turn-btn" onclick="seekTurn(3.32, 'mix')">▶ Play Overlap</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#03</td>
+              <td><span style="color:#8B5CF6; font-weight:700;">● SPEAKER_01</span><br><span style="font-size:11px; color:var(--muted);">Male Hindi (Stem 02)</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700;">5.72s – 9.54s</span></td>
+              <td><span style="font-family:var(--font-mono);">3.82s</span></td>
+              <td><span class="card-pill-tag" style="background:rgba(139,92,246,0.12); color:#7c3aed;">Solo Speech</span></td>
+              <td style="text-align: right;">
+                <button class="play-turn-btn" onclick="seekTurn(5.72, 'spk1')">▶ Play Turn</button>
+              </td>
+            </tr>
+          `;
+        }
       } else {
-        if (diarSubtitle) diarSubtitle.textContent = "Who Spoke When — 3-Speaker Studio Panel (Host, Guest 1, Guest 2)";
-        if (timelineHint) timelineHint.textContent = "3 Distinct Speakers Identified • Click any pill to jump directly to that speaker's speech in the isolated channel.";
+        if (diarSubtitle) diarSubtitle.textContent = "Who Spoke When — Multi-Track DAW Timeline (3-Speaker Studio Debate, 2 Overlap Zones)";
+        if (timelineHint) timelineHint.textContent = "3 Distinct Speakers Disentangled • Click any speaker lane or turn row to audition their isolated speech.";
         if (timeReadout) timeReadout.textContent = "00:00 / 13:02";
-        bar.innerHTML = `
-          <div class="timeline-spk-pill spk0-pill" style="left: 0%; width: 36.2%;" onclick="event.stopPropagation(); seekTurn(0.0, 'spk0')">
-            SPEAKER 00: Host (0.0s – 4.7s)
+
+        if (cSpeakers) cSpeakers.textContent = "3 Speakers";
+        if (cSpeakersSub) cSpeakersSub.textContent = "Interleaved Studio Panel Detection (k=3)";
+        if (cDER) cDER.textContent = "16.25% DER";
+        if (cDERSub) cDERSub.innerHTML = '<span class="t-green">Separation-Aware Decoupled</span>';
+        if (cOverlap) cOverlap.textContent = "2.54s (Total)";
+        if (cOverlapSub) cOverlapSub.textContent = "2 Distinct Collisions: OV1 (0.91s) & OV2 (1.63s)";
+        if (cRTF) cRTF.textContent = "0.007 RTF";
+        if (cRTFSub) cRTFSub.textContent = "142.8x Faster than Real-Time";
+
+        container.innerHTML = `
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <!-- Left Labels Column -->
+            <div style="width: 136px; display: flex; flex-direction: column; gap: 12px; margin-top: 24px; flex-shrink: 0;">
+              <div class="daw-lane-label" title="Host (Stem 01)">
+                <span style="color:#3B82F6;">●</span> SPEAKER_00
+              </div>
+              <div class="daw-lane-label" title="Guest 1 (Stem 02)">
+                <span style="color:#8B5CF6;">●</span> SPEAKER_01
+              </div>
+              <div class="daw-lane-label" title="Guest 2 (Stem 01)">
+                <span style="color:#10B981;">●</span> SPEAKER_02
+              </div>
+            </div>
+
+            <!-- Right DAW Tracks Column -->
+            <div id="dawTracksArea" style="flex: 1; position: relative; cursor: pointer;" onclick="scrubTimeline(event)">
+              <!-- Time Ruler -->
+              <div class="daw-ruler-row" style="margin-left: 0;">
+                <span>0.0s</span>
+                <span>2.5s</span>
+                <span>5.0s</span>
+                <span>7.5s</span>
+                <span>10.0s</span>
+                <span>13.0s</span>
+              </div>
+
+              <!-- Track Lanes Stack -->
+              <div style="display: flex; flex-direction: column; gap: 12px; position: relative;">
+                <!-- Lane 0 -->
+                <div class="daw-lane-track">
+                  <div class="daw-block spk0-block" style="left: 0%; width: 36.2%;" onclick="event.stopPropagation(); seekTurn(0.0, 'spk0')">
+                    SPEAKER 00: Host (0.00s – 4.71s)
+                  </div>
+                </div>
+
+                <!-- Lane 1 -->
+                <div class="daw-lane-track">
+                  <div class="daw-block spk1-block" style="left: 29.2%; width: 35.6%;" onclick="event.stopPropagation(); seekTurn(3.80, 'spk1')">
+                    SPEAKER 01: Guest 1 [तारीख के दिन...] (3.80s – 8.43s)
+                  </div>
+                </div>
+
+                <!-- Lane 2 -->
+                <div class="daw-lane-track">
+                  <div class="daw-block spk2-block" style="left: 52.2%; width: 43.9%;" onclick="event.stopPropagation(); seekTurn(6.80, 'spk0')">
+                    SPEAKER 02: Guest 2 [स्मार्टफोन में...] (6.80s – 12.52s)
+                  </div>
+                </div>
+
+                <!-- Overlap Collision 1 (Host & Guest 1) -->
+                <div class="overlap-overlay-strip" style="left: 29.2%; width: 7.0%;">
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 800; color: #d97706; text-transform: uppercase; background: rgba(255, 237, 213, 0.95); padding: 1px 4px; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.5); white-space: nowrap;">
+                    ⚡ OV1
+                  </div>
+                </div>
+
+                <!-- Overlap Collision 2 (Guest 1 & Guest 2) -->
+                <div class="overlap-overlay-strip" style="left: 52.2%; width: 12.5%;">
+                  <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 800; color: #d97706; text-transform: uppercase; background: rgba(255, 237, 213, 0.95); padding: 1px 4px; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.5); white-space: nowrap;">
+                    ⚡ OV2
+                  </div>
+                </div>
+
+                <!-- Playhead Scrub Line -->
+                <div class="daw-playhead-line" id="playheadLine"></div>
+              </div>
+            </div>
           </div>
-          <div class="timeline-spk-pill overlap-pill" style="left: 29.2%; width: 7.0%;" onclick="event.stopPropagation(); seekTurn(3.80, 'mix')">
-            OV 1 (3.8s–4.7s)
-          </div>
-          <div class="timeline-spk-pill spk1-pill" style="left: 29.2%; width: 35.6%;" onclick="event.stopPropagation(); seekTurn(3.80, 'spk1')">
-            SPEAKER 01: Guest 1 [इस योजना के अंतर्गत...] (3.8s – 8.4s)
-          </div>
-          <div class="timeline-spk-pill overlap-pill" style="left: 52.2%; width: 12.5%;" onclick="event.stopPropagation(); seekTurn(6.80, 'mix')">
-            OV 2 (6.8s–8.4s)
-          </div>
-          <div class="timeline-spk-pill spk2-pill" style="left: 52.2%; width: 43.9%;" onclick="event.stopPropagation(); seekTurn(6.80, 'spk0')">
-            SPEAKER 02: Guest 2 (6.8s – 12.5s)
-          </div>
-          <div class="timeline-scrub-cursor" id="playheadLine"></div>
         `;
+
+        if (diarTableBody) {
+          diarTableBody.innerHTML = `
+            <tr>
+              <td>#01</td>
+              <td><span style="color:#3B82F6; font-weight:700;">● SPEAKER_00</span><br><span style="font-size:11px; color:var(--muted);">Host (Stem 01)</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700;">0.00s – 3.80s</span></td>
+              <td><span style="font-family:var(--font-mono);">3.80s</span></td>
+              <td><span class="card-pill-tag" style="background:rgba(59,130,246,0.12); color:#2563eb;">Solo Host Monologue</span></td>
+              <td style="text-align: right;">
+                <button class="play-turn-btn" onclick="seekTurn(0.0, 'spk0')">▶ Play Turn</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#02</td>
+              <td><span style="color:#d97706; font-weight:700;">⚡ SPK_00 & SPK_01</span><br><span style="font-size:11px; color:var(--muted);">Host & Guest 1 Collision</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700; color:#d97706;">3.80s – 4.71s</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700; color:#d97706;">0.91s</span></td>
+              <td><span class="card-pill-tag" style="background:rgba(245,158,11,0.15); color:#d97706;">⚡ Interruption Collision 1</span></td>
+              <td style="text-align: right;">
+                <button class="play-turn-btn" onclick="seekTurn(3.80, 'mix')">▶ Play Overlap</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#03</td>
+              <td><span style="color:#8B5CF6; font-weight:700;">● SPEAKER_01</span><br><span style="font-size:11px; color:var(--muted);">Guest 1 [तारीख के दिन...] (Stem 02)</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700;">4.71s – 6.80s</span></td>
+              <td><span style="font-family:var(--font-mono);">2.09s</span></td>
+              <td><span class="card-pill-tag" style="background:rgba(139,92,246,0.12); color:#7c3aed;">Solo Guest 1 Response</span></td>
+              <td style="text-align: right;">
+                <button class="play-turn-btn" onclick="seekTurn(4.71, 'spk1')">▶ Play Turn</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#04</td>
+              <td><span style="color:#d97706; font-weight:700;">⚡ SPK_01 & SPK_02</span><br><span style="font-size:11px; color:var(--muted);">Guest 1 & Guest 2 Collision</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700; color:#d97706;">6.80s – 8.43s</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700; color:#d97706;">1.63s</span></td>
+              <td><span class="card-pill-tag" style="background:rgba(245,158,11,0.15); color:#d97706;">⚡ Interruption Collision 2</span></td>
+              <td style="text-align: right;">
+                <button class="play-turn-btn" onclick="seekTurn(6.80, 'mix')">▶ Play Overlap</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#05</td>
+              <td><span style="color:#10B981; font-weight:700;">● SPEAKER_02</span><br><span style="font-size:11px; color:var(--muted);">Guest 2 [स्मार्टफोन में...] (Stem 01)</span></td>
+              <td><span style="font-family:var(--font-mono); font-weight:700;">8.43s – 12.52s</span></td>
+              <td><span style="font-family:var(--font-mono);">4.09s</span></td>
+              <td><span class="card-pill-tag" style="background:rgba(16,185,129,0.12); color:#059669;">Solo Guest 2 Speech</span></td>
+              <td style="text-align: right;">
+                <button class="play-turn-btn" onclick="seekTurn(8.43, 'spk0')">▶ Play Turn</button>
+              </td>
+            </tr>
+          `;
+        }
       }
     }
 
@@ -1464,99 +1887,123 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
         grid.innerHTML = `
           <!-- Condition 1: Naive Mixture -->
           <div class="asr-soft-card">
-            <div class="asr-badge-well red">Condition 1 • Naive Baseline</div>
-            <div class="asr-card-title">Direct Mixture ASR (No Separation)</div>
-            <div class="asr-wer-metric red">WER: 86.3% | CER: 100.3%</div>
-            <div class="asr-desc">
+            <div class="asr-cond-badge badge-bad">Condition 1 • Naive Baseline</div>
+            <div class="card-title-soft" style="font-size:16px;">Direct Mixture ASR (No Separation)</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#dc2626; margin:6px 0 10px;">WER: 86.3% | CER: 100.3%</div>
+            <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Both speakers collide acoustically in the 25% overlap window. AI4Bharat encoder collapses from competing acoustic formants, hallucinating and dropping 86% of vocabulary.
-            </div>
-            <div class="asr-transcript-well">
-              <span style="color: #ef4444; font-weight: 700;">❌ Cross-Talk Attention Collapse:</span><br>
+            </p>
+            <div class="asr-bubble-well">
+              <span style="color: #dc2626; font-weight: 700;">❌ Cross-Talk Attention Collapse:</span><br>
               "उन्हें दस दिन तक रीहाब करना होगा ... <span style="background: rgba(239,68,68,0.15); padding: 2px 4px; border-radius: 4px;">[COLLAPSE: CROSS-TALK BABBLE SCRAMBLE]</span> ... प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं"
+            </div>
+            <div class="asr-meta-row">
+              <span>Pipeline: <span class="val">Bypassed</span></span>
+              <span>Acoustic: <span class="val" style="color:#dc2626;">Collapsed</span></span>
             </div>
           </div>
 
           <!-- Condition 2: Diarization Only -->
           <div class="asr-soft-card">
-            <div class="asr-badge-well yellow">Condition 2 • Diarization Only</div>
-            <div class="asr-card-title">Diarized Slices (No Separation)</div>
-            <div class="asr-wer-metric yellow">WER: 70.8% | CER: 65.6%</div>
-            <div class="asr-desc">
+            <div class="asr-cond-badge badge-warn">Condition 2 • Diarization Only</div>
+            <div class="card-title-soft" style="font-size:16px;">Diarized Slices (No Separation)</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#d97706; margin:6px 0 10px;">WER: 70.8% | CER: 65.6%</div>
+            <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Time-domain segmentation fails inside the 2.40s collision window. Both voices leak into Speaker 0 and Speaker 1 slices, causing severe deletion and phonetic confusion.
-            </div>
-            <div class="asr-transcript-well">
+            </p>
+            <div class="asr-bubble-well">
               <span style="color: #d97706; font-weight: 700;">⚠️ Boundary Bleed & Deletions:</span><br>
               <b>SPK_00:</b> "उन्हें दिन तक रीहाब करना होगा और उसके बाद ... [CROSS-TALK BLEED]"<br>
               <b>SPK_01:</b> "... [INCOMPLETE ONSET] डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस"
+            </div>
+            <div class="asr-meta-row">
+              <span>Pipeline: <span class="val">Diar Only</span></span>
+              <span>Acoustic: <span class="val" style="color:#d97706;">Bleed</span></span>
             </div>
           </div>
 
           <!-- Condition 3: Full Proposed Pipeline -->
           <div class="asr-soft-card">
-            <div class="asr-badge-well green">Condition 3 • Full Proposed System</div>
-            <div class="asr-card-title">Separation-Aware Dual ASR</div>
-            <div class="asr-wer-metric green">WER: 51.6% | CER: 44.7% (-34.7% Gain)</div>
-            <div class="asr-desc">
+            <div class="asr-cond-badge badge-good">Condition 3 • Full Proposed System</div>
+            <div class="card-title-soft" style="font-size:16px;">Separation-Aware Dual ASR</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#059669; margin:6px 0 10px;">WER: 51.6% | CER: 44.7% (-34.7% Gain)</div>
+            <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Conv-TasNet isolates acoustic wavefronts by +21.8 dB SI-SDR. ASR processes clean individual streams with 0 cross-talk interference and native Devanagari fidelity.
-            </div>
-            <div class="asr-transcript-well">
+            </p>
+            <div class="asr-bubble-well">
               <span style="color: #059669; font-weight: 700;">✅ Decoupled & Intelligible:</span><br>
               <b>SPK_00 (Female Hinglish):</b><br>
               "उन्हें दिन तक रीहाब करना होगा और उसके बाद उनका फिटनेस टेस लिया जाएगा"<br><br>
               <b>SPK_01 (Male Hindi):</b><br>
               "ये एक वॉइस ऑडियो डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस एआई के प्रशिक्षण के"
             </div>
+            <div class="asr-meta-row">
+              <span>Pipeline: <span class="val">Proposed</span></span>
+              <span>Acoustic: <span class="val" style="color:#059669;">Isolated (+21.8dB)</span></span>
+            </div>
           </div>
         `;
       } else {
-        if (asrSubtitle) asrSubtitle.textContent = "Ablation Matrix: 3-Speaker AIR Real-World Broadcast Recognition";
+        if (asrSubtitle) asrSubtitle.textContent = "Ablation Matrix: 3-Speaker Real-World Broadcast Recognition";
         grid.innerHTML = `
           <!-- Condition 1: Naive Mixture -->
           <div class="asr-soft-card">
-            <div class="asr-badge-well red">Condition 1 • Naive Baseline</div>
-            <div class="asr-card-title">Direct 3-Speaker Mixture ASR</div>
-            <div class="asr-wer-metric red">Severe Scramble | >90% WER</div>
-            <div class="asr-desc">
+            <div class="asr-cond-badge badge-bad">Condition 1 • Naive Baseline</div>
+            <div class="card-title-soft" style="font-size:16px;">Direct 3-Speaker Mixture ASR</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#dc2626; margin:6px 0 10px;">Severe Scramble | >90% WER</div>
+            <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Host and two guests speak concurrently with room reverberation and broadcast compression. Without separation, the CTC decoder scrambles all three voices together.
+            </p>
+            <div class="asr-bubble-well">
+              <span style="color: #dc2626; font-weight: 700;">❌ Triple-Speaker Collision:</span><br>
+              "उन्हें दस दिन तक ... <span style="background: rgba(239,68,68,0.15); padding: 2px 4px; border-radius: 4px;">[3-SPEAKER COLLISION SCRAMBLE]</span> ... तारीख के दिन मेरे ... [DROPPED WORDS]"
             </div>
-            <div class="asr-transcript-well">
-              <span style="color: #ef4444; font-weight: 700;">❌ Triple-Speaker Collision:</span><br>
-              "नमस्कार आज की परिचर्चा में ... <span style="background: rgba(239,68,68,0.15); padding: 2px 4px; border-radius: 4px;">[3-SPEAKER COLLISION SCRAMBLE]</span> ... लेकिन इसके लिए जो बजट का प्रावधान ... [DROPPED WORDS]"
+            <div class="asr-meta-row">
+              <span>Pipeline: <span class="val">Bypassed</span></span>
+              <span>Acoustic: <span class="val" style="color:#dc2626;">Scrambled</span></span>
             </div>
           </div>
 
           <!-- Condition 2: Diarization Only -->
           <div class="asr-soft-card">
-            <div class="asr-badge-well yellow">Condition 2 • Diarization Only</div>
-            <div class="asr-card-title">Diarized Slices (Without Separation)</div>
-            <div class="asr-wer-metric yellow">Boundary Collision Bleed</div>
-            <div class="asr-desc">
+            <div class="asr-cond-badge badge-warn">Condition 2 • Diarization Only</div>
+            <div class="card-title-soft" style="font-size:16px;">Diarized Slices (Without Separation)</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#d97706; margin:6px 0 10px;">Boundary Collision Bleed</div>
+            <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Clustering identifies 3 speaker clusters, but time slicing cannot untangle the 3.8s–4.7s and 6.8s–8.4s overlap intervals. Guest 1's speech is heavily garbled by Host and Guest 2.
-            </div>
-            <div class="asr-transcript-well">
+            </p>
+            <div class="asr-bubble-well">
               <span style="color: #d97706; font-weight: 700;">⚠️ Dual Overlap Bleed (OV1 & OV2):</span><br>
-              <b>SPK_00 (Host):</b> "नमस्कार आज की परिचर्चा में हम बात करेंगे ... [GUEST 1 INTERRUPTS]"<br>
-              <b>SPK_01 (Guest 1):</b> "इस योजना के ... [HOST BLEED] ... वित्तीय सहायता दी जाएगी"<br>
-              <b>SPK_02 (Guest 2):</b> "लेकिन इसके लिए जो ... [GUEST 1 BLEED] ... इंफ्रास्ट्रक्चर की आवश्यकता है"
+              <b>SPK_00 (Host):</b> "उन्हें दस दिन तक ... [GUEST 1 INTERRUPTS]"<br>
+              <b>SPK_01 (Guest 1):</b> "तारीख के दिन ... [HOST BLEED] ... मामला रफा दफा"<br>
+              <b>SPK_02 (Guest 2):</b> "स्मार्टफोन में विशेष ... [GUEST 1 BLEED]"
+            </div>
+            <div class="asr-meta-row">
+              <span>Pipeline: <span class="val">Diar Only</span></span>
+              <span>Acoustic: <span class="val" style="color:#d97706;">Bleed</span></span>
             </div>
           </div>
 
           <!-- Condition 3: Full Proposed Pipeline -->
           <div class="asr-soft-card">
-            <div class="asr-badge-well green">Condition 3 • Full Proposed System</div>
-            <div class="asr-card-title">Disentangled 3-Speaker Transcripts</div>
-            <div class="asr-wer-metric green">Clean Multi-Speaker Isolation</div>
-            <div class="asr-desc">
+            <div class="asr-cond-badge badge-good">Condition 3 • Full Proposed System</div>
+            <div class="card-title-soft" style="font-size:16px;">Disentangled 3-Speaker Transcripts</div>
+            <div style="font-family:var(--font-mono); font-weight:700; color:#059669; margin:6px 0 10px;">Clean Multi-Speaker Isolation</div>
+            <p style="font-size:12px; color:var(--muted); line-height:1.5;">
               Conv-TasNet separates concurrent wavefronts into discrete stems (Stem 01: Host & Guest 2; Stem 02: Guest 1). Full ASR yields accurate Devanagari transcripts for all 3 participants!
-            </div>
-            <div class="asr-transcript-well">
+            </p>
+            <div class="asr-bubble-well">
               <span style="color: #059669; font-weight: 700;">✅ Decoupled Transcripts (Audition Stems 01 & 02):</span><br><br>
               <b>SPEAKER 00 (Host • Stem 01 [0.0s – 4.7s]):</b><br>
-              "नमस्कार आज की परिचर्चा में हम बात करेंगे सरकार की नई योजनाओं पर"<br><br>
+              "उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा"<br><br>
               <b>SPEAKER 01 (Guest 1 • Stem 02 [3.8s – 8.4s]):</b><br>
-              "इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी"<br><br>
+              "तारीख के दिन मेरे स्वामी जाएंगे और ले देकर मामला रफा दफा हो जाएगा"<br><br>
               <b>SPEAKER 02 (Guest 2 • Stem 01 [6.8s – 12.5s]):</b><br>
-              "लेकिन इसके लिए जो बजट का प्रावधान है क्या वो पर्याप्त होगा ग्राउंड लेवल पर"
+              "स्मार्टफोन में विशेष तौर से इसी काम के लिए बने हार्डवेयर और सॉफ्टवेयर का इस्तेमाल किया गया है"
+            </div>
+            <div class="asr-meta-row">
+              <span>Pipeline: <span class="val">Proposed</span></span>
+              <span>Acoustic: <span class="val" style="color:#059669;">Isolated Stems</span></span>
             </div>
           </div>
         `;
@@ -1642,9 +2089,9 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
     player.addEventListener('ended', stopAudio);
 
     function scrubTimeline(e) {
-      const bar = document.getElementById('timelineBar');
-      if (!bar) return;
-      const rect = bar.getBoundingClientRect();
+      const area = document.getElementById('dawTracksArea');
+      if (!area) return;
+      const rect = area.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       const targetSec = pos * DB[currentTrack].duration;
       player.currentTime = targetSec;
