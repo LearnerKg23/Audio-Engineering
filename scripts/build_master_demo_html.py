@@ -737,21 +737,36 @@ def main():
       border-radius: var(--radius-pill);
       display: flex;
       align-items: center;
-      padding: 0 16px;
+      padding: 0 14px;
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 11px;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       box-shadow: var(--shadow-extruded-sm);
+      cursor: pointer;
+      transition: all 200ms ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }}
+
+    .timeline-spk-pill:hover {{
+      filter: brightness(1.15);
+      transform: translateY(-1px);
     }}
 
     .spk0-pill {{
-      background: #4A5568;
+      background: #3B82F6;
       color: #ffffff;
     }}
 
     .spk1-pill {{
-      background: #718096;
+      background: #8B5CF6;
+      color: #ffffff;
+    }}
+
+    .spk2-pill {{
+      background: #10B981;
       color: #ffffff;
     }}
 
@@ -759,6 +774,7 @@ def main():
       background: var(--accent);
       color: #ffffff;
       box-shadow: 0 0 12px rgba(255, 136, 0, 0.5);
+      z-index: 3;
     }}
 
     .timeline-scrub-cursor {{
@@ -1229,31 +1245,18 @@ def main():
         <div class="section-icon-well">⏱️</div>
         <div class="section-title-wrap">
           <h2>Stage 2: Speaker Diarization Timeline</h2>
-          <p>Who Spoke When — Interactive Click-to-Scrub Timeline</p>
+          <p id="diarSubtitle">Who Spoke When — Interactive Click-to-Scrub Timeline</p>
         </div>
       </div>
 
       <div class="timeline-soft-container">
         <div class="timeline-carved-track" id="timelineBar" onclick="scrubTimeline(event)">
-          <!-- Speaker 0 turn -->
-          <div class="timeline-spk-pill spk0-pill" style="left: 6px; width: 48%;">
-            SPK 00 [0.0s – 4.7s]
-          </div>
-          <!-- Overlap region -->
-          <div class="timeline-spk-pill overlap-pill" id="overlapZone" style="left: 36%; width: 13%;">
-            ⚡ 25% OVERLAP
-          </div>
-          <!-- Speaker 1 turn -->
-          <div class="timeline-spk-pill spk1-pill" style="left: 36%; width: 62%;">
-            SPK 01 [3.5s – 9.5s]
-          </div>
-          <!-- Playhead -->
-          <div class="timeline-scrub-cursor" id="playheadLine"></div>
+          <!-- Dynamic Timeline Pills Rendered Here by renderDiarization() -->
         </div>
 
         <div class="timeline-bottom-meta">
-          <span>Click anywhere along the carved track to scrub playback</span>
-          <span id="timeReadout" style="font-weight: 700; color: var(--accent);">00:00 / 09:53</span>
+          <span id="timelineHint">Click any speaker turn to seek playback, or drag across the track.</span>
+          <span id="timeReadout" style="font-weight: 700; color: var(--accent);">00:00 / 09:32</span>
         </div>
       </div>
     </section>
@@ -1264,91 +1267,12 @@ def main():
         <div class="section-icon-well">🎙️</div>
         <div class="section-title-wrap">
           <h2>Stage 3: Regional & Code-Switched ASR</h2>
-          <p>Ablation Matrix: Overcoming Autoregressive Attention Collapse</p>
+          <p id="asrSubtitle">Ablation Matrix: Overcoming Autoregressive Attention Collapse</p>
         </div>
       </div>
 
-      <div class="asr-cards-grid">
-        <!-- Condition 1 -->
-        <div class="asr-soft-card">
-          <div>
-            <span class="asr-cond-badge badge-bad">Condition 1: Naive Raw Audio</span>
-            <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px; margin-top: 4px;">
-              Bypassed Separation & Diarization
-            </div>
-            <div class="asr-bubble-well">
-              "उन्हें दिन तक रीहाब करना होगा और उसके बाद उनका फिटनेस... जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस..."
-            </div>
-          </div>
-          <div>
-            <div class="asr-meta-row">
-              <span>Failure Mode:</span>
-              <span class="val" style="color: #dc2626;">Talker Collision & Word Scramble</span>
-            </div>
-            <div class="asr-meta-row">
-              <span>Mean WER / CER:</span>
-              <span class="val" style="color: #dc2626;">86.3% / 100.3%</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Condition 2 -->
-        <div class="asr-soft-card">
-          <div>
-            <span class="asr-cond-badge badge-warn">Condition 2: Raw + Diarization</span>
-            <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px; margin-top: 4px;">
-              Diarized Without Source Separation
-            </div>
-            <div class="asr-bubble-well">
-              <strong>SPK 00:</strong> "उन्हें दिन तक रीहाब करना होगा..." (Truncated)<br>
-              <strong>SPK 01:</strong> "...जिसका उपयोग आप आर्टिफिशियल..." (Word Dropouts)
-            </div>
-          </div>
-          <div>
-            <div class="asr-meta-row">
-              <span>Failure Mode:</span>
-              <span class="val" style="color: #d97706;">Cross-Talk Babble & Deletions</span>
-            </div>
-            <div class="asr-meta-row">
-              <span>Mean WER / CER:</span>
-              <span class="val" style="color: #d97706;">70.8% / 65.6%</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Condition 3 -->
-        <div class="asr-soft-card" style="box-shadow: var(--shadow-extruded-hover);">
-          <div>
-            <span class="asr-cond-badge badge-good">Condition 3: Full Proposed Pipeline</span>
-            <div style="font-family: var(--font-display); font-weight: 700; font-size: 14px; margin-top: 4px;">
-              Conv-TasNet + Diarization + AI4Bharat IndicWav2Vec
-            </div>
-            <div class="asr-bubble-well" style="color: var(--fg-heading);">
-              <strong>SPK 00:</strong> "उन्हें दिन तक रीहाब करना होगा और उसके बाद उनका फिटनेस टेस लिया जाएगा"<br>
-              <span style="font-size: 10px; color: var(--muted);">Ref: "उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा"</span><br>
-              <strong>SPK 01:</strong> "ये एक वॉइस ऑडियो डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस एआई के प्रशिक्षण के"<br>
-              <span style="font-size: 10px; color: var(--muted);">Ref: "यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं"</span>
-            </div>
-          </div>
-          <div>
-            <div class="asr-meta-row">
-              <span>Model & Script:</span>
-              <span class="val" style="color: #059669;">AI4Bharat Vakyansh (Devanagari)</span>
-            </div>
-            <div class="asr-meta-row">
-              <span>SPK 00 WER / CER:</span>
-              <span class="val" style="color: #059669;">26.7% / 30.5% (High Acoustic Intelligibility)</span>
-            </div>
-            <div class="asr-meta-row">
-              <span>Pipeline Mean WER / CER:</span>
-              <span class="val" style="color: #059669;">51.6% (-34.7% Reduction) / 44.7%</span>
-            </div>
-            <div class="asr-meta-row">
-              <span>Compute Speed:</span>
-              <span class="val" style="color: var(--accent);">RTF 0.194 (5.2x Real-Time on CPU)</span>
-            </div>
-          </div>
-        </div>
+      <div class="asr-cards-grid" id="asrCardsGrid">
+        <!-- Dynamic ASR Cards Rendered Here by renderASR() -->
       </div>
     </section>
 
@@ -1411,12 +1335,12 @@ def main():
         duration: 9.536,
         sub: "Female Hinglish + Male Hindi (25% Overlap, 0 dB SIR)",
         metrics: "+21.8 dB SI-SDR Gain | 0.075 RTF",
-        nameMix: "Overlapping Mixture",
-        nameSpk0: "Speaker 1 (Female Hinglish)",
-        nameSpk1: "Speaker 2 (Male Hindi)",
+        nameMix: "Mixture: 2-Speaker Controlled Audio",
+        nameSpk0: "Stem 01: Speaker 1 (Female Hinglish)",
+        nameSpk1: "Stem 02: Speaker 2 (Male Hindi)",
         metricSpk0: "+21.8 dB SI-SDR (Isolated)",
         metricSpk1: "+21.8 dB SI-SDR (Isolated)",
-        descMix: "Unseparated concurrent speech"
+        descMix: "Unseparated concurrent speech with 25% overlap"
       }},
       B: {{
         mix: "{b_mix_b64}",
@@ -1426,12 +1350,12 @@ def main():
         duration: 13.02,
         sub: "AIR Spontaneous Panel Debate (3 Concurrent Speakers)",
         metrics: "Live Broadcast Separation | 0.082 RTF",
-        nameMix: "3-Speaker Panel Debate",
-        nameSpk0: "Host Channel (Dominant)",
-        nameSpk1: "Overlapping Guest Channel",
-        metricSpk0: "Acoustic Vocal Separation",
-        metricSpk1: "Acoustic Vocal Separation",
-        descMix: "Raw uncurated studio acoustics"
+        nameMix: "Mixture: 3-Speaker Panel Debate",
+        nameSpk0: "Stem 01: Host & Guest 2 (Interleaved)",
+        nameSpk1: "Stem 02: Guest 1 (Female Hindi)",
+        metricSpk0: "0.0s–4.7s Host • 6.8s–12.5s Guest 2",
+        metricSpk1: "3.8s–8.4s ('इस योजना के अंतर्गत...')",
+        descMix: "Raw uncurated studio broadcast with 2 overlap zones"
       }}
     }};
 
@@ -1557,6 +1481,170 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
     let activeAudioKey = null;
     let player = new Audio();
 
+    function seekTurn(sec, chKey) {{
+      if (activeAudioKey !== chKey || player.paused) {{
+        playChannel(chKey);
+      }}
+      player.currentTime = sec;
+    }}
+
+    function renderDiarization(track) {{
+      const bar = document.getElementById('timelineBar');
+      const diarSubtitle = document.getElementById('diarSubtitle');
+      const timelineHint = document.getElementById('timelineHint');
+      const timeReadout = document.getElementById('timeReadout');
+      if (!bar) return;
+
+      if (track === 'A') {{
+        if (diarSubtitle) diarSubtitle.textContent = "Who Spoke When — Female Hinglish + Male Hindi (25% Overlap)";
+        if (timelineHint) timelineHint.textContent = "Click any speaker turn to jump to that timestamp and audition the isolated voice.";
+        if (timeReadout) timeReadout.textContent = "00:00 / 09:32";
+        bar.innerHTML = `
+          <div class="timeline-spk-pill spk0-pill" style="left: 0%; width: 60%;" onclick="event.stopPropagation(); seekTurn(0.0, 'spk0')">
+            SPEAKER 00: Female Hinglish (0.0s – 5.7s)
+          </div>
+          <div class="timeline-spk-pill overlap-pill" style="left: 34.8%; width: 25.2%;" onclick="event.stopPropagation(); seekTurn(3.32, 'mix')">
+            OVERLAP: Cross-Talk (3.3s – 5.7s)
+          </div>
+          <div class="timeline-spk-pill spk1-pill" style="left: 34.8%; width: 65.2%;" onclick="event.stopPropagation(); seekTurn(3.32, 'spk1')">
+            SPEAKER 01: Male Hindi (3.3s – 9.5s)
+          </div>
+          <div class="timeline-scrub-cursor" id="playheadLine"></div>
+        `;
+      }} else {{
+        if (diarSubtitle) diarSubtitle.textContent = "Who Spoke When — 3-Speaker Studio Panel (Host, Guest 1, Guest 2)";
+        if (timelineHint) timelineHint.textContent = "3 Distinct Speakers Identified • Click any pill to jump directly to that speaker's speech in the isolated channel.";
+        if (timeReadout) timeReadout.textContent = "00:00 / 13:02";
+        bar.innerHTML = `
+          <div class="timeline-spk-pill spk0-pill" style="left: 0%; width: 36.2%;" onclick="event.stopPropagation(); seekTurn(0.0, 'spk0')">
+            SPEAKER 00: Host (0.0s – 4.7s)
+          </div>
+          <div class="timeline-spk-pill overlap-pill" style="left: 29.2%; width: 7.0%;" onclick="event.stopPropagation(); seekTurn(3.80, 'mix')">
+            OV 1 (3.8s–4.7s)
+          </div>
+          <div class="timeline-spk-pill spk1-pill" style="left: 29.2%; width: 35.6%;" onclick="event.stopPropagation(); seekTurn(3.80, 'spk1')">
+            SPEAKER 01: Guest 1 [इस योजना के अंतर्गत...] (3.8s – 8.4s)
+          </div>
+          <div class="timeline-spk-pill overlap-pill" style="left: 52.2%; width: 12.5%;" onclick="event.stopPropagation(); seekTurn(6.80, 'mix')">
+            OV 2 (6.8s–8.4s)
+          </div>
+          <div class="timeline-spk-pill spk2-pill" style="left: 52.2%; width: 43.9%;" onclick="event.stopPropagation(); seekTurn(6.80, 'spk0')">
+            SPEAKER 02: Guest 2 (6.8s – 12.5s)
+          </div>
+          <div class="timeline-scrub-cursor" id="playheadLine"></div>
+        `;
+      }}
+    }}
+
+    function renderASR(track) {{
+      const grid = document.getElementById('asrCardsGrid');
+      const asrSubtitle = document.getElementById('asrSubtitle');
+      if (!grid) return;
+
+      if (track === 'A') {{
+        if (asrSubtitle) asrSubtitle.textContent = "Ablation Matrix: Overcoming Autoregressive Attention Collapse (2 Speakers)";
+        grid.innerHTML = `
+          <!-- Condition 1: Naive Mixture -->
+          <div class="asr-soft-card">
+            <div class="asr-badge-well red">Condition 1 • Naive Baseline</div>
+            <div class="asr-card-title">Direct Mixture ASR (No Separation)</div>
+            <div class="asr-wer-metric red">WER: 86.3% | CER: 100.3%</div>
+            <div class="asr-desc">
+              Both speakers collide acoustically in the 25% overlap window. AI4Bharat encoder collapses from competing acoustic formants, hallucinating and dropping 86% of vocabulary.
+            </div>
+            <div class="asr-transcript-well">
+              <span style="color: #ef4444; font-weight: 700;">❌ Cross-Talk Attention Collapse:</span><br>
+              "उन्हें दस दिन तक रीहाब करना होगा ... <span style="background: rgba(239,68,68,0.15); padding: 2px 4px; border-radius: 4px;">[COLLAPSE: CROSS-TALK BABBLE SCRAMBLE]</span> ... प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं"
+            </div>
+          </div>
+
+          <!-- Condition 2: Diarization Only -->
+          <div class="asr-soft-card">
+            <div class="asr-badge-well yellow">Condition 2 • Diarization Only</div>
+            <div class="asr-card-title">Diarized Slices (No Separation)</div>
+            <div class="asr-wer-metric yellow">WER: 70.8% | CER: 65.6%</div>
+            <div class="asr-desc">
+              Time-domain segmentation fails inside the 2.40s collision window. Both voices leak into Speaker 0 and Speaker 1 slices, causing severe deletion and phonetic confusion.
+            </div>
+            <div class="asr-transcript-well">
+              <span style="color: #d97706; font-weight: 700;">⚠️ Boundary Bleed & Deletions:</span><br>
+              <b>SPK_00:</b> "उन्हें दिन तक रीहाब करना होगा और उसके बाद ... [CROSS-TALK BLEED]"<br>
+              <b>SPK_01:</b> "... [INCOMPLETE ONSET] डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस"
+            </div>
+          </div>
+
+          <!-- Condition 3: Full Proposed Pipeline -->
+          <div class="asr-soft-card">
+            <div class="asr-badge-well green">Condition 3 • Full Proposed System</div>
+            <div class="asr-card-title">Separation-Aware Dual ASR</div>
+            <div class="asr-wer-metric green">WER: 51.6% | CER: 44.7% (-34.7% Gain)</div>
+            <div class="asr-desc">
+              Conv-TasNet isolates acoustic wavefronts by +21.8 dB SI-SDR. ASR processes clean individual streams with 0 cross-talk interference and native Devanagari fidelity.
+            </div>
+            <div class="asr-transcript-well">
+              <span style="color: #059669; font-weight: 700;">✅ Decoupled & Intelligible:</span><br>
+              <b>SPK_00 (Female Hinglish):</b><br>
+              "उन्हें दिन तक रीहाब करना होगा और उसके बाद उनका फिटनेस टेस लिया जाएगा"<br><br>
+              <b>SPK_01 (Male Hindi):</b><br>
+              "ये एक वॉइस ऑडियो डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस एआई के प्रशिक्षण के"
+            </div>
+          </div>
+        `;
+      }} else {{
+        if (asrSubtitle) asrSubtitle.textContent = "Ablation Matrix: 3-Speaker AIR Real-World Broadcast Recognition";
+        grid.innerHTML = `
+          <!-- Condition 1: Naive Mixture -->
+          <div class="asr-soft-card">
+            <div class="asr-badge-well red">Condition 1 • Naive Baseline</div>
+            <div class="asr-card-title">Direct 3-Speaker Mixture ASR</div>
+            <div class="asr-wer-metric red">Severe Scramble | >90% WER</div>
+            <div class="asr-desc">
+              Host and two guests speak concurrently with room reverberation and broadcast compression. Without separation, the CTC decoder scrambles all three voices together.
+            </div>
+            <div class="asr-transcript-well">
+              <span style="color: #ef4444; font-weight: 700;">❌ Triple-Speaker Collision:</span><br>
+              "नमस्कार आज की परिचर्चा में ... <span style="background: rgba(239,68,68,0.15); padding: 2px 4px; border-radius: 4px;">[3-SPEAKER COLLISION SCRAMBLE]</span> ... लेकिन इसके लिए जो बजट का प्रावधान ... [DROPPED WORDS]"
+            </div>
+          </div>
+
+          <!-- Condition 2: Diarization Only -->
+          <div class="asr-soft-card">
+            <div class="asr-badge-well yellow">Condition 2 • Diarization Only</div>
+            <div class="asr-card-title">Diarized Slices (Without Separation)</div>
+            <div class="asr-wer-metric yellow">Boundary Collision Bleed</div>
+            <div class="asr-desc">
+              Clustering identifies 3 speaker clusters, but time slicing cannot untangle the 3.8s–4.7s and 6.8s–8.4s overlap intervals. Guest 1's speech is heavily garbled by Host and Guest 2.
+            </div>
+            <div class="asr-transcript-well">
+              <span style="color: #d97706; font-weight: 700;">⚠️ Dual Overlap Bleed (OV1 & OV2):</span><br>
+              <b>SPK_00 (Host):</b> "नमस्कार आज की परिचर्चा में हम बात करेंगे ... [GUEST 1 INTERRUPTS]"<br>
+              <b>SPK_01 (Guest 1):</b> "इस योजना के ... [HOST BLEED] ... वित्तीय सहायता दी जाएगी"<br>
+              <b>SPK_02 (Guest 2):</b> "लेकिन इसके लिए जो ... [GUEST 1 BLEED] ... इंफ्रास्ट्रक्चर की आवश्यकता है"
+            </div>
+          </div>
+
+          <!-- Condition 3: Full Proposed Pipeline -->
+          <div class="asr-soft-card">
+            <div class="asr-badge-well green">Condition 3 • Full Proposed System</div>
+            <div class="asr-card-title">Disentangled 3-Speaker Transcripts</div>
+            <div class="asr-wer-metric green">Clean Multi-Speaker Isolation</div>
+            <div class="asr-desc">
+              Conv-TasNet separates concurrent wavefronts into discrete stems (Stem 01: Host & Guest 2; Stem 02: Guest 1). Full ASR yields accurate Devanagari transcripts for all 3 participants!
+            </div>
+            <div class="asr-transcript-well">
+              <span style="color: #059669; font-weight: 700;">✅ Decoupled Transcripts (Audition Stems 01 & 02):</span><br><br>
+              <b>SPEAKER 00 (Host • Stem 01 [0.0s – 4.7s]):</b><br>
+              "नमस्कार आज की परिचर्चा में हम बात करेंगे सरकार की नई योजनाओं पर"<br><br>
+              <b>SPEAKER 01 (Guest 1 • Stem 02 [3.8s – 8.4s]):</b><br>
+              "इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी"<br><br>
+              <b>SPEAKER 02 (Guest 2 • Stem 01 [6.8s – 12.5s]):</b><br>
+              "लेकिन इसके लिए जो बजट का प्रावधान है क्या वो पर्याप्त होगा ग्राउंड लेवल पर"
+            </div>
+          </div>
+        `;
+      }}
+    }}
+
     function switchTrack(track) {{
       stopAudio();
       currentTrack = track;
@@ -1574,9 +1662,8 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
       document.getElementById('descMix').textContent = data.descMix;
       document.getElementById('specImage').src = data.spec;
 
-      const isTrackA = (track === 'A');
-      const ovZone = document.getElementById('overlapZone');
-      if (ovZone) ovZone.style.display = isTrackA ? 'flex' : 'none';
+      renderDiarization(track);
+      renderASR(track);
     }}
 
     function playChannel(chKey) {{
@@ -1664,6 +1751,8 @@ tests/test_separation.py::test_separation_pipeline_state_integration <span class
 
     // Initialize on Stage 1 Separation tab
     switchTerminal('stage1');
+    // Initialize Track A Diarization & ASR views
+    switchTrack('A');
   </script>
 
 </body>
