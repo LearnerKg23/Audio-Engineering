@@ -37,6 +37,7 @@ class SpeakerDiarizer(BaseModule):
         super().__init__(config=config, device=device)
         diar_cfg = self.config.get("diarization", {})
 
+        self.embedding_model = diar_cfg.get("embedding_model", "pyannote/embedding")
         self.clustering_method = diar_cfg.get("clustering_method", clustering_method)
         self.window_duration = diar_cfg.get("window_duration_seconds", window_duration)
         self.step_duration = diar_cfg.get("step_duration_seconds", step_duration)
@@ -55,6 +56,7 @@ class SpeakerDiarizer(BaseModule):
             return
 
         self.extractor = SpeakerEmbeddingExtractor(
+            embedding_model=self.embedding_model,
             embedding_dim=192,
             window_duration=self.window_duration,
             step_duration=self.step_duration,

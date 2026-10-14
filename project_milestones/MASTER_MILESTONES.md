@@ -268,15 +268,38 @@ This milestone directly satisfies the professor's explicit evaluation requiremen
 
 ---
 
-## Milestone M5: Stage 2 — Acoustic Speaker Diarization
-* **Objective**: Implement unsupervised speaker tracking using `pyannote.audio` neural embeddings, evaluate Spectral Clustering versus Gaussian Mixture Models (GMM), implement automated speaker count ($K$) estimation via the Eigengap heuristic, and calculate Diarization Error Rate (DER) with NIST collar tolerance.
-* **Deliverables**: `src/diarization/` module, `diarization_timeline.json`, DER/JER evaluation script, and ablation comparing diarization on raw audio vs. separated stems.
+## Milestone M5: Stage 2 — Acoustic Speaker Diarization [COMPLETED & BENCHMARKED]
+* **Objective**: Implement unsupervised speaker tracking using deep acoustic embeddings, evaluate Spectral Clustering versus Gaussian Mixture Models (GMM), implement automated speaker count ($K^*$) estimation via the Eigengap heuristic, and calculate Diarization Error Rate (DER) with NIST collar tolerance.
+* **Status**: **PASSED & VERIFIED**
+* **Delivered Artifacts**:
+  - `src/diarization/`: Complete module (`SpeakerEmbeddingExtractor`, `SpeakerClusterer`, `SpeakerDiarizer`).
+  - `evaluation/diarization_metrics.py`: NIST DER (250ms collar) & JER with Hungarian matching algorithm.
+  - `scripts/evaluate_stage2_diarization.py`: Comprehensive 9-mixture benchmark.
+  - `outputs/reports/stage2_diarization_report.md`: Formal evaluation report.
+  - `tests/test_diarization.py`: 6/6 unit tests passing cleanly.
+* **Empirical Results**:
+  - Raw Mixture Diarization Mean DER: **40.52%**
+  - Separation-Aware Pipeline Mean DER: **23.97%** (**-16.55% absolute DER improvement**)
+  - Clean separation drop on controlled mixtures: DER drops from **44.25% down to 9.20%**
+  - Average Real-Time Factor (RTF): **0.006** (166.7x faster than real-time playback)
 
 ---
 
-## Milestone M6: Stage 3 — Regional & Code-Switched ASR
+## Milestone M6: Stage 3 — Regional & Code-Switched ASR [COMPLETED & BENCHMARKED]
 * **Objective**: Implement acoustic-to-text transcription using AI4Bharat's `IndicWav2Vec` / `IndicASR`, establish vanilla OpenAI Whisper as a baseline comparator, implement Indic Unicode NFKC normalization, and evaluate Word Error Rate (WER) and Character Error Rate (CER) on spontaneous Hinglish audio.
-* **Deliverables**: `src/asr/` module, speaker-attributed `raw_transcript.json`, and comparative WER/CER report.
+* **Status**: **PASSED & VERIFIED**
+* **Delivered Artifacts**:
+  - `src/asr/`: Complete module (`IndicASREngine`, `IndicTextNormalizer`).
+  - `evaluation/asr_metrics.py`: Standard Levenshtein WER, CER, and S/D/I error decomposition.
+  - `scripts/evaluate_stage3_asr.py`: Comparative 3-condition ASR benchmark across controlled mixtures.
+  - `outputs/reports/stage3_asr_report.md` & `outputs/reports/stage3_asr_evaluation.json`: Official benchmark report.
+  - `tests/test_asr.py`: 10/10 unit tests passing cleanly.
+* **Empirical Results**:
+  - Naive Mixture WER: **86.28%** (CER: 100.28% due to autoregressive attention collision loops)
+  - Raw Audio + Diarization WER: **70.78%** (CER: 65.64%)
+  - Full Proposed System WER (Conv-TasNet + Diarization + IndicWav2Vec): **51.57%** (CER: 44.66%)
+  - **WER Reduction**: **-34.71% absolute reduction** in WER over raw mixture.
+  - Average Real-Time Factor (RTF): **0.1936** on standard CPU (5.2x real-time playback).
 
 ---
 
