@@ -115,6 +115,7 @@ Read the documents in this folder in order:
 | [`04_STAGE_4_SEMANTIC_POST_PROCESSING.md`](file:///c:/Users/Kushal%20Gupta/Desktop/AudioEngineering/Audio-Engineering/LEARNING/04_STAGE_4_SEMANTIC_POST_PROCESSING.md) | Stage 4 | Semantic Intelligence & LLM Guardrails, Disfluency Cleaning, Contract 5 Validation, ROUGE, BERTScore |
 | [`05_MASTER_EVALUATION_AND_METRICS.md`](file:///c:/Users/Kushal%20Gupta/Desktop/AudioEngineering/Audio-Engineering/LEARNING/05_MASTER_EVALUATION_AND_METRICS.md) | Full Pipeline | Unified Mathematical Formulation for all Metrics, Cross-Stage Matrix, Master Viva Cheat Sheet |
 | [`06_DEMO_AND_DEPLOYMENT_GUIDE.md`](file:///c:/Users/Kushal%20Gupta/Desktop/AudioEngineering/Audio-Engineering/LEARNING/06_DEMO_AND_DEPLOYMENT_GUIDE.md) | Web Demo & Deployment | `demo.html` Web Audio API Architecture, GitHub Pages Deployment, Git Push Workflow, 2-Min Reviewer Walkthrough |
+| [`07_LIVE_DEMO_SPEAKING_SCRIPT.md`](file:///c:/Users/Kushal%20Gupta/Desktop/AudioEngineering/Audio-Engineering/LEARNING/07_LIVE_DEMO_SPEAKING_SCRIPT.md) | Presentation Script | Turn-by-Turn Word-for-Word Speaking Guide, Stage 1 & 2 Live Audition Steps, Evaluator Q&A Cheat Sheet |
 
 ---
 
