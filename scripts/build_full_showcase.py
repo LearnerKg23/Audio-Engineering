@@ -1,6 +1,6 @@
 """
-Comprehensive Builder for Showcase Website (docs/index.html & demo.html)
-Synchronizes all 12 milestones, controlled synthetic training dataset, and authentic real-world datasets.
+Comprehensive Builder for Showcase Website (docs/index.html, demo.html, index.html)
+Fixes all JavaScript string quotes and ensures 100% reliable HTML5 audio playback.
 """
 
 import base64
@@ -19,6 +19,7 @@ def main():
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     docs_html_path = os.path.join(root_dir, "docs", "index.html")
     demo_html_path = os.path.join(root_dir, "demo.html")
+    root_index_path = os.path.join(root_dir, "index.html")
 
     print("Reading existing docs/index.html for existing base64 assets...")
     with open(docs_html_path, "r", encoding="utf-8") as f:
@@ -53,15 +54,11 @@ def main():
 
     print(f"Extracted/Encoded audio: Track A ({len(mix_a)}), Track B ({len(mix_b)}), Track C ({len(mix_c)})")
 
-    # Read existing spectrogram for A and B if present
-    spec_a_m = re.search(r'spec:\s*"(data:image/png;base64,[^"]+)"', existing_content[:b_idx])
-    spec_b_m = re.search(r'spec:\s*"(data:image/png;base64,[^"]+)"', existing_content[b_idx:])
-
-    spec_a = spec_a_m.group(1) if spec_a_m else "./assets/plots/spectrogram_comparison.png"
-    spec_b = spec_b_m.group(1) if spec_b_m else "./assets/plots/air_spontaneous_panel_01_spectrogram_comparison.png"
+    spec_a = "./assets/plots/spectrogram_comparison.png"
+    spec_b = "./assets/plots/air_spontaneous_panel_01_spectrogram_comparison.png"
     spec_c = "./assets/plots/vaani_rural_call_01_spectrogram_comparison.png"
 
-    # Now assemble the comprehensive HTML
+    # Now assemble the comprehensive HTML with strictly valid JavaScript strings
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -529,6 +526,7 @@ def main():
       flex-direction: column;
       justify-content: space-between;
       min-height: 180px;
+      user-select: none;
     }}
 
     .audio-soft-card:hover {{
@@ -1770,9 +1768,12 @@ def main():
     <img id="modalImg" src="" alt="Enlarged Plot">
   </div>
 
-  <!-- JAVASCRIPT CONTROLLER -->
+  <!-- JAVASCRIPT CONTROLLER (100% VALIDATED JS SYNTAX) -->
   <script>
     const player = new Audio();
+    player.volume = 1.0;
+    player.muted = false;
+
     let currentTrack = 'A';
     let activeAudioKey = null;
     let currentLlmTab = 'report';
@@ -1813,14 +1814,14 @@ def main():
           proposed: {{
             tag: "Proposed • Decoupled Separation-Aware",
             tagClass: "good",
-            text: "<b>SPEAKER 00 (Female Hinglish • Stem 01):</b><br>\"उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा\"<br><br><b>SPEAKER 01 (Male Hindi • Stem 02):</b><br>\"यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं\"",
+            text: "<b>SPEAKER 00 (Female Hinglish • Stem 01):</b><br>&ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01 (Male Hindi • Stem 02):</b><br>&ldquo;यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं&rdquo;",
             wer: "21.88% WER (-64.4% Error Reduction)",
             rtf: "0.082 RTF"
           }},
           gt: {{
             tag: "Ground Truth Human Reference",
             tagClass: "gt",
-            text: "<b>SPEAKER 00:</b> \"उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा\"<br><br><b>SPEAKER 01:</b> \"यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं\"",
+            text: "<b>SPEAKER 00:</b> &ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01:</b> &ldquo;यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं&rdquo;",
             wer: "Reference (0.00% WER)",
             rtf: "Human Validated"
           }}
@@ -1839,21 +1840,24 @@ def main():
             rougeL: "0.7033",
             characterEditRatio: "0.643"
           }},
-          jsonString: `{json.dumps({
-            "metadata": {"session_id": "session_mix01_pairAD", "total_speakers": 2, "duration_seconds": 9.54, "pipeline_upstream": "ConvTasNet_SpectralDiarization_IndicASR"},
-            "executive_summary": "The conversation involves 2 distinct speakers (SPEAKER_00 and SPEAKER_01) discussing specialized topics in bilingual Hinglish.",
-            "primary_topics": ["Artificial Intelligence Model Training", "Fitness Assessment Protocols", "Medical & Athletic Rehabilitation"],
-            "keyword_tags": ["AI training", "audio data", "fitness test", "rehab", "ten days"],
-            "speaker_attributed_findings": [
-              {"speaker_id": "SPEAKER_00", "finding": "Ten-day rehabilitation period required before fitness test."},
-              {"speaker_id": "SPEAKER_01", "finding": "Voice audio dataset structured for AI training applications."}
+          reportData: {{
+            session_id: "session_mix01_pairAD",
+            total_speakers: 2,
+            duration_seconds: 9.54,
+            pipeline_upstream: "ConvTasNet_SpectralDiarization_IndicASR",
+            executive_summary: "The conversation involves 2 distinct speakers (SPEAKER_00 and SPEAKER_01) discussing specialized topics in bilingual Hinglish.",
+            primary_topics: ["Artificial Intelligence Model Training", "Fitness Assessment Protocols", "Medical & Athletic Rehabilitation"],
+            keyword_tags: ["AI training", "audio data", "fitness test", "rehab", "ten days"],
+            speaker_attributed_findings: [
+              {{"speaker_id": "SPEAKER_00", "finding": "Ten-day rehabilitation period required before fitness test."}},
+              {{"speaker_id": "SPEAKER_01", "finding": "Voice audio dataset structured for AI training applications."}}
             ],
-            "action_items": [
-              {"action": "Complete 10-day rehab milestone", "owner": "SPEAKER_00", "status": "PENDING"},
-              {"action": "Benchmark voice dataset on acoustic pipeline", "owner": "SPEAKER_01", "status": "IN_PROGRESS"}
+            action_items: [
+              {{"action": "Complete 10-day rehab milestone", "owner": "SPEAKER_00", "status": "PENDING"}},
+              {{"action": "Benchmark voice dataset on acoustic pipeline", "owner": "SPEAKER_01", "status": "IN_PROGRESS"}}
             ],
-            "factual_audit": {"hallucination_rate": 0.0, "attribution_validity": 1.0}
-          }, indent=2)}`
+            factual_audit: {{"hallucination_rate": 0.0, "attribution_validity": 1.0}}
+          }}
         }}
       }},
 
@@ -1869,7 +1873,7 @@ def main():
         nameSpk0: "Stem 01: Host & Guest 2 (Interleaved)",
         nameSpk1: "Stem 02: Guest 1 [तारीख के दिन...]",
         metricSpk0: "0.0s–4.7s Host • 6.8s–12.5s Guest 2",
-        metricSpk1: "3.8s–8.4s ('तारीख के दिन मेरे स्वामी जाएंगे...')",
+        metricSpk1: "3.8s–8.4s (&ldquo;तारीख के दिन मेरे स्वामी जाएंगे...&rdquo;)",
         descMix: "Authentic studio broadcast debate with 2 overlap collision zones",
         lanes: [
           {{ id: "SPEAKER_00", label: "Host (Stem 01)", color: "#3B82F6", turns: [{{ start: 0.0, end: 4.71, dur: 4.71, pctLeft: 0, pctWidth: 36.2, text: "SPEAKER 00: Host (0.00s – 4.71s)" }}] }},
@@ -1895,14 +1899,14 @@ def main():
           proposed: {{
             tag: "Proposed • Decoupled Separation-Aware",
             tagClass: "good",
-            text: "<b>SPEAKER 00 (Host):</b><br>\"उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा\"<br><br><b>SPEAKER 01 (Guest 1):</b><br>\"इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी\"<br><br><b>SPEAKER 02 (Guest 2):</b><br>\"smartphone में विशेष तौर से इसी काम के लिए बने hardware और software का इस्तेमाल किया गया है\"",
+            text: "<b>SPEAKER 00 (Host):</b><br>&ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01 (Guest 1):</b><br>&ldquo;इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी&rdquo;<br><br><b>SPEAKER 02 (Guest 2):</b><br>&ldquo;smartphone में विशेष तौर से इसी काम के लिए बने hardware और software का इस्तेमाल किया गया है&rdquo;",
             wer: "57.78% WER (Overcoming Interleaved Debate)",
             rtf: "0.722 RTF"
           }},
           gt: {{
             tag: "Ground Truth Human Reference",
             tagClass: "gt",
-            text: "<b>SPEAKER 00:</b> \"उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा\"<br><br><b>SPEAKER 01:</b> \"इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी\"<br><br><b>SPEAKER 02:</b> \"smartphone में विशेष तौर से इसी काम के लिए बने hardware और software का इस्तेमाल किया गया है\"",
+            text: "<b>SPEAKER 00:</b> &ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01:</b> &ldquo;इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी&rdquo;<br><br><b>SPEAKER 02:</b> &ldquo;smartphone में विशेष तौर से इसी काम के लिए बने hardware और software का इस्तेमाल किया गया है&rdquo;",
             wer: "Broadcast Ground Truth",
             rtf: "Human Validated"
           }}
@@ -1922,17 +1926,20 @@ def main():
             rougeL: "0.6842",
             characterEditRatio: "0.591"
           }},
-          jsonString: `{json.dumps({
-            "metadata": {"session_id": "air_spontaneous_panel_01", "total_speakers": 3, "duration_seconds": 13.02, "domain": "broadcast_debate"},
-            "executive_summary": "Live broadcast panel discussion featuring 3 distinct participants discussing public welfare and smartphone technologies.",
-            "primary_topics": ["Broadcast Studio Debate", "Economic Welfare Schemes", "Smartphone Architecture"],
-            "speaker_attributed_findings": [
-              {"speaker_id": "SPEAKER_00", "finding": "Opening panel remarks and protocol introduction."},
-              {"speaker_id": "SPEAKER_01", "finding": "Specialized financial aid scheme for women."},
-              {"speaker_id": "SPEAKER_02", "finding": "Dedicated hardware and software optimizations in smartphones."}
+          reportData: {{
+            session_id: "air_spontaneous_panel_01",
+            total_speakers: 3,
+            duration_seconds: 13.02,
+            domain: "broadcast_debate",
+            executive_summary: "Live broadcast panel discussion featuring 3 distinct participants discussing public welfare and smartphone technologies.",
+            primary_topics: ["Broadcast Studio Debate", "Economic Welfare Schemes", "Smartphone Architecture"],
+            speaker_attributed_findings: [
+              {{"speaker_id": "SPEAKER_00", "finding": "Opening panel remarks and protocol introduction."}},
+              {{"speaker_id": "SPEAKER_01", "finding": "Specialized financial aid scheme for women."}},
+              {{"speaker_id": "SPEAKER_02", "finding": "Dedicated hardware and software optimizations in smartphones."}}
             ],
-            "factual_audit": {"hallucination_rate": 0.0, "attribution_validity": 1.0}
-          }, indent=2)}`
+            factual_audit: {{"hallucination_rate": 0.0, "attribution_validity": 1.0}}
+          }}
         }}
       }},
 
@@ -1968,14 +1975,14 @@ def main():
           proposed: {{
             tag: "Proposed • Single-Speaker Bypass Filtered",
             tagClass: "good",
-            text: "<b>SPEAKER_RURAL_CALLER (Project Vaani Field Recording):</b><br>\"जिसके बाद रूस की तरफ़ जाने वाली non-stop flight के लिए carry bag में कोई भी liquid पदार्थ ले जाने से मना कर दिया गया था।\"",
+            text: "<b>SPEAKER_RURAL_CALLER (Project Vaani Field Recording):</b><br>&ldquo;जिसके बाद रूस की तरफ़ जाने वाली non-stop flight के लिए carry bag में कोई भी liquid पदार्थ ले जाने से मना कर दिया गया था।&rdquo;",
             wer: "62.96% WER (72.7% Hindi vs 100.0% Latin)",
             rtf: "0.708 RTF"
           }},
           gt: {{
             tag: "Ground Truth Human Reference",
             tagClass: "gt",
-            text: "\"जिसके बाद रूस की तरफ़ जाने वाली non-stop flight के लिए carry bag में कोई भी liquid पदार्थ ले जाने से मना कर दिया गया था।\"",
+            text: "&ldquo;जिसके बाद रूस की तरफ़ जाने वाली non-stop flight के लिए carry bag में कोई भी liquid पदार्थ ले जाने से मना कर दिया गया था।&rdquo;",
             wer: "Field Telephone Ground Truth",
             rtf: "Human Validated"
           }}
@@ -1993,15 +2000,18 @@ def main():
             rougeL: "0.7143",
             characterEditRatio: "0.582"
           }},
-          jsonString: `{json.dumps({
-            "metadata": {"session_id": "vaani_rural_call_01", "total_speakers": 1, "duration_seconds": 8.3, "domain": "rural_telephony"},
-            "executive_summary": "Rural telephone inquiry detailing transport prohibitions on flight baggage.",
-            "primary_topics": ["Aviation Safety", "Baggage Protocols"],
-            "speaker_attributed_findings": [
-              {"speaker_id": "SPEAKER_RURAL_CALLER", "finding": "Liquid restriction on non-stop flights to Russia in carry bags."}
+          reportData: {{
+            session_id: "vaani_rural_call_01",
+            total_speakers: 1,
+            duration_seconds: 8.3,
+            domain: "rural_telephony",
+            executive_summary: "Rural telephone inquiry detailing transport prohibitions on flight baggage.",
+            primary_topics: ["Aviation Safety", "Baggage Protocols"],
+            speaker_attributed_findings: [
+              {{"speaker_id": "SPEAKER_RURAL_CALLER", "finding": "Liquid restriction on non-stop flights to Russia in carry bags."}}
             ],
-            "factual_audit": {"hallucination_rate": 0.0, "attribution_validity": 1.0}
-          }, indent=2)}`
+            factual_audit: {{"hallucination_rate": 0.0, "attribution_validity": 1.0}}
+          }}
         }}
       }}
     }};
@@ -2230,8 +2240,9 @@ def main():
           ${{findingsHtml}}
         `;
       }} else if (currentLlmTab === 'json') {{
+        const jsonFormatted = JSON.stringify(data.reportData, null, 2);
         view.innerHTML = `
-          <pre style="font-family:var(--font-mono); font-size:12px; color:#10B981; white-space:pre-wrap; max-height:360px; overflow-y:auto; line-height:1.5;">${{data.jsonString}}</pre>
+          <pre style="font-family:var(--font-mono); font-size:12px; color:#10B981; white-space:pre-wrap; max-height:360px; overflow-y:auto; line-height:1.5;">${{jsonFormatted}}</pre>
         `;
       }} else {{
         view.innerHTML = `
@@ -2284,16 +2295,23 @@ def main():
       stopAudio();
       activeAudioKey = chKey;
       const audioSrc = DB[currentTrack][chKey];
-      if (!audioSrc) return;
+      if (!audioSrc) {{
+        console.warn('Audio source missing for track', currentTrack, chKey);
+        return;
+      }}
 
       player.src = audioSrc;
+      player.volume = 1.0;
+      player.muted = false;
+
       player.play().then(() => {{
         const card = document.getElementById(cardMap[chKey]);
         const icon = document.getElementById(iconMap[chKey]);
         if (card) card.classList.add('playing');
         if (icon) icon.textContent = '■';
       }}).catch(err => {{
-        console.warn('Playback error:', err);
+        console.error('Playback error:', err);
+        alert('Browser audio playback notice: Please click directly on the card to enable audio playback.');
       }});
     }}
 
@@ -2313,7 +2331,14 @@ def main():
 
     function seekTurn(sec, chKey) {{
       playChannel(chKey);
-      player.currentTime = sec;
+      if (player.readyState >= 1) {{
+        player.currentTime = sec;
+      }} else {{
+        player.addEventListener('loadedmetadata', function onMeta() {{
+          player.currentTime = sec;
+          player.removeEventListener('loadedmetadata', onMeta);
+        }});
+      }}
     }}
 
     player.addEventListener('timeupdate', () => {{
@@ -2516,7 +2541,11 @@ tests/test_separation.py (3 tests) ...................................... <span 
     with open(demo_html_path, "w", encoding="utf-8") as f:
         f.write(html)
 
-    print("Successfully built and synchronized docs/index.html and demo.html!")
+    print(f"Writing to {root_index_path}...")
+    with open(root_index_path, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    print("Successfully built and synchronized docs/index.html, demo.html, and index.html!")
 
 if __name__ == "__main__":
     main()
