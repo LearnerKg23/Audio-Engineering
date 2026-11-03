@@ -287,3 +287,7 @@ class DiarizationEvaluator:
             "speaker_alignment": der_res.get("speaker_alignment", {}),
             "per_speaker_jer": jer_res.get("per_speaker_jer", {}),
         }
+
+
+# Alias for backward and forward compatibility
+DiarizationMetricsEvaluator = DiarizationEvaluator

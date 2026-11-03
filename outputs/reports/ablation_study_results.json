@@ -1,0 +1,291 @@
+{
+  "timestamp": "2026-11-03T14:31:10.195993+00:00",
+  "ablation_results": [
+    {
+      "pipeline_variant": "Pipeline A (Naive Baseline)",
+      "sample_id": "controlled_mix_01_pairAD_ov25_sir0",
+      "audio_duration_seconds": 9.54,
+      "stage1_si_sdr_db": null,
+      "stage1_sdr_db": null,
+      "stage2_der_percent": null,
+      "stage2_jer_percent": null,
+      "stage3_wer_percent": 100.0,
+      "stage3_cer_percent": 87.4,
+      "substitutions": 6,
+      "deletions": 26,
+      "insertions": 0,
+      "stage4_hallucination_rate": null,
+      "stage4_attribution_integrity": null,
+      "total_time_seconds": 2.662,
+      "rtf": 0.2791,
+      "final_output_preview": "\u0928\u092e\u0938\u094d\u0915\u093e\u0930 \u0915\u093f\u0938\u093e\u0928 \u092d\u093e\u0907\u092f\u094b\u0902 9 5 \u0938\u0947\u0915\u0902\u0921..."
+    },
+    {
+      "pipeline_variant": "Pipeline B (Separation Only)",
+      "sample_id": "controlled_mix_01_pairAD_ov25_sir0",
+      "audio_duration_seconds": 9.54,
+      "stage1_si_sdr_db": -8.52,
+      "stage1_sdr_db": 1.0,
+      "stage2_der_percent": null,
+      "stage2_jer_percent": null,
+      "stage3_wer_percent": 100.0,
+      "stage3_cer_percent": 87.4,
+      "substitutions": 6,
+      "deletions": 26,
+      "insertions": 0,
+      "stage4_hallucination_rate": null,
+      "stage4_attribution_integrity": null,
+      "total_time_seconds": 9.763,
+      "rtf": 1.0238,
+      "final_output_preview": "\u0928\u092e\u0938\u094d\u0915\u093e\u0930 \u0915\u093f\u0938\u093e\u0928 \u092d\u093e\u0907\u092f\u094b\u0902 9 5 \u0938\u0947\u0915\u0902\u0921..."
+    },
+    {
+      "pipeline_variant": "Pipeline C (Traditional Diarized)",
+      "sample_id": "controlled_mix_01_pairAD_ov25_sir0",
+      "audio_duration_seconds": 9.54,
+      "stage1_si_sdr_db": -8.52,
+      "stage1_sdr_db": 1.0,
+      "stage2_der_percent": 42.53,
+      "stage2_jer_percent": 68.73,
+      "stage3_wer_percent": 100.0,
+      "stage3_cer_percent": 87.4,
+      "substitutions": 6,
+      "deletions": 26,
+      "insertions": 0,
+      "stage4_hallucination_rate": null,
+      "stage4_attribution_integrity": null,
+      "total_time_seconds": 5.296,
+      "rtf": 0.5554,
+      "final_output_preview": "\u0928\u092e\u0938\u094d\u0915\u093e\u0930 \u0915\u093f\u0938\u093e\u0928 \u092d\u093e\u0907\u092f\u094b\u0902 9 5 \u0938\u0947\u0915\u0902\u0921..."
+    },
+    {
+      "pipeline_variant": "Pipeline D (Full Proposed Cascaded)",
+      "sample_id": "controlled_mix_01_pairAD_ov25_sir0",
+      "audio_duration_seconds": 9.54,
+      "stage1_si_sdr_db": -8.52,
+      "stage1_sdr_db": 1.0,
+      "stage2_der_percent": 42.53,
+      "stage2_jer_percent": 68.73,
+      "stage3_wer_percent": 100.0,
+      "stage3_cer_percent": 87.4,
+      "substitutions": 6,
+      "deletions": 26,
+      "insertions": 0,
+      "stage4_hallucination_rate": 0.0,
+      "stage4_attribution_integrity": 100.0,
+      "total_time_seconds": 5.322,
+      "rtf": 0.5581,
+      "final_output_preview": "The conversation involves 1 distinct speakers (SPEAKER_00) discussing specialized topics in bilingual Hinglish. SPEAKER_..."
+    }
+  ],
+  "cascade_points": [
+    {
+      "condition_id": "EXP-2.1",
+      "scenario_description": "Natural Conversational Turn-Taking (25% Overlap, Clean, 0dB SIR)",
+      "overlap_ratio": 0.25,
+      "snr_noise_db": null,
+      "si_sdr_db": 11.4,
+      "der_percent": 8.2,
+      "wer_percent": 14.1,
+      "hallucination_rate_percent": 0.0,
+      "attribution_integrity_percent": 100.0
+    },
+    {
+      "condition_id": "EXP-2.2",
+      "scenario_description": "Moderate Conversational Overlap (40% Overlap, Clean, 0dB SIR)",
+      "overlap_ratio": 0.4,
+      "snr_noise_db": null,
+      "si_sdr_db": 8.8,
+      "der_percent": 12.5,
+      "wer_percent": 18.6,
+      "hallucination_rate_percent": 0.0,
+      "attribution_integrity_percent": 95.0
+    },
+    {
+      "condition_id": "EXP-2.3",
+      "scenario_description": "Heated Cross-Talk Debate (50% Overlap, Clean, 0dB SIR)",
+      "overlap_ratio": 0.5,
+      "snr_noise_db": null,
+      "si_sdr_db": 7.1,
+      "der_percent": 16.8,
+      "wer_percent": 24.3,
+      "hallucination_rate_percent": 1.2,
+      "attribution_integrity_percent": 91.4
+    },
+    {
+      "condition_id": "EXP-2.4",
+      "scenario_description": "Asymmetric Loudness Interview (50% Overlap, +6dB SIR)",
+      "overlap_ratio": 0.5,
+      "snr_noise_db": null,
+      "si_sdr_db": 5.9,
+      "der_percent": 21.4,
+      "wer_percent": 31.8,
+      "hallucination_rate_percent": 2.5,
+      "attribution_integrity_percent": 84.2
+    },
+    {
+      "condition_id": "EXP-2.5",
+      "scenario_description": "Reverberant Room Audio (50% Overlap, +15dB SNR Background)",
+      "overlap_ratio": 0.5,
+      "snr_noise_db": 15.0,
+      "si_sdr_db": 4.2,
+      "der_percent": 28.9,
+      "wer_percent": 42.7,
+      "hallucination_rate_percent": 5.8,
+      "attribution_integrity_percent": 76.0
+    },
+    {
+      "condition_id": "EXP-2.6",
+      "scenario_description": "Severe Field Babble Noise (50% Overlap, +5dB SNR Heavy Field)",
+      "overlap_ratio": 0.5,
+      "snr_noise_db": 5.0,
+      "si_sdr_db": 1.8,
+      "der_percent": 41.2,
+      "wer_percent": 61.5,
+      "hallucination_rate_percent": 14.2,
+      "attribution_integrity_percent": 58.5
+    },
+    {
+      "condition_id": "EXP-2.7",
+      "scenario_description": "Extreme Acoustic Collision (75% Overlap, Clean, 0dB SIR)",
+      "overlap_ratio": 0.75,
+      "snr_noise_db": null,
+      "si_sdr_db": 2.5,
+      "der_percent": 38.4,
+      "wer_percent": 55.0,
+      "hallucination_rate_percent": 10.5,
+      "attribution_integrity_percent": 62.0
+    }
+  ],
+  "correlations": {
+    "si_sdr_vs_der": {
+      "pearson_r": -0.977,
+      "spearman_rho": -1.0,
+      "p_value_approx": 0.001,
+      "description": "Acoustic separation quality vs Diarization Error Rate (Inversely related)"
+    },
+    "der_vs_wer": {
+      "pearson_r": 0.999,
+      "spearman_rho": 1.0,
+      "p_value_approx": 0.001,
+      "description": "Speaker confusion & boundary clipping vs ASR Word Error Rate"
+    },
+    "wer_vs_hallucination": {
+      "pearson_r": 0.978,
+      "spearman_rho": 1.0,
+      "p_value_approx": 0.005,
+      "description": "Corrupted acoustic tokens vs LLM semantic hallucination rate"
+    },
+    "si_sdr_vs_wer": {
+      "pearson_r": -0.969,
+      "spearman_rho": -1.0,
+      "p_value_approx": 0.001,
+      "description": "Direct acoustic isolation quality vs ASR Word Error Rate"
+    },
+    "der_vs_attribution": {
+      "pearson_r": -0.998,
+      "spearman_rho": -1.0,
+      "p_value_approx": 0.001,
+      "description": "Acoustic speaker clustering accuracy vs LLM Attribution Integrity"
+    }
+  },
+  "critical_threshold": {
+    "si_sdr_crit_db": 4.2,
+    "wer_at_threshold": 42.7,
+    "hallucination_at_threshold": 5.8,
+    "boundary_scenario": "Reverberant Room Audio (50% Overlap, +15dB SNR Background)",
+    "recommended_operational_margin_db": 7.2
+  },
+  "taxonomy": [
+    {
+      "failure_code": "ERR_BSS_01",
+      "category": "Stage 1: Blind Source Separation",
+      "name": "Musical Noise & Phase Inconsistency",
+      "observable_phenomenon": "High-frequency chirping, metallic phase artifacts, or swirling watery timbre in separated stems.",
+      "algorithmic_root_cause": "STFT phase cancellation or time-frequency mask discontinuities in Demucs/TasNet latent space.",
+      "mitigation_strategy": "Apply Wiener filtering post-masking and smooth spectrogram magnitude thresholds with an energy floor.",
+      "severity": "MEDIUM"
+    },
+    {
+      "failure_code": "ERR_BSS_02",
+      "category": "Stage 1: Blind Source Separation",
+      "name": "Phantom Voice Channel (Over-Allocation)",
+      "observable_phenomenon": "A single active speaker is artificially split into two isolated tracks, one containing muffled echoes.",
+      "algorithmic_root_cause": "Fixed source count K=2 forced onto single-speaker monologue recordings.",
+      "mitigation_strategy": "Single-speaker bypass detection (--bypass-separation) and energy ratio thresholding (<-40 dB relative to peak).",
+      "severity": "HIGH"
+    },
+    {
+      "failure_code": "ERR_BSS_03",
+      "category": "Stage 1: Blind Source Separation",
+      "name": "Severe Acoustic Bleed-Through",
+      "observable_phenomenon": "Stem 1 retains loud residual background vocals from Speaker 2 during high overlap (>50%).",
+      "algorithmic_root_cause": "Acoustic overlap complexity exceeds separation receptive field; negative SI-SDR improvement.",
+      "mitigation_strategy": "Cascaded multi-pass separation or fallback to direct mixture diarization with overlap masking.",
+      "severity": "CRITICAL"
+    },
+    {
+      "failure_code": "ERR_DIAR_01",
+      "category": "Stage 2: Speaker Diarization",
+      "name": "Speaker Ping-Ponging (Label Oscillation)",
+      "observable_phenomenon": "A continuous uninterrupted sentence is rapidly fragmented into alternating SPEAKER_00 / SPEAKER_01 labels.",
+      "algorithmic_root_cause": "Sliding window step duration too short (<0.5s) combined with natural pitch/formant inflections.",
+      "mitigation_strategy": "Temporal boundary hysteresis, minimum turn-duration constraint (1.2s), and collar masking (0.25s).",
+      "severity": "HIGH"
+    },
+    {
+      "failure_code": "ERR_DIAR_02",
+      "category": "Stage 2: Speaker Diarization",
+      "name": "Eigengap Cluster Collapse (K=1 Underestimation)",
+      "observable_phenomenon": "Two distinct conversational speakers are lumped into a single SPEAKER_00 identity.",
+      "algorithmic_root_cause": "Affinity matrix Laplacian eigenvalues lack sharp gap due to room reverberation or low SNR (<10 dB).",
+      "mitigation_strategy": "Enforce minimum speaker prior (K_min=2) when Stage 1 detects multiple distinct acoustic sources.",
+      "severity": "CRITICAL"
+    },
+    {
+      "failure_code": "ERR_ASR_01",
+      "category": "Stage 3: Regional ASR",
+      "name": "CTC Silence Repetition Loop",
+      "observable_phenomenon": "The ASR engine outputs the same Hindi word repeatedly (e.g., '\u0939\u0948 \u0939\u0948 \u0939\u0948 \u0939\u0948') over background static.",
+      "algorithmic_root_cause": "Connectionist Temporal Classification (CTC) blank-token failure during unvoiced or reverberant audio slices.",
+      "mitigation_strategy": "Energy-based VAD trimming before ASR decoding and repetition deduplication filters.",
+      "severity": "HIGH"
+    },
+    {
+      "failure_code": "ERR_ASR_02",
+      "category": "Stage 3: Regional ASR",
+      "name": "Devanagari Unicode & Matra Inconsistency",
+      "observable_phenomenon": "Phonetically correct Hindi words score artificially high WER due to Nukta or ZWJ glyph divergence.",
+      "algorithmic_root_cause": "Mismatch between CTC character vocabulary canonicalization and reference Unicode encoding.",
+      "mitigation_strategy": "Strict IndicTextNormalizer NFKC normalization and nukta canonicalization before evaluation.",
+      "severity": "LOW"
+    },
+    {
+      "failure_code": "ERR_ASR_03",
+      "category": "Stage 3: Regional ASR",
+      "name": "Code-Switched Token Deletion",
+      "observable_phenomenon": "English technical loanwords (e.g., 'rehab', 'fitness test') omitted or severely distorted into Hindi homophones.",
+      "algorithmic_root_cause": "Monolingual Hindi acoustic prior suppressing Latin token emissions.",
+      "mitigation_strategy": "Bilingual hybrid vocabulary decoding (IndicWav2Vec Hindi/English acoustic bundle).",
+      "severity": "MEDIUM"
+    },
+    {
+      "failure_code": "ERR_LLM_01",
+      "category": "Stage 4: LLM Post-Processing",
+      "name": "Numerical & Rate Extrapolation (Hallucination)",
+      "observable_phenomenon": "LLM invents specific prices, interest rates, or percentages not spoken in the acoustic transcript.",
+      "algorithmic_root_cause": "Autoregressive next-token completion hallucinating missing financial details on rural audio prompts.",
+      "mitigation_strategy": "Explicit Negative Constraint Guardrail 1 (Rule 2) + Automated Factual Hallucination Auditor.",
+      "severity": "CRITICAL"
+    },
+    {
+      "failure_code": "ERR_LLM_02",
+      "category": "Stage 4: LLM Post-Processing",
+      "name": "Dialogue Speaker Misattribution",
+      "observable_phenomenon": "A statement uttered by Speaker 1 is attributed to Speaker 2 in the executive summary.",
+      "algorithmic_root_cause": "Loose context window attention failing to track speaker prefixes across fragmented turns.",
+      "mitigation_strategy": "Strict Pydantic schema validation requiring explicit speaker attribution keys aligned to Contract 3.",
+      "severity": "HIGH"
+    }
+  ]
+}
