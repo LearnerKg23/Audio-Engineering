@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "session_id": "session_mix01_pairAD",
+    "total_speakers": 2,
+    "duration_seconds": 9.54,
+    "pipeline_upstream": "ConvTasNet_SpectralDiarization_IndicASR"
+  },
+  "executive_summary": "The conversation involves 2 distinct speakers (SPEAKER_00 and SPEAKER_01) discussing specialized topics in bilingual Hinglish. SPEAKER_00 discusses rehabilitation duration (Speaker states that a ten-day rehabilitation period is required prior to the fitness test.). SPEAKER_01 discusses dataset utility (Speaker explains that the voice audio dataset is structured for AI training applications.).",
+  "primary_topics": [
+    "Artificial Intelligence Model Training",
+    "Fitness Assessment Protocols",
+    "Medical & Athletic Rehabilitation",
+    "Speech Dataset Curation"
+  ],
+  "keyword_tags": [
+    "AI training",
+    "audio data",
+    "fitness test",
+    "machine learning",
+    "medical protocol",
+    "rehab",
+    "ten days",
+    "voice dataset"
+  ],
+  "key_findings": [
+    {
+      "topic": "Rehabilitation Duration",
+      "detail": "Speaker states that a ten-day rehabilitation period is required prior to the fitness test.",
+      "speaker_attribution": "SPEAKER_00"
+    },
+    {
+      "topic": "Dataset Utility",
+      "detail": "Speaker explains that the voice audio dataset is structured for AI training applications.",
+      "speaker_attribution": "SPEAKER_01"
+    }
+  ],
+  "speaker_separated_dialogue": [
+    {
+      "speaker": "SPEAKER_00",
+      "timestamp": "00:00.00 - 00:04.71",
+      "cleaned_text": "उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा।"
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "timestamp": "00:03.54 - 00:09.54",
+      "cleaned_text": "यह एक वॉइस ऑडियो डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस (AI) के प्रशिक्षण उद्देश्यों के लिए कर सकते हैं।"
+    }
+  ]
+}

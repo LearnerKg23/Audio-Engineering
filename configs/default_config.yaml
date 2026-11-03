@@ -45,8 +45,10 @@ asr:
 
 llm:
   enabled: true
-  provider: "groq" # Options: "groq", "openai", "sarvam", "local_quantized"
+  provider: "mock" # Options: "mock", "groq", "openai", "sarvam", "local_quantized"
   model_name: "llama-3.1-8b-instant"
   temperature: 0.1
   max_tokens: 1024
   enforce_schema: true
+  guardrail_config_path: "configs/llm_guardrails.yaml"
+  template_path: "src/llm/prompts/post_processing_prompt.jinja"

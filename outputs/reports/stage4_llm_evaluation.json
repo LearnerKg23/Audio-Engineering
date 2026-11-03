@@ -1,0 +1,201 @@
+{
+  "timestamp": "2026-11-03T13:27:31.897449+00:00",
+  "milestone": "M7",
+  "summary": {
+    "mean_hallucination_rate_percent": 0.0,
+    "mean_attribution_integrity_percent": 100.0,
+    "mean_rouge_1_f1": 0.6374,
+    "mean_rouge_l_f1": 0.6231,
+    "mean_latency_seconds": 0.0004,
+    "mean_rtf": 0.0001
+  },
+  "scenarios": [
+    {
+      "condition_id": "full_proposed_system_mix01",
+      "condition_name": "Full Proposed System (Separation + Diarization + IndicASR)",
+      "upstream_pipeline": "ConvTasNet_SpectralDiarization_IndicWav2Vec",
+      "audio_duration_seconds": 9.54,
+      "processing_time_seconds": 0.0005,
+      "rtf": 0.0001,
+      "metrics": {
+        "hallucination": {
+          "hallucination_rate_percent": 0.0,
+          "total_entities_checked": 9,
+          "supported_entities_count": 9,
+          "unsupported_entities": [],
+          "is_hallucination_free": true
+        },
+        "attribution": {
+          "attribution_integrity_percent": 100.0,
+          "total_attributed_elements": 4,
+          "valid_attributions": 4,
+          "invalid_speaker_labels": [],
+          "is_attribution_valid": true
+        },
+        "rouge": {
+          "rouge_1": {
+            "precision": 0.6275,
+            "recall": 0.8,
+            "f1": 0.7033
+          },
+          "rouge_2": {
+            "precision": 0.46,
+            "recall": 0.5897,
+            "f1": 0.5169
+          },
+          "rouge_l": {
+            "precision": 0.6275,
+            "recall": 0.8,
+            "f1": 0.7033
+          }
+        },
+        "character_edit_ratio": 0.6434,
+        "total_topics": 4,
+        "total_tags": 8,
+        "total_key_findings": 2,
+        "total_dialogue_turns": 2
+      },
+      "final_report": {
+        "metadata": {
+          "session_id": "session_mix01_pairAD",
+          "total_speakers": 2,
+          "duration_seconds": 9.54,
+          "pipeline_upstream": "ConvTasNet_SpectralDiarization_IndicASR"
+        },
+        "executive_summary": "The conversation involves 2 distinct speakers (SPEAKER_00 and SPEAKER_01) discussing specialized topics in bilingual Hinglish. SPEAKER_00 discusses rehabilitation duration (Speaker states that a ten-day rehabilitation period is required prior to the fitness test.). SPEAKER_01 discusses dataset utility (Speaker explains that the voice audio dataset is structured for AI training applications.).",
+        "primary_topics": [
+          "Artificial Intelligence Model Training",
+          "Fitness Assessment Protocols",
+          "Medical & Athletic Rehabilitation",
+          "Speech Dataset Curation"
+        ],
+        "keyword_tags": [
+          "AI training",
+          "audio data",
+          "fitness test",
+          "machine learning",
+          "medical protocol",
+          "rehab",
+          "ten days",
+          "voice dataset"
+        ],
+        "key_findings": [
+          {
+            "topic": "Rehabilitation Duration",
+            "detail": "Speaker states that a ten-day rehabilitation period is required prior to the fitness test.",
+            "speaker_attribution": "SPEAKER_00"
+          },
+          {
+            "topic": "Dataset Utility",
+            "detail": "Speaker explains that the voice audio dataset is structured for AI training applications.",
+            "speaker_attribution": "SPEAKER_01"
+          }
+        ],
+        "speaker_separated_dialogue": [
+          {
+            "speaker": "SPEAKER_00",
+            "timestamp": "00:00.00 - 00:04.71",
+            "cleaned_text": "उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा।"
+          },
+          {
+            "speaker": "SPEAKER_01",
+            "timestamp": "00:03.54 - 00:09.54",
+            "cleaned_text": "यह एक वॉइस ऑडियो डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस (AI) के प्रशिक्षण उद्देश्यों के लिए कर सकते हैं।"
+          }
+        ]
+      }
+    },
+    {
+      "condition_id": "full_proposed_system_mix04",
+      "condition_name": "Full Proposed System (Corporate Acquisition Dialogue)",
+      "upstream_pipeline": "ConvTasNet_SpectralDiarization_IndicWav2Vec",
+      "audio_duration_seconds": 9.16,
+      "processing_time_seconds": 0.0004,
+      "rtf": 0.0,
+      "metrics": {
+        "hallucination": {
+          "hallucination_rate_percent": 0.0,
+          "total_entities_checked": 7,
+          "supported_entities_count": 7,
+          "unsupported_entities": [],
+          "is_hallucination_free": true
+        },
+        "attribution": {
+          "attribution_integrity_percent": 100.0,
+          "total_attributed_elements": 4,
+          "valid_attributions": 4,
+          "invalid_speaker_labels": [],
+          "is_attribution_valid": true
+        },
+        "rouge": {
+          "rouge_1": {
+            "precision": 0.5128,
+            "recall": 0.6452,
+            "f1": 0.5714
+          },
+          "rouge_2": {
+            "precision": 0.2895,
+            "recall": 0.3667,
+            "f1": 0.3235
+          },
+          "rouge_l": {
+            "precision": 0.4872,
+            "recall": 0.6129,
+            "f1": 0.5429
+          }
+        },
+        "character_edit_ratio": 0.6247,
+        "total_topics": 3,
+        "total_tags": 6,
+        "total_key_findings": 2,
+        "total_dialogue_turns": 2
+      },
+      "final_report": {
+        "metadata": {
+          "session_id": "session_mix04_pairBC",
+          "total_speakers": 2,
+          "duration_seconds": 9.16,
+          "pipeline_upstream": "ConvTasNet_SpectralDiarization_IndicASR"
+        },
+        "executive_summary": "The conversation involves 2 distinct speakers (SPEAKER_00 and SPEAKER_01) discussing specialized topics in bilingual Hinglish. SPEAKER_00 discusses acquisition announcement (Discussion covers the acquisition of WhatsApp by Facebook.). SPEAKER_01 discusses literary citation (Speaker references author Philip Steels and literary works.).",
+        "primary_topics": [
+          "Corporate Acquisitions",
+          "Literary References",
+          "Social Media Ecosystem"
+        ],
+        "keyword_tags": [
+          "Facebook",
+          "Philip Steels",
+          "WhatsApp",
+          "acquisition",
+          "author",
+          "literature"
+        ],
+        "key_findings": [
+          {
+            "topic": "Acquisition Announcement",
+            "detail": "Discussion covers the acquisition of WhatsApp by Facebook.",
+            "speaker_attribution": "SPEAKER_00"
+          },
+          {
+            "topic": "Literary Citation",
+            "detail": "Speaker references author Philip Steels and literary works.",
+            "speaker_attribution": "SPEAKER_01"
+          }
+        ],
+        "speaker_separated_dialogue": [
+          {
+            "speaker": "SPEAKER_00",
+            "timestamp": "00:00.00 - 00:06.61",
+            "cleaned_text": "Social network site Facebook ने अब तक का सबसे बड़ा अधिग्रहण करते हुए WhatsApp को खरीद लिया है।"
+          },
+          {
+            "speaker": "SPEAKER_01",
+            "timestamp": "00:05.76 - 00:09.16",
+            "cleaned_text": "Author of the danger trail Philip Steels etc."
+          }
+        ]
+      }
+    }
+  ]
+}

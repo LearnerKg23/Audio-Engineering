@@ -103,9 +103,9 @@ $$\text{Hallucination Rate} = \frac{\text{Entities in Summary not found in Raw T
 
 ## 5. Definition of Done (DoD) for Stage 4
 
-- [ ] Localized LLM inference pipeline (Airavata / OpenHathi or quantized equivalent) runs with deterministic seed and temperature controls.
-- [ ] Prompt template with strict negative guardrails is implemented and loaded via configuration.
-- [ ] Output response is validated against Contract 5 JSON schema using `pydantic` or `jsonschema`.
-- [ ] Automated hallucination audit script verifies that all numbers, prices, and speaker attributions are grounded in the source transcript.
-- [ ] Qualitative human-readable report is rendered in clean Markdown (`report.md`) alongside JSON.
-- [ ] Processing latency, memory usage, and token generation throughput are benchmarked and logged.
+- [x] Localized LLM inference pipeline (Airavata / OpenHathi or quantized equivalent) runs with deterministic seed and temperature controls.
+- [x] Prompt template with strict negative guardrails is implemented and loaded via configuration.
+- [x] Output response is validated against Contract 5 JSON schema using `pydantic` or `jsonschema`.
+- [x] Automated hallucination audit script verifies that all numbers, prices, and speaker attributions are grounded in the source transcript.
+- [x] Qualitative human-readable report is rendered in clean Markdown (`report.md`) alongside JSON.
+- [x] Processing latency, memory usage, and token generation throughput are benchmarked and logged.

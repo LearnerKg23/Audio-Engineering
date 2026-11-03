@@ -8,17 +8,26 @@ timing telemetry, and strict typing across all pipeline stages.
 from abc import ABC, abstractmethod
 import time
 from typing import Any, Dict, Optional
-import torch
+
+try:
+    import torch
+    HAS_TORCH = True
+except ImportError:
+    torch = None
+    HAS_TORCH = False
 
 from src.core.state import PipelineState
 
 
-def resolve_device(device_preference: str = "auto") -> torch.device:
+def resolve_device(device_preference: str = "auto") -> Any:
     """
     Deterministically resolves the optimal compute device.
     Prioritizes Apple Silicon Metal (MPS) on macOS, CUDA on NVIDIA Linux/Colab,
     and falls back gracefully to CPU.
     """
+    if not HAS_TORCH:
+        return "cpu"
+
     if device_preference.lower() == "auto":
         if torch.backends.mps.is_available():
             return torch.device("mps")
@@ -69,9 +78,13 @@ class BaseModule(ABC):
         """
         Frees device cache, tears down lingering resources, and triggers garbage collection.
         """
-        if self.device.type == "cuda":
+        if not HAS_TORCH or torch is None:
+            return
+
+        device_type = getattr(self.device, "type", str(self.device))
+        if device_type == "cuda":
             torch.cuda.empty_cache()
-        elif self.device.type == "mps":
+        elif device_type == "mps":
             if hasattr(torch.mps, "empty_cache"):
                 torch.mps.empty_cache()
 

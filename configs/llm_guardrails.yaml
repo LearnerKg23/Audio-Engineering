@@ -1,0 +1,33 @@
+# ==============================================================================
+# Stage 4: LLM Semantic Post-Processing & Guardrails Configuration
+# ==============================================================================
+
+llm:
+  # Active Provider selection: "mock", "groq", "openai", "sarvam", "local_quantized"
+  provider: "mock"
+  model_name: "llama-3.1-8b-instant"
+  
+  # Decoding parameters (strictly low temperature for factual grounding)
+  temperature: 0.1
+  top_p: 0.95
+  max_tokens: 1024
+  random_seed: 42
+  
+  # Structural Guardrail Toggles
+  guardrails:
+    source_grounding: true       # Negative constraint: no facts/numbers not present in transcript
+    attribution_integrity: true  # Prevent swapping or merging speaker attributions
+    phonetic_repair: true        # Remove loose matras/spaces and stutter without content change
+    enforce_pydantic_schema: true# Reject freeform markdown, force Contract 5 JSON schema
+    zero_hallucination_mode: true# Strict entity verification threshold
+    
+  # Prompt settings
+  prompt:
+    template_path: "src/llm/prompts/post_processing_prompt.jinja"
+    language_mode: "hinglish"     # Preserve natural bilingual Hindi-English terms
+    fallback_on_unintelligible: "[Unintelligible]"
+
+  # Fallback & Resilience
+  offline_fallback: true         # Automatically fall back to MockLLMProvider if API call fails
+  timeout_seconds: 30
+
