@@ -178,7 +178,8 @@ class DemucsSeparator(BaseModule):
     def process(self, state: PipelineState) -> PipelineState:
         """Pipeline stage processing method."""
         input_file = state.normalized_audio_path or state.input_audio_path
-        out_dir = Path("outputs/runs") / state.session_id / "01_separated"
+        base_dir = Path(state.execution_telemetry.get("output_dir", Path("outputs/runs") / state.session_id))
+        out_dir = base_dir / "01_separated"
 
         isolated_stems, meta = self.separate_file(input_file, output_dir=out_dir)
 

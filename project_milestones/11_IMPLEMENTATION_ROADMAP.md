@@ -92,7 +92,7 @@ gantt
 * **Milestone M5: Stage 2 — Speaker Diarization**: Implement `pyannote.audio` embeddings, Spectral vs. GMM clustering, Eigengap $K$ estimation, and Diarization Error Rate (DER) calculation.
 * **Milestone M6: Stage 3 — Regional & Code-Switched ASR**: Implement AI4Bharat `IndicWav2Vec`, Indic Unicode NFKC normalization, Whisper baseline comparator, and WER/CER evaluation.
 * **Milestone M7: Stage 4 — Semantic Post-Processing & LLM Guardrails**: Implement modular LLM provider layer (Groq/OpenAI APIs during dev, Airavata local fallback), negative prompt guardrails, and automated factual hallucination auditor.
-* **Milestone M8: End-to-End System Integration & CLI Orchestrator**: Build unified `src/pipeline.py` CLI orchestrator with caching and automated error fallbacks.
+* **Milestone M8: End-to-End System Integration & CLI Orchestrator**: **COMPLETED & VERIFIED**. Built unified `src/pipeline.py` CLI orchestrator with multi-tier intermediate caching, graceful single-speaker bypass, Contract 1-5 serialization, and 9/9 integration tests passing (55/55 total suite passing).
 * **Milestone M9: Cross-Stage Error Propagation & Scientific Ablation Study**: Execute progressive ablations (Pipelines A–D) and plot error cascade dynamics (SI-SDR vs. DER vs. WER).
 * **Milestone M10: System Benchmarking & Computational Profiling Notebook**: Author the required `notebooks/01_system_benchmark.ipynb` profiling latency, RTF, RAM, and GPU VRAM across varying audio durations.
 * **Milestone M11: Real-World Indian Audio Validation**: Evaluate robustness on uncurated, in-the-wild Indian radio debate snippets.

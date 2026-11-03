@@ -1,0 +1,64 @@
+[
+  {
+    "session_id": "m8_demo_controlled_mix_01",
+    "audio_file": "controlled_mix_01_pairAD_ov25_sir0.wav",
+    "audio_duration_seconds": 9.54,
+    "total_wall_clock_seconds": 12.076,
+    "rtf": 1.2664,
+    "speedup_factor": 0.79,
+    "stems_count": 2,
+    "speakers_count": 1,
+    "utterances_count": 1,
+    "findings_count": 1,
+    "artifacts_verified": true,
+    "telemetry": {
+      "output_dir": "/mnt/c/Users/Kushal Gupta/Desktop/AudioEngineering/Audio-Engineering/outputs/runs/m8_demo_controlled_mix_01",
+      "stage0_preprocessing": {
+        "elapsed_seconds": 0.0894,
+        "duration_seconds": 9.536,
+        "sample_rate": 16000,
+        "status": "SUCCESS"
+      },
+      "stage1_separation": {
+        "elapsed_seconds": 9.4073,
+        "num_sources": 2,
+        "rtf": 0.9865,
+        "status": "SUCCESS"
+      },
+      "SpeakerDiarizer_metrics": {
+        "clustering_method": "spectral",
+        "speakers_detected": 1,
+        "total_segments": 1
+      },
+      "stage2_diarization": {
+        "elapsed_seconds": 0.0451,
+        "speakers_detected": 1,
+        "num_segments": 1,
+        "rtf": 0.0047,
+        "status": "SUCCESS"
+      },
+      "ASREngine_metrics": {
+        "model_name": "indic_wav2vec_mock",
+        "utterances_count": 1,
+        "words_count": 6,
+        "language_code": "hi"
+      },
+      "stage3_asr": {
+        "elapsed_seconds": 0.056,
+        "num_utterances": 1,
+        "rtf": 0.0059,
+        "status": "SUCCESS"
+      },
+      "stage4_llm": {
+        "elapsed_seconds": 0.0014,
+        "status": "SUCCESS"
+      },
+      "total_pipeline_time_seconds": 9.5994,
+      "audio_duration_seconds": 9.536,
+      "cumulative_rtf": 1.0066,
+      "throughput_ratio": 0.99,
+      "completed_at": "2026-11-03T14:04:40.590920+00:00"
+    },
+    "run_dir": "/mnt/c/Users/Kushal Gupta/Desktop/AudioEngineering/Audio-Engineering/outputs/runs/m8_demo_controlled_mix_01"
+  }
+]

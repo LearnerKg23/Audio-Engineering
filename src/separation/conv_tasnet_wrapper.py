@@ -151,7 +151,8 @@ class ConvTasNetSeparator(BaseModule):
     def process(self, state: PipelineState) -> PipelineState:
         """Pipeline state processing."""
         input_file = state.normalized_audio_path or state.input_audio_path
-        out_dir = Path("outputs/runs") / state.session_id / "01_separated_convtasnet"
+        base_dir = Path(state.execution_telemetry.get("output_dir", Path("outputs/runs") / state.session_id))
+        out_dir = base_dir / "01_separated_convtasnet"
 
         stems, meta = self.separate_file(input_file, output_dir=out_dir)
 
