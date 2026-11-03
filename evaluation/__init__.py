@@ -25,6 +25,13 @@ __all__ = [
     "CANONICAL_FAILURE_TAXONOMY",
     "FailureDiagnosticEngine",
     "FailureTaxonomyItem",
+    # M11 Real-World Validation
+    "RealWorldEvaluator",
+    "RealWorldClipMetadata",
+    "RealWorldClipResult",
+    "RealWorldValidationReport",
+    "AcousticStressMetrics",
+    "DomainAggregateMetrics",
 ]
 
 # LLM metrics
@@ -79,6 +86,14 @@ try:
         CANONICAL_FAILURE_TAXONOMY,
         FailureDiagnosticEngine,
         FailureTaxonomyItem,
+    )
+    from evaluation.real_world_evaluator import (
+        AcousticStressMetrics,
+        DomainAggregateMetrics,
+        RealWorldClipMetadata,
+        RealWorldClipResult,
+        RealWorldEvaluator,
+        RealWorldValidationReport,
     )
 except ImportError:
     pass
