@@ -1,0 +1,145 @@
+{
+  "timestamp": "2026-11-03T14:46:20.403641+00:00",
+  "hardware": {
+    "os_platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "python_version": "3.12.3",
+    "cpu_architecture": "x86_64",
+    "cpu_count_physical": 8,
+    "cpu_count_logical": 8,
+    "total_ram_gb": 7.51,
+    "available_ram_gb": 6.41,
+    "pytorch_version": "2.14.1+cpu",
+    "cuda_available": false,
+    "cuda_device_name": null,
+    "cuda_device_count": 0,
+    "mps_available": false
+  },
+  "isolated_stages": {
+    "Stage 0: Preprocessing": {
+      "stage_name": "Stage 0: Preprocessing",
+      "audio_duration_seconds": 30.0,
+      "elapsed_seconds": 0.2276,
+      "rtf": 0.0076,
+      "throughput_ratio": 131.8,
+      "ram_initial_mb": 343.81,
+      "ram_peak_mb": 349.33,
+      "ram_delta_mb": 10.12,
+      "vram_peak_mb": 0.0,
+      "details": {}
+    },
+    "Stage 1: Separation": {
+      "stage_name": "Stage 1: Separation",
+      "audio_duration_seconds": 30.0,
+      "elapsed_seconds": 19.3996,
+      "rtf": 0.6467,
+      "throughput_ratio": 1.55,
+      "ram_initial_mb": 353.93,
+      "ram_peak_mb": 383.93,
+      "ram_delta_mb": 521.61,
+      "vram_peak_mb": 0.0,
+      "details": {}
+    },
+    "Stage 2: Diarization": {
+      "stage_name": "Stage 2: Diarization",
+      "audio_duration_seconds": 30.0,
+      "elapsed_seconds": 0.1837,
+      "rtf": 0.0061,
+      "throughput_ratio": 163.29,
+      "ram_initial_mb": 875.55,
+      "ram_peak_mb": 880.22,
+      "ram_delta_mb": 3.12,
+      "vram_peak_mb": 0.0,
+      "details": {}
+    },
+    "Stage 3: IndicASR": {
+      "stage_name": "Stage 3: IndicASR",
+      "audio_duration_seconds": 30.0,
+      "elapsed_seconds": 0.0251,
+      "rtf": 0.0008,
+      "throughput_ratio": 1195.76,
+      "ram_initial_mb": 878.67,
+      "ram_peak_mb": 884.17,
+      "ram_delta_mb": 0.12,
+      "vram_peak_mb": 0.0,
+      "details": {}
+    },
+    "Stage 4: LLM Guardrail": {
+      "stage_name": "Stage 4: LLM Guardrail",
+      "audio_duration_seconds": 30.0,
+      "elapsed_seconds": 0.2128,
+      "rtf": 0.0071,
+      "throughput_ratio": 140.99,
+      "ram_initial_mb": 878.8,
+      "ram_peak_mb": 880.48,
+      "ram_delta_mb": 1.12,
+      "vram_peak_mb": 0.0,
+      "details": {}
+    },
+    "End-to-End Pipeline": {
+      "stage_name": "End-to-End Pipeline",
+      "audio_duration_seconds": 30.0,
+      "elapsed_seconds": 20.9005,
+      "rtf": 0.6967,
+      "throughput_ratio": 1.44,
+      "ram_initial_mb": 879.92,
+      "ram_peak_mb": 902.89,
+      "ram_delta_mb": 63.12,
+      "vram_peak_mb": 0.0,
+      "details": {}
+    }
+  },
+  "scaling_matrix": [
+    {
+      "duration_seconds": 15,
+      "total_time_seconds": 8.1062,
+      "rtf_e2e": 0.5404,
+      "throughput_ratio": 1.85,
+      "stage_latencies": {
+        "stage0_prep": 0.074,
+        "stage1_sep": 7.9432,
+        "stage2_diar": 0.037,
+        "stage3_asr": 0.0514,
+        "stage4_llm": 0.0004
+      }
+    },
+    {
+      "duration_seconds": 30,
+      "total_time_seconds": 14.7117,
+      "rtf_e2e": 0.4904,
+      "throughput_ratio": 2.04,
+      "stage_latencies": {
+        "stage0_prep": 0.095,
+        "stage1_sep": 14.413,
+        "stage2_diar": 0.1121,
+        "stage3_asr": 0.0909,
+        "stage4_llm": 0.0005
+      }
+    },
+    {
+      "duration_seconds": 60,
+      "total_time_seconds": 34.1563,
+      "rtf_e2e": 0.5693,
+      "throughput_ratio": 1.76,
+      "stage_latencies": {
+        "stage0_prep": 0.2063,
+        "stage1_sep": 33.6631,
+        "stage2_diar": 0.1209,
+        "stage3_asr": 0.1653,
+        "stage4_llm": 0.0005
+      }
+    },
+    {
+      "duration_seconds": 120,
+      "total_time_seconds": 72.3623,
+      "rtf_e2e": 0.603,
+      "throughput_ratio": 1.66,
+      "stage_latencies": {
+        "stage0_prep": 0.4147,
+        "stage1_sep": 71.4531,
+        "stage2_diar": 0.1998,
+        "stage3_asr": 0.2943,
+        "stage4_llm": 0.0005
+      }
+    }
+  ]
+}
