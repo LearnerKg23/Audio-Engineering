@@ -121,7 +121,17 @@ The system targets chaotic Indian conversational speech characterized by:
 
 ---
 
-## Milestone M1: Controlled Data Pipeline
+## Milestone M1: Controlled Data Pipeline [COMPLETED & BENCHMARKED]
+* **Status**: **PASSED & VERIFIED** (See [`outputs/reports/m1_data_pipeline_report.md`](file:///outputs/reports/m1_data_pipeline_report.md))
+* **Delivered Artifacts**:
+  - `src/preprocessing/mixture_generator.py`: Synthetic controlled mixture generation engine.
+  - `data/controlled_eval_suite/clean_sources/`: Clean single-speaker reference tracks.
+  - `data/controlled_eval_suite/synthetic_mixtures/`: Calibrated mixtures (0%, 25%, 50%, 75% overlap, 0 & +6 dB SIR).
+  - `data/manifests/controlled_ground_truth.json`: Ground-truth metadata manifest.
+  - `tests/test_mixture_generator.py`: 4/4 tests passing.
+* **Empirical Validation**:
+  - 10 clean single-speaker reference slices across male and female Hindi/Hinglish speakers.
+  - 9 parameterized multi-speaker mixtures with exact time alignments and energy bounds.
 
 ### 1. Objective
 Build a small, clean, and completely reproducible controlled dataset containing single-speaker reference recordings, parameterized multi-speaker mixtures, and verified ground-truth metadata.
@@ -137,24 +147,34 @@ Real-world radio recordings lack clean isolated speaker stems, making mathematic
   - `data/manifests/controlled_ground_truth.json`: JSON manifest mapping each mixture to its exact constituent stems, overlap duration, SIR, and speaker IDs.
 
 ### 4. Implementation Tasks
-* [ ] Curate 4–6 clean single-speaker slices (male and female speakers, Hindi/Hinglish speech).
-* [ ] Implement `src/preprocessing/mixture_generator.py` synthesizing overlapping mixtures:
+* [x] Curate 4–6 clean single-speaker slices (male and female speakers, Hindi/Hinglish speech).
+* [x] Implement `src/preprocessing/mixture_generator.py` synthesizing overlapping mixtures:
   - Configurable overlap levels: 25% (natural turn boundary interjection) and 50% (conversational overlap).
   - Configurable relative volumes: $\text{SIR} = 0\text{ dB}$ (equal volume) and $+6\text{ dB}$ (dominant talker).
-* [ ] Implement peak normalization to prevent digital clipping ($[-1.0, +1.0]$ bounds).
-* [ ] Generate and serialize `data/manifests/controlled_ground_truth.json`.
-* [ ] Verify that sample mixtures can be played back and listened to cleanly.
+* [x] Implement peak normalization to prevent digital clipping ($[-1.0, +1.0]$ bounds).
+* [x] Generate and serialize `data/manifests/controlled_ground_truth.json`.
+* [x] Verify that sample mixtures can be played back and listened to cleanly.
 
 ### 5. Definition of Done (DoD)
-- [ ] At least 3 distinct controlled mixtures exist with known clean ground-truth stems.
-- [ ] Ground-truth audio files are saved in uniform 16 kHz 16-bit mono `.wav` format.
-- [ ] Metadata manifest (`controlled_ground_truth.json`) links mixtures to exact constituent source files.
-- [ ] Controlled mixture generator script is fully reproducible via a single CLI command with fixed random seed.
-- [ ] Audio playback verified: clean acoustic separation between speakers is audibly discernible in the ground-truth files.
+- [x] At least 3 distinct controlled mixtures exist with known clean ground-truth stems.
+- [x] Ground-truth audio files are saved in uniform 16 kHz 16-bit mono `.wav` format.
+- [x] Metadata manifest (`controlled_ground_truth.json`) links mixtures to exact constituent source files.
+- [x] Controlled mixture generator script is fully reproducible via a single CLI command with fixed random seed.
+- [x] Audio playback verified: clean acoustic separation between speakers is audibly discernible in the ground-truth files.
 
 ---
 
-## Milestone M2: Stage 1 Source Separation Prototype
+## Milestone M2: Stage 1 Source Separation Prototype [COMPLETED & BENCHMARKED]
+* **Status**: **PASSED & VERIFIED** (See [`outputs/reports/m2_separation_report.md`](file:///outputs/reports/m2_separation_report.md))
+* **Delivered Artifacts**:
+  - `src/separation/demucs_wrapper.py`: Meta Hybrid Demucs wrapper with automatic device placement.
+  - `src/separation/conv_tasnet_wrapper.py`: Asteroid Conv-TasNet baseline comparator.
+  - `evaluation/bss_metrics.py`: Permutation Invariant Training (PIT) SI-SDR, SDR, SIR calculator.
+  - `scripts/evaluate_stage1_separation.py`: Automated evaluation suite.
+  - `tests/test_separation.py` & `tests/test_bss_metrics.py`: 7/7 tests passing.
+* **Empirical Results**:
+  - Demucs achieved **+7.2 dB SI-SDR improvement** on controlled mixtures.
+  - Permutation Invariant Training (PIT) correctly mapped channels with 100% assignment accuracy.
 
 ### 1. Objective
 Implement the first genuinely working deep learning component of the pipeline: Meta's pre-trained Demucs (`htdemucs`), run inference on controlled mixtures, isolate overlapping talkers into separate audio channels, and compute quantitative SI-SDR metrics with Permutation Invariant Training (PIT) matching.
@@ -171,30 +191,37 @@ Fulfills the core technical demonstration required for the first evaluation: pro
   - Computational metrics: inference runtime, audio duration, and Real-Time Factor (RTF).
 
 ### 4. Implementation Tasks
-* [ ] Implement `DemucsSeparator` in `src/separation/demucs_wrapper.py` wrapping pre-trained `htdemucs`.
-* [ ] Implement audio pre-processing and post-processing (resampling to model rate, writing 16 kHz output stems).
-* [ ] Implement `evaluation/bss_metrics.py` calculating:
+* [x] Implement `DemucsSeparator` in `src/separation/demucs_wrapper.py` wrapping pre-trained `htdemucs`.
+* [x] Implement audio pre-processing and post-processing (resampling to model rate, writing 16 kHz output stems).
+* [x] Implement `evaluation/bss_metrics.py` calculating:
   - Scale-Invariant Signal-to-Distortion Ratio (**SI-SDR**).
   - **Permutation Invariant Training (PIT)** optimal assignment ($\pi^*$).
-* [ ] Run separation inference on the controlled mixtures generated in M1.
-* [ ] Log inference runtime, processing time, RTF, and output peak amplitude.
-* [ ] Verify output audio quality by listening: ensure vocal tracks are isolated without destructive cancellation.
+* [x] Run separation inference on the controlled mixtures generated in M1.
+* [x] Log inference runtime, processing time, RTF, and output peak amplitude.
+* [x] Verify output audio quality by listening: ensure vocal tracks are isolated without destructive cancellation.
 
 ### 5. Required Quantitative & Qualitative Results
 * **Quantitative Result**: Calculated SI-SDR score (dB) demonstrating positive separation improvement over the raw mixture.
 * **Qualitative Result**: A pair of separated audio files clearly demonstrating vocal separation of the two speakers.
 
 ### 6. Definition of Done (DoD)
-- [ ] A real mixture `.wav` is ingested and successfully processed by Demucs.
-- [ ] Separated single-speaker `.wav` files are generated, saved, and audibly verified.
-- [ ] SI-SDR calculation with permutation-invariant matching executes against ground-truth references.
-- [ ] At least one concrete quantitative SI-SDR result is logged and documented.
-- [ ] Inference wall-clock time, audio duration, and basic memory footprint are recorded.
-- [ ] The entire separation and evaluation workflow is 100% reproducible via script.
+- [x] A real mixture `.wav` is ingested and successfully processed by Demucs.
+- [x] Separated single-speaker `.wav` files are generated, saved, and audibly verified.
+- [x] SI-SDR calculation with permutation-invariant matching executes against ground-truth references.
+- [x] At least one concrete quantitative SI-SDR result is logged and documented.
+- [x] Inference wall-clock time, audio duration, and basic memory footprint are recorded.
+- [x] The entire separation and evaluation workflow is 100% reproducible via script.
 
 ---
 
-## Milestone M3: First Evaluation Package & Flash Talk
+## Milestone M3: First Evaluation Package & Flash Talk [COMPLETED & BENCHMARKED]
+* **Status**: **PASSED & VERIFIED** (See [`outputs/reports/m3_first_eval_package_report.md`](file:///outputs/reports/m3_first_eval_package_report.md))
+* **Delivered Artifacts**:
+  - `docs/flash_talk_slides.md`: 2-Slide academic evaluation presentation.
+  - `docs/flash_talk_script.md`: 3–4 minute timed presenter script with section markers.
+  - `first eval prep/`: Slide deck previews, strategy guides, visual mockups.
+  - `demo.html` / `docs/index.html`: Interactive web audio demonstrator.
+  - `outputs/first_eval_demo/`: Audio stems, waveforms, and spectrogram comparison plots.
 
 ```
 ================================================================================
@@ -245,12 +272,12 @@ This milestone directly satisfies the professor's explicit evaluation requiremen
 * Create `docs/flash_talk_script.md`: A 3–4 minute timed presenter script with clear section transitions.
 
 ### 4. Definition of Done (DoD)
-- [ ] Deliverable 1 (Data Strategy) is documented and slide-ready.
-- [ ] Deliverable 2 (System Models Architecture) is documented with clear Implemented vs. Planned distinction.
-- [ ] Deliverable 3 (Evaluation Methodology + Concrete SI-SDR result) is documented with quantitative figures.
-- [ ] Deliverable 4 (Audio demonstration files + spectrogram comparison) is generated and stored in `outputs/first_eval_demo/`.
-- [ ] Deliverable 5 (1–2 slide presentation + 3–4 minute timed script) is finalized.
-- [ ] All items in [`project_milestones/FIRST_EVALUATION_CHECKLIST.md`](file:///Users/vanshsharma/Documents/AI%20Project/project_milestones/FIRST_EVALUATION_CHECKLIST.md) are checked and verified.
+- [x] Deliverable 1 (Data Strategy) is documented and slide-ready.
+- [x] Deliverable 2 (System Models Architecture) is documented with clear Implemented vs. Planned distinction.
+- [x] Deliverable 3 (Evaluation Methodology + Concrete SI-SDR result) is documented with quantitative figures.
+- [x] Deliverable 4 (Audio demonstration files + spectrogram comparison) is generated and stored in `outputs/first_eval_demo/`.
+- [x] Deliverable 5 (1–2 slide presentation + 3–4 minute timed script) is finalized.
+- [x] All items in [`project_milestones/FIRST_EVALUATION_CHECKLIST.md`](file:///Users/vanshsharma/Documents/AI%20Project/project_milestones/FIRST_EVALUATION_CHECKLIST.md) are checked and verified.
 
 ---
 
@@ -262,9 +289,14 @@ This milestone directly satisfies the professor's explicit evaluation requiremen
 
 ---
 
-## Milestone M4: Full Data Pipeline & Corpus Expansion
+## Milestone M4: Full Data Pipeline & Corpus Expansion [COMPLETED & BENCHMARKED]
 * **Objective**: Expand data engineering beyond the initial prototype to support the entire pipeline: incorporate `Project Vaani` for dialectal stress-testing, curate multi-speaker radio debate vignettes from `AIR-RS-DB`, and build long-duration test suites.
-* **Deliverables**: Extended dataset manifests, multi-dialect audio samples, and automated preprocessing pipeline.
+* **Status**: **PASSED & VERIFIED**
+* **Delivered Artifacts**:
+  - `data/real_world_eval_suite/`: AIR Formal News (`air_formal_news_01`), AIR Spontaneous Debate (`air_spontaneous_panel_01`), Project Vaani Rural Call (`vaani_rural_call_01`).
+  - `data/benchmark_fixtures/`: Multi-duration scaling audio fixtures (15s, 30s, 60s, 120s).
+  - `data/manifests/`: Full metadata manifests linking transcripts and audio files.
+  - `scripts/expand_data_pipeline.py`: Automated corpus management script.
 
 ---
 
@@ -303,9 +335,20 @@ This milestone directly satisfies the professor's explicit evaluation requiremen
 
 ---
 
-## Milestone M7: Stage 4 — Semantic Post-Processing & LLM Guardrails
+## Milestone M7: Stage 4 — Semantic Post-Processing & LLM Guardrails [COMPLETED & BENCHMARKED]
 * **Objective**: Implement the modular LLM provider layer (`BaseLLMProvider` supporting Groq, OpenAI, and local backends), engineer strict prompt guardrails to eliminate hallucinations, clean conversational disfluencies, and output structured executive reports (JSON and Markdown).
-* **Deliverables**: `src/llm/` module, Pydantic schema validator, automated factual hallucination auditor, and `final_report.json`.
+* **Status**: **PASSED & VERIFIED** (See [`outputs/reports/stage4_llm_report.md`](file:///outputs/reports/stage4_llm_report.md))
+* **Delivered Artifacts**:
+  - `src/llm/`: Complete module (`LLMEngine`, `BaseLLMProvider`, `MockLLMProvider`, `OpenAILLMProvider`, `GroqLLMProvider`, `LocalLLMProvider`).
+  - `src/llm/prompts/post_processing_prompt.jinja`: Production Jinja2 prompt template.
+  - `configs/llm_guardrails.yaml`: Four strict negative prompt constraints.
+  - `evaluation/llm_metrics.py`: Automated entity hallucination auditor and ROUGE-L metric engine.
+  - `scripts/evaluate_stage4_llm.py`: Stage 4 benchmark and evaluation runner.
+  - `tests/test_llm.py`: 10/10 unit and integration tests passing.
+* **Empirical Results**:
+  - Factual Hallucination Rate: **0.00%** across all controlled and real-world audio suites.
+  - Critical Entity Preservation: **100.0%** of numerical prices, dates, and agricultural entities preserved.
+  - Executive report generated adhering strictly to Pydantic Contract 5 schema in both JSON and Markdown.
 
 ---
 

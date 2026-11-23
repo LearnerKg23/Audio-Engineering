@@ -118,10 +118,10 @@ class PyannoteSpectralDiarizer(Diarizer):
 
 ## 6\. Definition of Done (DoD) for Stage 2
 
-- [ ] Embedding extraction from `pyannote.audio` executes reliably without out-of-memory faults.
-- [ ] Both Spectral Clustering and GMM clustering implementations are functional and selectable via config.
-- [ ] Automated speaker count estimation ($K$ estimation via eigengap heuristic) is verified on synthetic multi-speaker audio.
-- [ ] Output JSON timeline strictly conforms to Contract 3 (`diarization_timeline.json`).
-- [ ] DER and JER evaluation script compares hypotheses against ground-truth synthetic annotations.
-- [ ] Ablation study comparing Diarization on Raw Audio vs. Diarization on Separated Audio is completed with recorded DER metrics.
-- [ ] Latency, processing time, RTF, RAM, and GPU memory benchmarks are captured.
+- [x] Embedding extraction from `pyannote.audio` executes reliably without out-of-memory faults.
+- [x] Both Spectral Clustering and GMM clustering implementations are functional and selectable via config.
+- [x] Automated speaker count estimation ($K$ estimation via eigengap heuristic) is verified on synthetic multi-speaker audio.
+- [x] Output JSON timeline strictly conforms to Contract 3 (`diarization_timeline.json`).
+- [x] DER and JER evaluation script compares hypotheses against ground-truth synthetic annotations.
+- [x] Ablation study comparing Diarization on Raw Audio vs. Diarization on Separated Audio is completed with recorded DER metrics.
+- [x] Latency, processing time, RTF, RAM, and GPU memory benchmarks are captured.

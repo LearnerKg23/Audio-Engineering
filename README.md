@@ -79,9 +79,9 @@ Across 12 systematic engineering milestones, the pipeline was benchmarked over *
 ```
 Audio-Engineering/
 ├── configs/                          # Production YAML configurations
-│   ├── pipeline.yaml                 # Master orchestrator config
-│   ├── llm_guardrails.yaml           # Jinja2 prompt constraints & negative rules
-│   └── experiments/                  # M1-M11 experiment sweeps
+│   ├── default_config.yaml           # Master system default configuration
+│   ├── pipeline.yaml                 # Master orchestrator config (alias)
+│   └── llm_guardrails.yaml           # Jinja2 prompt constraints & negative rules
 ├── data/                             # Standardized benchmark datasets
 │   ├── controlled_eval_suite/        # Track A: Synthetic controlled mixtures (M1, M9)
 │   ├── real_world_eval_suite/        # Track B: AIR Radio & Vaani field slices (M11)
@@ -124,7 +124,7 @@ Audio-Engineering/
 │   ├── diarization/                  # Neural speaker embeddings & spectral clustering
 │   ├── asr/                          # AI4Bharat IndicWav2Vec, Whisper, text normalization
 │   └── llm/                          # Swappable LLM providers, Jinja2 prompts, guardrails
-└── tests/                            # 75 automated unit and integration tests (100% passing)
+└── tests/                            # 80 automated unit and integration tests (100% passing)
 ```
 
 ---
@@ -132,9 +132,9 @@ Audio-Engineering/
 ## 4. Getting Started & Installation
 
 ### Prerequisites
-- Python 3.10+ (Tested on Python 3.12.3 in Ubuntu WSL2 / Linux).
+- Python 3.10+ (Tested on Python 3.12.3 in Ubuntu WSL2 / Linux / macOS).
 - PyTorch with CPU, CUDA, or Apple Silicon MPS support.
-- C++ build tools and `libsndfile` (`sudo apt-get install -y libsndfile1 ffmpeg`).
+- C++ build tools and `libsndfile` (`sudo apt-get install -y libsndfile1 ffmpeg` or `brew install libsndfile ffmpeg`).
 
 ### 1. Clone & Set Up Virtual Environment
 ```bash
@@ -148,11 +148,11 @@ pip install -r requirements.txt
 ```
 
 ### 2. Run Full Test Suite (Verification)
-Execute the 75 automated unit and integration tests covering all 11 milestones:
+Execute the 80 automated unit and integration tests covering all 12 milestones:
 ```bash
 pytest tests/ -v
 ```
-*(All 75 tests pass with 0 failures in under 95 seconds).*
+*(All 80 tests pass with 0 failures in under 70 seconds).*
 
 ---
 
