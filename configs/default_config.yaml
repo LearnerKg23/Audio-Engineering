@@ -28,13 +28,14 @@ separation:
 
 diarization:
   enabled: true
-  embedding_model: "pyannote/embedding"
+  embedding_model: "pyannote/embedding" # Falls back gracefully to native 192-d hyperspherical extractor when offline
   clustering_method: "spectral" # Options: "spectral", "gmm"
   window_duration_seconds: 2.0
   step_duration_seconds: 0.75
   min_speakers: 1
   max_speakers: 4
-  collar_seconds: 0.25 # NIST collar for boundary tolerance
+  collar_seconds: 0.25 # NIST collar for boundary tolerance (250 ms)
+  leakage_margin_db: 7.0 # Cross-stem energy margin to suppress separation bleed artifacts
 
 asr:
   enabled: true

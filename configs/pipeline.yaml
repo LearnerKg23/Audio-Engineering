@@ -1,0 +1,55 @@
+# ==============================================================================
+# Master Pipeline Configuration: Advanced Computational Speech Engineering
+# ==============================================================================
+
+system:
+  project_name: "advanced-speech-pipeline"
+  random_seed: 42
+  target_sample_rate: 16000
+  target_bit_depth: 16
+  device: "auto" # "auto" dynamically resolves to "mps" (Mac), "cuda" (Linux/Colab), or "cpu"
+  save_intermediate_stems: true
+  output_base_dir: "outputs/runs"
+
+preprocessing:
+  normalize_peak: true
+  target_peak_db: -1.0
+  target_rms_db: -23.0
+  vad_enabled: true
+  vad_silence_threshold_ms: 300
+
+separation:
+  enabled: true
+  model_name: "htdemucs"
+  expected_sources: 2
+  chunk_duration_seconds: 30.0
+  overlap_seconds: 2.0
+  energy_gate_db: -40.0 # Prune inactive/phantom stems below this energy relative to peak
+
+diarization:
+  enabled: true
+  embedding_model: "pyannote/embedding" # Falls back gracefully to native 192-d hyperspherical extractor when offline
+  clustering_method: "spectral" # Options: "spectral", "gmm"
+  window_duration_seconds: 2.0
+  step_duration_seconds: 0.75
+  min_speakers: 1
+  max_speakers: 4
+  collar_seconds: 0.25 # NIST collar for boundary tolerance (250 ms)
+  leakage_margin_db: 7.0 # Cross-stem energy margin to suppress separation bleed artifacts
+
+asr:
+  enabled: true
+  primary_engine: "indic_wav2vec" # Options: "indic_wav2vec", "whisper_baseline"
+  language_code: "hi" # Hindi / Hinglish primary target
+  apply_indic_normalization: true
+  beam_size: 1
+
+llm:
+  enabled: true
+  provider: "mock" # Options: "mock", "groq", "openai", "sarvam", "local_quantized"
+  model_name: "llama-3.1-8b-instant"
+  temperature: 0.1
+  max_tokens: 1024
+  enforce_schema: true
+  guardrail_config_path: "configs/llm_guardrails.yaml"
+  template_path: "src/llm/prompts/post_processing_prompt.jinja"

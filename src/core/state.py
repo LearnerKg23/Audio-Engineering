@@ -107,6 +107,17 @@ class PostProcessedReport(BaseModel):
     speaker_separated_dialogue: List[SpeakerDialogue] = Field(default_factory=list)
 
 
+class RAGAnswer(BaseModel):
+    """Output artifact for Stage 4 Retrieval-Augmented Generation (RAG) query over conversation."""
+    query: str
+    answer: str
+    is_grounded: bool = True
+    confidence: float = Field(ge=0.0, le=1.0, default=1.0)
+    cited_speakers: List[str] = Field(default_factory=list)
+    relevant_timestamps: List[str] = Field(default_factory=list)
+    guardrail_status: str = "PASSED"
+
+
 class PipelineState(BaseModel):
     """
     Immutable Pipeline Context passed through all modules.
@@ -120,6 +131,7 @@ class PipelineState(BaseModel):
     diarization_timeline: Optional[DiarizationTimeline] = None
     raw_transcript: Optional[RawTranscript] = None
     final_report: Optional[PostProcessedReport] = None
+    rag_answers: List[RAGAnswer] = Field(default_factory=list)
     execution_telemetry: Dict[str, Any] = Field(default_factory=dict)
     errors: List[str] = Field(default_factory=list)
 
