@@ -72,10 +72,10 @@ We evaluate ASR under three explicit pipeline conditions:
 
 ## 6. Definition of Done (DoD) for Stage 3
 
-- [ ] IndicWav2Vec / IndicASR model loads and runs inference on standardized 16 kHz audio chunks.
-- [ ] Baseline comparator (vanilla Whisper) is implemented behind the same `BaseASR` interface.
-- [ ] Text normalizer resolves Indic Unicode codepoint variations and Devanagari matras.
-- [ ] WER and CER calculation pipeline is verified on ground-truth transcripts from IndicVoices / Nirantar.
-- [ ] ASR output strictly conforms to Contract 4 (`raw_transcript.json`), mapping speaker IDs and timestamps to text.
-- [ ] Comparative benchmark between IndicASR and Whisper baseline is executed on code-switched audio.
-- [ ] Processing time, RTF, RAM, and GPU memory metrics are documented.
+- [x] IndicWav2Vec / IndicASR model loads and runs inference on standardized 16 kHz audio chunks.
+- [x] Baseline comparator (vanilla Whisper) is implemented behind the same `BaseASR` interface.
+- [x] Text normalizer resolves Indic Unicode codepoint variations and Devanagari matras.
+- [x] WER and CER calculation pipeline is verified on ground-truth transcripts from IndicVoices / Nirantar.
+- [x] ASR output strictly conforms to Contract 4 (`raw_transcript.json`), mapping speaker IDs and timestamps to text.
+- [x] Comparative benchmark between IndicASR and Whisper baseline is executed on code-switched audio.
+- [x] Processing time, RTF, RAM, and GPU memory metrics are documented.

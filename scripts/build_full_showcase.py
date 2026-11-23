@@ -1,4 +1,6 @@
 """
+Comprehensive Builder for Showcase Website (docs/index.html & demo.html)
+Synchronizes all 12 milestones, controlled synthetic training dataset, and authentic real-world datasets.
 Comprehensive Builder for Showcase Website (docs/index.html, demo.html, index.html)
 Fixes all JavaScript string quotes and ensures 100% reliable HTML5 audio playback.
 """
@@ -54,10 +56,17 @@ def main():
 
     print(f"Extracted/Encoded audio: Track A ({len(mix_a)}), Track B ({len(mix_b)}), Track C ({len(mix_c)})")
 
+    # Read existing spectrogram for A and B if present
+    spec_a_m = re.search(r'spec:\s*"(data:image/png;base64,[^"]+)"', existing_content[:b_idx])
+    spec_b_m = re.search(r'spec:\s*"(data:image/png;base64,[^"]+)"', existing_content[b_idx:])
+
+    spec_a = spec_a_m.group(1) if spec_a_m else "./assets/plots/spectrogram_comparison.png"
+    spec_b = spec_b_m.group(1) if spec_b_m else "./assets/plots/air_spontaneous_panel_01_spectrogram_comparison.png"
     spec_a = "./assets/plots/spectrogram_comparison.png"
     spec_b = "./assets/plots/air_spontaneous_panel_01_spectrogram_comparison.png"
     spec_c = "./assets/plots/vaani_rural_call_01_spectrogram_comparison.png"
 
+    # Now assemble the comprehensive HTML
     # Now assemble the comprehensive HTML with strictly valid JavaScript strings
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -1768,6 +1777,7 @@ def main():
     <img id="modalImg" src="" alt="Enlarged Plot">
   </div>
 
+  <!-- JAVASCRIPT CONTROLLER -->
   <!-- JAVASCRIPT CONTROLLER (100% VALIDATED JS SYNTAX) -->
   <script>
     const player = new Audio();
@@ -2310,7 +2320,7 @@ def main():
         if (card) card.classList.add('playing');
         if (icon) icon.textContent = '■';
       }}).catch(err => {{
-        console.error('Playback error:', err);
+        console.warn('Playback error:', err);
         alert('Browser audio playback notice: Please click directly on the card to enable audio playback.');
       }});
     }}
@@ -2541,6 +2551,7 @@ tests/test_separation.py (3 tests) ...................................... <span 
     with open(demo_html_path, "w", encoding="utf-8") as f:
         f.write(html)
 
+    print("Successfully built and synchronized docs/index.html and demo.html!")
     print(f"Writing to {root_index_path}...")
     with open(root_index_path, "w", encoding="utf-8") as f:
         f.write(html)

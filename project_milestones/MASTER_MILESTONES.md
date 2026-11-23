@@ -137,20 +137,20 @@ Real-world radio recordings lack clean isolated speaker stems, making mathematic
   - `data/manifests/controlled_ground_truth.json`: JSON manifest mapping each mixture to its exact constituent stems, overlap duration, SIR, and speaker IDs.
 
 ### 4. Implementation Tasks
-* [ ] Curate 4–6 clean single-speaker slices (male and female speakers, Hindi/Hinglish speech).
-* [ ] Implement `src/preprocessing/mixture_generator.py` synthesizing overlapping mixtures:
+* [x] Curate 4–6 clean single-speaker slices (male and female speakers, Hindi/Hinglish speech).
+* [x] Implement `src/preprocessing/mixture_generator.py` synthesizing overlapping mixtures:
   - Configurable overlap levels: 25% (natural turn boundary interjection) and 50% (conversational overlap).
   - Configurable relative volumes: $\text{SIR} = 0\text{ dB}$ (equal volume) and $+6\text{ dB}$ (dominant talker).
-* [ ] Implement peak normalization to prevent digital clipping ($[-1.0, +1.0]$ bounds).
-* [ ] Generate and serialize `data/manifests/controlled_ground_truth.json`.
-* [ ] Verify that sample mixtures can be played back and listened to cleanly.
+* [x] Implement peak normalization to prevent digital clipping ($[-1.0, +1.0]$ bounds).
+* [x] Generate and serialize `data/manifests/controlled_ground_truth.json`.
+* [x] Verify that sample mixtures can be played back and listened to cleanly.
 
 ### 5. Definition of Done (DoD)
-- [ ] At least 3 distinct controlled mixtures exist with known clean ground-truth stems.
-- [ ] Ground-truth audio files are saved in uniform 16 kHz 16-bit mono `.wav` format.
-- [ ] Metadata manifest (`controlled_ground_truth.json`) links mixtures to exact constituent source files.
-- [ ] Controlled mixture generator script is fully reproducible via a single CLI command with fixed random seed.
-- [ ] Audio playback verified: clean acoustic separation between speakers is audibly discernible in the ground-truth files.
+- [x] At least 3 distinct controlled mixtures exist with known clean ground-truth stems.
+- [x] Ground-truth audio files are saved in uniform 16 kHz 16-bit mono `.wav` format.
+- [x] Metadata manifest (`controlled_ground_truth.json`) links mixtures to exact constituent source files.
+- [x] Controlled mixture generator script is fully reproducible via a single CLI command with fixed random seed.
+- [x] Audio playback verified: clean acoustic separation between speakers is audibly discernible in the ground-truth files.
 
 ---
 
@@ -171,26 +171,26 @@ Fulfills the core technical demonstration required for the first evaluation: pro
   - Computational metrics: inference runtime, audio duration, and Real-Time Factor (RTF).
 
 ### 4. Implementation Tasks
-* [ ] Implement `DemucsSeparator` in `src/separation/demucs_wrapper.py` wrapping pre-trained `htdemucs`.
-* [ ] Implement audio pre-processing and post-processing (resampling to model rate, writing 16 kHz output stems).
-* [ ] Implement `evaluation/bss_metrics.py` calculating:
+* [x] Implement `DemucsSeparator` in `src/separation/demucs_wrapper.py` wrapping pre-trained `htdemucs`.
+* [x] Implement audio pre-processing and post-processing (resampling to model rate, writing 16 kHz output stems).
+* [x] Implement `evaluation/bss_metrics.py` calculating:
   - Scale-Invariant Signal-to-Distortion Ratio (**SI-SDR**).
   - **Permutation Invariant Training (PIT)** optimal assignment ($\pi^*$).
-* [ ] Run separation inference on the controlled mixtures generated in M1.
-* [ ] Log inference runtime, processing time, RTF, and output peak amplitude.
-* [ ] Verify output audio quality by listening: ensure vocal tracks are isolated without destructive cancellation.
+* [x] Run separation inference on the controlled mixtures generated in M1.
+* [x] Log inference runtime, processing time, RTF, and output peak amplitude.
+* [x] Verify output audio quality by listening: ensure vocal tracks are isolated without destructive cancellation.
 
 ### 5. Required Quantitative & Qualitative Results
 * **Quantitative Result**: Calculated SI-SDR score (dB) demonstrating positive separation improvement over the raw mixture.
 * **Qualitative Result**: A pair of separated audio files clearly demonstrating vocal separation of the two speakers.
 
 ### 6. Definition of Done (DoD)
-- [ ] A real mixture `.wav` is ingested and successfully processed by Demucs.
-- [ ] Separated single-speaker `.wav` files are generated, saved, and audibly verified.
-- [ ] SI-SDR calculation with permutation-invariant matching executes against ground-truth references.
-- [ ] At least one concrete quantitative SI-SDR result is logged and documented.
-- [ ] Inference wall-clock time, audio duration, and basic memory footprint are recorded.
-- [ ] The entire separation and evaluation workflow is 100% reproducible via script.
+- [x] A real mixture `.wav` is ingested and successfully processed by Demucs.
+- [x] Separated single-speaker `.wav` files are generated, saved, and audibly verified.
+- [x] SI-SDR calculation with permutation-invariant matching executes against ground-truth references.
+- [x] At least one concrete quantitative SI-SDR result is logged and documented.
+- [x] Inference wall-clock time, audio duration, and basic memory footprint are recorded.
+- [x] The entire separation and evaluation workflow is 100% reproducible via script.
 
 ---
 
@@ -245,12 +245,12 @@ This milestone directly satisfies the professor's explicit evaluation requiremen
 * Create `docs/flash_talk_script.md`: A 3–4 minute timed presenter script with clear section transitions.
 
 ### 4. Definition of Done (DoD)
-- [ ] Deliverable 1 (Data Strategy) is documented and slide-ready.
-- [ ] Deliverable 2 (System Models Architecture) is documented with clear Implemented vs. Planned distinction.
-- [ ] Deliverable 3 (Evaluation Methodology + Concrete SI-SDR result) is documented with quantitative figures.
-- [ ] Deliverable 4 (Audio demonstration files + spectrogram comparison) is generated and stored in `outputs/first_eval_demo/`.
-- [ ] Deliverable 5 (1–2 slide presentation + 3–4 minute timed script) is finalized.
-- [ ] All items in [`project_milestones/FIRST_EVALUATION_CHECKLIST.md`](file:///Users/vanshsharma/Documents/AI%20Project/project_milestones/FIRST_EVALUATION_CHECKLIST.md) are checked and verified.
+- [x] Deliverable 1 (Data Strategy) is documented and slide-ready.
+- [x] Deliverable 2 (System Models Architecture) is documented with clear Implemented vs. Planned distinction.
+- [x] Deliverable 3 (Evaluation Methodology + Concrete SI-SDR result) is documented with quantitative figures.
+- [x] Deliverable 4 (Audio demonstration files + spectrogram comparison) is generated and stored in `outputs/first_eval_demo/`.
+- [x] Deliverable 5 (1–2 slide presentation + 3–4 minute timed script) is finalized.
+- [x] All items in [`project_milestones/FIRST_EVALUATION_CHECKLIST.md`](project_milestones/FIRST_EVALUATION_CHECKLIST.md) are checked and verified.
 
 ---
 

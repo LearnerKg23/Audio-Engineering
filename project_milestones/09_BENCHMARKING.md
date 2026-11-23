@@ -90,8 +90,8 @@ The benchmark notebook is structured into executable cells that execute without 
 
 ## 6. Definition of Done (DoD) for Benchmarking
 
-- [ ] Automated profiling harness (`BenchmarkProfiler`) measures wall-clock time, RAM, and GPU VRAM with zero synthetic data fabrication.
-- [ ] Profiling runs successfully across test audio lengths (15s, 30s, 60s, 120s).
-- [ ] Real-Time Factor (RTF) is computed and analyzed for every pipeline stage.
-- [ ] Bottleneck identification is clearly documented (identifying which stage dominates runtime).
-- [ ] `notebooks/01_system_benchmark.ipynb` executes cleanly from top to bottom, generating interactive visualizations and exported summary tables.
+- [x] Automated profiling harness (`BenchmarkProfiler`) measures wall-clock time, RAM, and GPU VRAM with zero synthetic data fabrication.
+- [x] Profiling runs successfully across test audio lengths (15s, 30s, 60s, 120s).
+- [x] Real-Time Factor (RTF) is computed and analyzed for every pipeline stage.
+- [x] Bottleneck identification is clearly documented (identifying which stage dominates runtime).
+- [x] `notebooks/01_system_benchmark.ipynb` executes cleanly from top to bottom, generating interactive visualizations and exported summary tables.

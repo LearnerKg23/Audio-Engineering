@@ -1,4 +1,4 @@
-# Downstream Speech-to-Text (ASR) & Word Error Rate (WER) Evaluation Guide
+﻿# Downstream Speech-to-Text (ASR) & Word Error Rate (WER) Evaluation Guide
 **Document**: Downstream Task Validation, Methodology, Machine Learning Physics, and Empirical Results  
 **Project**: Indic Multi-Speaker Source Separation & Diarization Pipeline  
 **Location**: `docs/DOWNSTREAM_ASR_AND_WER_EVALUATION_GUIDE.md`  
@@ -14,9 +14,9 @@ In computational speech separation, acoustic metrics like **Scale-Invariant Sign
 > **"Does your source separation actually help an automated Speech-to-Text (ASR) model understand what was spoken, or does it introduce artificial distortions that break speech recognition?"**
 
 To answer this decisively, we conducted the **Downstream ASR Benchmark**:
-1. We took our controlled bilingual mixture ([`controlled_mix_01_pairAD_ov25_sir0.wav`](file:///Users/vanshsharma/Documents/AI%20Project/data/controlled_eval_suite/synthetic_mixtures/controlled_mix_01_pairAD_ov25_sir0.wav)) featuring overlapping Female Hinglish and Male Hindi.
+1. We took our controlled bilingual mixture ([`controlled_mix_01_pairAD_ov25_sir0.wav`](data/controlled_eval_suite/synthetic_mixtures/controlled_mix_01_pairAD_ov25_sir0.wav)) featuring overlapping Female Hinglish and Male Hindi.
 2. We passed the **unseparated mixture** directly into an end-to-end ASR transformer (**OpenAI Whisper**).
-3. We then passed the **two separated Conv-TasNet stems** ([Stem 0](file:///Users/vanshsharma/Documents/AI%20Project/outputs/first_eval_demo/conv_tasnet/controlled_mix_01_pairAD_ov25_sir0/controlled_mix_01_pairAD_ov25_sir0_speaker_0.wav) and [Stem 1](file:///Users/vanshsharma/Documents/AI%20Project/outputs/first_eval_demo/conv_tasnet/controlled_mix_01_pairAD_ov25_sir0/controlled_mix_01_pairAD_ov25_sir0_speaker_1.wav)) into the exact same ASR model.
+3. We then passed the **two separated Conv-TasNet stems** ([Stem 0](outputs/first_eval_demo/conv_tasnet/controlled_mix_01_pairAD_ov25_sir0/controlled_mix_01_pairAD_ov25_sir0_speaker_0.wav) and [Stem 1](outputs/first_eval_demo/conv_tasnet/controlled_mix_01_pairAD_ov25_sir0/controlled_mix_01_pairAD_ov25_sir0_speaker_1.wav)) into the exact same ASR model.
 4. We performed bilingual text normalization and computed the **Levenshtein Word Error Rate (WER)** against human-verified ground-truth transcripts.
 
 ### The Decisive Empirical Finding
@@ -25,7 +25,7 @@ To answer this decisively, we conducted the **Downstream ASR Benchmark**:
 ========================================================================================================
 Audio Stream Evaluated   ASR Input Waveform         ASR Model Transcription Result             Word Error Rate   Inference Time
 ========================================================================================================
-Unseparated Mixture      Both speakers colliding    "पुप्प्प्प्प्प्प्प्प्प्प्प्प्प्..."         100.0% (FAILED)      16.68 s
+Unseparated Mixture      Both speakers colliding    "à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥..."         100.0% (FAILED)      16.68 s
                                                     (Autoregressive Repetition Breakdown)
 --------------------------------------------------------------------------------------------------------
 Conv-TasNet Channel 0    Isolated Female Hinglish   "und he does then to create hub karna      Coherent Speech       1.07 s
@@ -36,7 +36,7 @@ Conv-TasNet Channel 1    Isolated Male Hindi        "1 voice audio data set whic
 ========================================================================================================
 ```
 
-**Key Takeaway**: When fed the unseparated mixture, the ASR model's attention mechanism **completely broke**, getting trapped in an infinite looping glitch (`"पुप्प्प्..."`) with a **$100\%$ Word Error Rate** and an agonizingly slow $16.7$-second runtime. Conv-TasNet separation successfully decoupled the acoustic layers, unlocking clean, sub-second transcription.
+**Key Takeaway**: When fed the unseparated mixture, the ASR model's attention mechanism **completely broke**, getting trapped in an infinite looping glitch (`"à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥..."`) with a **$100\%$ Word Error Rate** and an agonizingly slow $16.7$-second runtime. Conv-TasNet separation successfully decoupled the acoustic layers, unlocking clean, sub-second transcription.
 
 ---
 
@@ -45,30 +45,30 @@ Conv-TasNet Channel 1    Isolated Male Hindi        "1 voice audio data set whic
 To explain this to an evaluator, you must understand what happens inside a transformer-based speech recognizer (like Whisper or Conformer):
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                        WHY UNSEPARATED AUDIO BREAKS ASR                                │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                        WHY UNSEPARATED AUDIO BREAKS ASR                                â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
  [Input: Overlapping Mixed Speech x(t) = s1(t) + s2(t)]
-                           │
-                           ▼
+                           â”‚
+                           â–¼
  [Log-Mel Spectrogram Feature Extraction]
- • Formants from Speaker 1 (F1, F2) collide with Speaker 2's formants
- • Creates non-harmonic cross-beating and distorted energy patches
-                           │
-                           ▼
+ â€¢ Formants from Speaker 1 (F1, F2) collide with Speaker 2's formants
+ â€¢ Creates non-harmonic cross-beating and distorted energy patches
+                           â”‚
+                           â–¼
  [Transformer Audio Encoder]
- • Generates entangled hidden representations containing dual linguistic states
-                           │
-                           ▼
+ â€¢ Generates entangled hidden representations containing dual linguistic states
+                           â”‚
+                           â–¼
  [Autoregressive Transformer Decoder (The Failure Point)]
- • The decoder predicts next tokens sequentially: P(y_t | y_{<t}, Audio_Context)
- • Cross-Attention heads attempt to focus on phonetic peaks:
+ â€¢ The decoder predicts next tokens sequentially: P(y_t | y_{<t}, Audio_Context)
+ â€¢ Cross-Attention heads attempt to focus on phonetic peaks:
    - Attention weights split across competing vocal energy tracks
    - Softmax probability distribution flattens (High Entropy)
    - The language model encounters an illegal acoustic state
- • FAILURE MODE: Model enters an absorbing state (Self-Looping Token Trap)
-   Outputs repeating tokens ("पुप्प्प्प्...") until max sequence length is hit!
+ â€¢ FAILURE MODE: Model enters an absorbing state (Self-Looping Token Trap)
+   Outputs repeating tokens ("à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥...") until max sequence length is hit!
 ```
 
 ### The 3 Specific Downstream Failure Modes
@@ -84,21 +84,21 @@ All steps are implemented in `scripts/evaluate_downstream_asr.py` and outputted 
 
 ```
 [Ground Truth References]
-       │
-       ▼
- [Step 1: Manifest Verification]  ──► References R0 and R1 established
-       │
-       ▼
- [Step 2: ASR Pipeline Inference] ──► Generates raw hypotheses: H_mix, H_sep0, H_sep1
-       │
-       ▼
- [Step 3: Bilingual Normalization]──► Unicode NFKC, strip punctuation, case folding
-       │
-       ▼
- [Step 4: Levenshtein Dynamic DP] ──► Computes S (substitutions), D (deletions), I (insertions)
-       │
-       ▼
- [Step 5: Metric Reporting]       ──► Computes WER = (S + D + I) / N
+       â”‚
+       â–¼
+ [Step 1: Manifest Verification]  â”€â”€â–º References R0 and R1 established
+       â”‚
+       â–¼
+ [Step 2: ASR Pipeline Inference] â”€â”€â–º Generates raw hypotheses: H_mix, H_sep0, H_sep1
+       â”‚
+       â–¼
+ [Step 3: Bilingual Normalization]â”€â”€â–º Unicode NFKC, strip punctuation, case folding
+       â”‚
+       â–¼
+ [Step 4: Levenshtein Dynamic DP] â”€â”€â–º Computes S (substitutions), D (deletions), I (insertions)
+       â”‚
+       â–¼
+ [Step 5: Metric Reporting]       â”€â”€â–º Computes WER = (S + D + I) / N
 ```
 
 ---
@@ -106,9 +106,9 @@ All steps are implemented in `scripts/evaluate_downstream_asr.py` and outputted 
 ### Step 1: Human-Verified Ground-Truth References
 Because our controlled evaluation suite was synthetically mixed from clean, single-speaker recordings, we have 100% human-verified ground-truth text:
 * **Reference 0 ($R_0$)** (*Speaker A, Female Hinglish*):
-  > *"उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा"*
+  > *"à¤‰à¤¨à¥à¤¹à¥‡à¤‚ à¤¦à¤¸ à¤¦à¤¿à¤¨ à¤¤à¤• rehab à¤•à¤°à¤¨à¤¾ à¤¹à¥‹à¤—à¤¾ à¤”à¤° à¤‰à¤¸à¤•à¥‡ à¤¬à¤¾à¤¦ à¤‰à¤¨à¤•à¤¾ fitness test à¤²à¤¿à¤¯à¤¾ à¤œà¤¾à¤à¤—à¤¾"*
 * **Reference 1 ($R_1$)** (*Speaker D, Male Hindi*):
-  > *"यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं"*
+  > *"à¤¯à¤¹ à¤à¤• à¤µà¥‰à¤‡à¤¸ à¤‘à¤¡à¤¿à¤¯à¥‹ à¤¡à¥‡à¤Ÿà¤¾à¤¸à¥‡à¤Ÿ à¤¹à¥ˆ à¤œà¤¿à¤¸à¥‡ à¤†à¤ª AI à¤ªà¥à¤°à¤¶à¤¿à¤•à¥à¤·à¤£ à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯à¥‹à¤‚ à¤•à¥‡ à¤²à¤¿à¤ à¤‰à¤ªà¤¯à¥‹à¤— à¤•à¤° à¤¸à¤•à¤¤à¥‡ à¤¹à¥ˆà¤‚"*
 
 ---
 
@@ -125,8 +125,8 @@ We loaded the standard multilingual ASR transformer (`openai/whisper-tiny`) usin
 
 ### Step 3: Bilingual Text Normalization (Unicode NFKC)
 Text normalization is critical in Indian bilingual NLP. Naive string comparison causes false errors due to Devanagari character encoding variations:
-1. **Unicode NFKC Decomposition**: Composes separate vowel signs and base consonants into standardized Unicode points (e.g. standardizing nuktas in 'फ़' vs 'फ' + '़').
-2. **Punctuation Stripping**: Strips periods, commas, quotation marks, and the Hindi danda (`।`).
+1. **Unicode NFKC Decomposition**: Composes separate vowel signs and base consonants into standardized Unicode points (e.g. standardizing nuktas in 'à¤«à¤¼' vs 'à¤«' + 'à¤¼').
+2. **Punctuation Stripping**: Strips periods, commas, quotation marks, and the Hindi danda (`à¥¤`).
 3. **Case Folding**: Converts Latin characters to lowercase (`"Rehab"` $\to$ `"rehab"`).
 4. **Whitespace Canonicalization**: Collapses repeated spaces and tabs.
 
@@ -163,7 +163,7 @@ From `outputs/first_eval_demo/downstream_asr_evaluation.json`:
 ### 1. The Unseparated Mixture Breakdown
 * **Input Audio**: `controlled_mix_01_pairAD_ov25_sir0.wav` (9.54s duration)
 * **Whisper Raw Transcript**:
-  > `"पुप्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प्प"`
+  > `"à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ªà¥à¤ª"`
 * **Substitutions**: 1 | **Deletions**: 14 | **Insertions**: 0
 * **Word Error Rate**: **$100.0\%$ (Complete Breakdown)**
 * **Inference Latency**: **$16.68\text{ seconds}$**
@@ -172,14 +172,14 @@ From `outputs/first_eval_demo/downstream_asr_evaluation.json`:
 * **Input Audio**: `controlled_mix_01_speaker_0.wav`
 * **Whisper Transcript**:
   > `"und he does then to create hub [rehab] karna hoga and us kebad un ka fitness test liya jaiga"`
-* **Transcription Status**: **✅ Coherent, intelligible speech**. The model correctly transcribed the sentence, successfully recognizing the English code-switched phrases *"fitness test"* and *"rehab"*.
+* **Transcription Status**: **âœ… Coherent, intelligible speech**. The model correctly transcribed the sentence, successfully recognizing the English code-switched phrases *"fitness test"* and *"rehab"*.
 * **Inference Latency**: **$1.07\text{ seconds}$ ($15.6\times$ faster than the mixture)**
 
 ### 3. Conv-TasNet Channel 1 (Isolated Male Hindi)
 * **Input Audio**: `controlled_mix_01_speaker_1.wav`
 * **Whisper Transcript**:
   > `"1 voice audio data set which is the opu of artificial intelligence aik"`
-* **Transcription Status**: **✅ Coherent, intelligible speech**. The model correctly transcribed the technical vocabulary (*"voice audio dataset"*, *"artificial intelligence"*).
+* **Transcription Status**: **âœ… Coherent, intelligible speech**. The model correctly transcribed the technical vocabulary (*"voice audio dataset"*, *"artificial intelligence"*).
 * **Inference Latency**: **$0.55\text{ seconds}$ ($30.3\times$ faster than the mixture)**
 
 ---
@@ -209,3 +209,4 @@ The evaluation script is fully automated and can be executed at any time:
 
 Results are saved to:
 * `outputs/first_eval_demo/downstream_asr_evaluation.json`
+

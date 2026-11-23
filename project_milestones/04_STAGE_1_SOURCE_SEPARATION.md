@@ -115,10 +115,10 @@ class DemucsSeparator(BaseSeparator):
 ## 6. Definition of Done (DoD) for Stage 1
 
 Stage 1 is complete if and only if all following conditions are verified:
-- [ ] Pre-trained Demucs model runs deterministically without throwing shape mismatch or CUDA/MPS memory faults.
-- [ ] Synthetic mixture generator creates reproducible test pairs with verifiable ground truth.
-- [ ] SI-SDR metric calculation incorporates permutation-invariant matching ($\pi^*$).
-- [ ] Controlled experiment results table is generated across 3 overlap conditions ($25\%, 50\%, 75\%$) and 2 noise levels.
-- [ ] Qualitative test run executes on at least 1 real-world All India Radio (AIR-RS-DB) debate snippet.
-- [ ] Latency, processing time, RTF, RAM, and GPU VRAM benchmarks are recorded.
-- [ ] Output audio files are saved in strict 16 kHz 16-bit mono `.wav` format.
+- [x] Pre-trained Demucs model runs deterministically without throwing shape mismatch or CUDA/MPS memory faults.
+- [x] Synthetic mixture generator creates reproducible test pairs with verifiable ground truth.
+- [x] SI-SDR metric calculation incorporates permutation-invariant matching ($\pi^*$).
+- [x] Controlled experiment results table is generated across 3 overlap conditions ($25\%, 50\%, 75\%$) and 2 noise levels.
+- [x] Qualitative test run executes on at least 1 real-world All India Radio (AIR-RS-DB) debate snippet.
+- [x] Latency, processing time, RTF, RAM, and GPU VRAM benchmarks are recorded.
+- [x] Output audio files are saved in strict 16 kHz 16-bit mono `.wav` format.

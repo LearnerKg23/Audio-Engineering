@@ -1707,6 +1707,7 @@
     <img id="modalImg" src="" alt="Enlarged Plot">
   </div>
 
+  <!-- JAVASCRIPT CONTROLLER -->
   <!-- JAVASCRIPT CONTROLLER (100% VALIDATED JS SYNTAX) -->
   <script>
     const player = new Audio();
@@ -2249,7 +2250,7 @@
         if (card) card.classList.add('playing');
         if (icon) icon.textContent = '■';
       }).catch(err => {
-        console.error('Playback error:', err);
+        console.warn('Playback error:', err);
         alert('Browser audio playback notice: Please click directly on the card to enable audio playback.');
       });
     }

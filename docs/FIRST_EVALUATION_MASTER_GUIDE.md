@@ -1,6 +1,6 @@
-# Comprehensive Master Guide: First Evaluation Checkpoint
+﻿# Comprehensive Master Guide: First Evaluation Checkpoint
 **Project**: Advanced Computational Speech Engineering: "Who Spoke What and When"  
-**Academic Milestone**: First Evaluation Checkpoint (Phase A: Milestones M0 – M3)  
+**Academic Milestone**: First Evaluation Checkpoint (Phase A: Milestones M0 â€“ M3)  
 **Authors / Presenters**: Technical Team  
 **System Target**: Multi-Speaker Indian Conversational Audio (Overlapping Speech, Hinglish Code-Switching, Acoustic Degradation)  
 
@@ -12,7 +12,7 @@
 > *"We expect that by that time you will have figured out **data**, **models** and **how to evaluate them**, maybe with a **demonstration**. These will be taken as a **flash talk (1-2 slides or a very short demo)**. Each team will get **3-4 minutes** to give a talk, and we will evaluate your progress."*
 
 ### What is the Boundary of the First Evaluation?
-* **Implemented & Live-Demonstrated**: **Stage 1 — Blind Source Separation (BSS)**. Fully implemented with working PyTorch models running on Apple Silicon GPU (`mps:0`), benchmarked with **Scale-Invariant Signal-to-Distortion Ratio (SI-SDR)**, supported by a 6-condition controlled dataset, working single-speaker audio files, and high-resolution spectrogram visual proof.
+* **Implemented & Live-Demonstrated**: **Stage 1 â€” Blind Source Separation (BSS)**. Fully implemented with working PyTorch models running on Apple Silicon GPU (`mps:0`), benchmarked with **Scale-Invariant Signal-to-Distortion Ratio (SI-SDR)**, supported by a 6-condition controlled dataset, working single-speaker audio files, and high-resolution spectrogram visual proof.
 * **Architectural Roadmap (Planned for Phase B)**: The complete 4-stage pipeline is formally designed, models are selected, and mathematical evaluation metrics are defined for **Stage 2 (Diarization)**, **Stage 3 (Hinglish ASR)**, and **Stage 4 (LLM Guardrailing)**.
 
 ---
@@ -22,42 +22,42 @@
 The core objective is to answer: **"WHO spoke WHAT and WHEN in complex Indian conversational audio?"**
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                        STAGE 1: BLIND SOURCE SEPARATION (BSS)                          │
-│                        STATUS: IMPLEMENTED, TESTED & VERIFIED                          │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│  Raw Mixed Conversational Audio (Overlapping talkers, unconstrained acoustics)         │
-│                                    │                                                   │
-│                                    ▼                                                   │
-│  Separation Engine: Conv-TasNet (Time-Domain TCN) vs. Meta's Hybrid Demucs (htdemucs)  │
-│  Hardware: Apple Silicon Metal GPU (mps:0) / Libri2Mix + Indic Checkpoint              │
-│                                    │                                                   │
-│                                    ▼                                                   │
-│  Output: Isolated Single-Speaker Audio Channels (Speaker 0 .wav, Speaker 1 .wav)       │
-│  Quantitative Metric: SI-SDR (+15.45 dB Gain), Real-Time Factor (0.075 RTF)           │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-                                     │
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                        PHASE B: DOWNSTREAM PIPELINE ROADMAP                            │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│                                    ▼                                                   │
-│  STAGE 2: ACOUSTIC SPEAKER DIARIZATION ("Who Spoke When?")                             │
-│  • Architecture: pyannote.audio Neural Embeddings + Spectral Clustering / GMM          │
-│  • Evaluation Metric: Diarization Error Rate (DER) with 250 ms NIST collar tolerance   │
-│  • Output: Timestamped Speaker Timeline JSON: [00:03.5 - 00:08.2]: Speaker_A           │
-│                                    │                                                   │
-│                                    ▼                                                   │
-│  STAGE 3: REGIONAL & CODE-SWITCHED ASR ("What Did They Say?")                          │
-│  • Architecture: AI4Bharat IndicWav2Vec / IndicASR (vs. OpenAI Whisper Baseline)       │
-│  • Evaluation Metric: Word Error Rate (WER) with Indic Unicode NFKC Normalization      │
-│  • Output: Speaker-Attributed Bilingual Hindi-English Transcript                       │
-│                                    │                                                   │
-│                                    ▼                                                   │
-│  STAGE 4: SEMANTIC POST-PROCESSING & LLM GUARDRAILING ("Executive Summary")            │
-│  • Architecture: Modular LLM Layer (Groq / OpenAI API during dev, Airavata 7B local)   │
-│  • Evaluation Metric: Factual Hallucination Rate (Target: 0% invented facts/numbers)  │
-│  • Output: Structured JSON + Executive Markdown Meeting Brief                          │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                        STAGE 1: BLIND SOURCE SEPARATION (BSS)                          â”‚
+â”‚                        STATUS: IMPLEMENTED, TESTED & VERIFIED                          â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚  Raw Mixed Conversational Audio (Overlapping talkers, unconstrained acoustics)         â”‚
+â”‚                                    â”‚                                                   â”‚
+â”‚                                    â–¼                                                   â”‚
+â”‚  Separation Engine: Conv-TasNet (Time-Domain TCN) vs. Meta's Hybrid Demucs (htdemucs)  â”‚
+â”‚  Hardware: Apple Silicon Metal GPU (mps:0) / Libri2Mix + Indic Checkpoint              â”‚
+â”‚                                    â”‚                                                   â”‚
+â”‚                                    â–¼                                                   â”‚
+â”‚  Output: Isolated Single-Speaker Audio Channels (Speaker 0 .wav, Speaker 1 .wav)       â”‚
+â”‚  Quantitative Metric: SI-SDR (+15.45 dB Gain), Real-Time Factor (0.075 RTF)           â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                                     â”‚
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                        PHASE B: DOWNSTREAM PIPELINE ROADMAP                            â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                    â–¼                                                   â”‚
+â”‚  STAGE 2: ACOUSTIC SPEAKER DIARIZATION ("Who Spoke When?")                             â”‚
+â”‚  â€¢ Architecture: pyannote.audio Neural Embeddings + Spectral Clustering / GMM          â”‚
+â”‚  â€¢ Evaluation Metric: Diarization Error Rate (DER) with 250 ms NIST collar tolerance   â”‚
+â”‚  â€¢ Output: Timestamped Speaker Timeline JSON: [00:03.5 - 00:08.2]: Speaker_A           â”‚
+â”‚                                    â”‚                                                   â”‚
+â”‚                                    â–¼                                                   â”‚
+â”‚  STAGE 3: REGIONAL & CODE-SWITCHED ASR ("What Did They Say?")                          â”‚
+â”‚  â€¢ Architecture: AI4Bharat IndicWav2Vec / IndicASR (vs. OpenAI Whisper Baseline)       â”‚
+â”‚  â€¢ Evaluation Metric: Word Error Rate (WER) with Indic Unicode NFKC Normalization      â”‚
+â”‚  â€¢ Output: Speaker-Attributed Bilingual Hindi-English Transcript                       â”‚
+â”‚                                    â”‚                                                   â”‚
+â”‚                                    â–¼                                                   â”‚
+â”‚  STAGE 4: SEMANTIC POST-PROCESSING & LLM GUARDRAILING ("Executive Summary")            â”‚
+â”‚  â€¢ Architecture: Modular LLM Layer (Groq / OpenAI API during dev, Airavata 7B local)   â”‚
+â”‚  â€¢ Evaluation Metric: Factual Hallucination Rate (Target: 0% invented facts/numbers)  â”‚
+â”‚  â€¢ Output: Structured JSON + Executive Markdown Meeting Brief                          â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -80,10 +80,10 @@ In speech engineering, you cannot evaluate models without understanding your dat
 
 #### Why is Speaker A considered "Hinglish"?
 Speaker A's transcript is:
-> *"उन्हें दस दिन तक **rehab** करना होगा और उसके बाद उनका **fitness test** लिया जाएगा"*
+> *"à¤‰à¤¨à¥à¤¹à¥‡à¤‚ à¤¦à¤¸ à¤¦à¤¿à¤¨ à¤¤à¤• **rehab** à¤•à¤°à¤¨à¤¾ à¤¹à¥‹à¤—à¤¾ à¤”à¤° à¤‰à¤¸à¤•à¥‡ à¤¬à¤¾à¤¦ à¤‰à¤¨à¤•à¤¾ **fitness test** à¤²à¤¿à¤¯à¤¾ à¤œà¤¾à¤à¤—à¤¾"*
 
 In computational linguistics, this is **intra-sentential code-switching**:
-* The grammatical framework is Hindi (*"उन्हें दस दिन तक... करना होगा और उसके बाद उनका... लिया जाएगा"*).
+* The grammatical framework is Hindi (*"à¤‰à¤¨à¥à¤¹à¥‡à¤‚ à¤¦à¤¸ à¤¦à¤¿à¤¨ à¤¤à¤•... à¤•à¤°à¤¨à¤¾ à¤¹à¥‹à¤—à¤¾ à¤”à¤° à¤‰à¤¸à¤•à¥‡ à¤¬à¤¾à¤¦ à¤‰à¤¨à¤•à¤¾... à¤²à¤¿à¤¯à¤¾ à¤œà¤¾à¤à¤—à¤¾"*).
 * The embedded technical/colloquial nouns are English (*"rehab"*, *"fitness test"*).
 * This accurately mirrors how bilingual urban and semi-urban Indians communicate daily.
 
@@ -101,9 +101,9 @@ We evaluated the models across 6 controlled conditions (saving 18 `.wav` files t
 
 #### Understanding the Timeline of `controlled_mix_01`
 Why does `controlled_mix_01` sound like one person at the beginning?
-* **0.0s – 3.5s**: Female Speaker A speaks alone (*"उन्हें दस दिन तक rehab..."*). Male is silent.
-* **3.5s – 4.7s**: **THE OVERLAP REGION (1.18 seconds)**. Both Female A (*"...fitness test liya jayega"*) and Male D (*"यह एक वॉइस ऑडियो..."*) speak **simultaneously** at equal volume ($0\text{ dB SIR}$).
-* **4.7s – 9.5s**: Male Speaker D finishes his thought alone.
+* **0.0s â€“ 3.5s**: Female Speaker A speaks alone (*"à¤‰à¤¨à¥à¤¹à¥‡à¤‚ à¤¦à¤¸ à¤¦à¤¿à¤¨ à¤¤à¤• rehab..."*). Male is silent.
+* **3.5s â€“ 4.7s**: **THE OVERLAP REGION (1.18 seconds)**. Both Female A (*"...fitness test liya jayega"*) and Male D (*"à¤¯à¤¹ à¤à¤• à¤µà¥‰à¤‡à¤¸ à¤‘à¤¡à¤¿à¤¯à¥‹..."*) speak **simultaneously** at equal volume ($0\text{ dB SIR}$).
+* **4.7s â€“ 9.5s**: Male Speaker D finishes his thought alone.
 * In natural conversation, people don't talk at the exact same start second; one person chimes in toward the end of another's sentence. That is what a **25% overlap** represents!
 
 ---
@@ -120,7 +120,7 @@ What are `IndicVoices`, `Nirantar`, and `AIR-RS-DB`, and when do we use them?
 
 #### How do we evaluate real-world audio when NO clean ground truth exists?
 On real radio debates, you cannot compute SI-SDR because you don't have separate microphone tracks. Instead, we evaluate using three techniques:
-1. **Subjective Listening Tests (Mean Opinion Score - MOS)**: Playing the raw broadcast vs. separated channels for human panel rating (speech clarity and cross-talk suppression on a 1–5 scale).
+1. **Subjective Listening Tests (Mean Opinion Score - MOS)**: Playing the raw broadcast vs. separated channels for human panel rating (speech clarity and cross-talk suppression on a 1â€“5 scale).
 2. **Visual Spectrogram Inspection**: Verifying that colliding formant stripes on the raw mixture are unentangled into distinct single-voice spectrograms.
 3. **Downstream Task-Based Evaluation (The ASR Test)**:
    * Pass raw mixed broadcast audio to ASR $\rightarrow$ ASR fails due to overlapping voices (e.g., **55% WER**).
@@ -152,7 +152,7 @@ PIT solves this by evaluating all $K!$ possible channel assignments ($\mathcal{P
 
 $$\pi^* = \arg\max_{\pi \in \mathcal{P}_K} \sum_{i=1}^K \text{SI-SDR}(\mathbf{s}_i, \hat{\mathbf{s}}_{\pi(i)})$$
 
-Our implementation in [`evaluation/bss_metrics.py`](file:///Users/vanshsharma/Documents/AI%20Project/evaluation/bss_metrics.py) automatically resolves the permutation before calculating metrics.
+Our implementation in [`evaluation/bss_metrics.py`](evaluation/bss_metrics.py) automatically resolves the permutation before calculating metrics.
 
 ### 3. Signal-to-Interference Ratio (SIR) Calibration
 When generating synthetic mixtures, we set the relative loudness between the primary speaker $\mathbf{s}_A$ and the interfering speaker $\mathbf{s}_B$ using Root-Mean-Square (RMS) energy:
@@ -180,7 +180,7 @@ Both candidate architectures specified in the proposal were implemented behind o
 | `mix_04_pairBC` | 25% | 0 dB | -0.006 dB | **4.81 dB** | **+4.81 dB** | **0.072** | -7.20 dB | 0.362 |
 | `mix_05_pairBC` | 50% | 0 dB | +0.041 dB | **5.92 dB** | **+5.88 dB** | **0.080** | -6.89 dB | 0.409 |
 | `mix_06_pairBC` | 50% | -6 dB | +0.041 dB | **20.15 dB** | **+20.11 dB** | **0.060** | -8.10 dB | 0.409 |
-| **Averages / Overall** | — | — | **-0.003 dB** | **+15.45 dB** | **+15.45 dB** | **0.075** | **-8.60 dB** | **0.539** |
+| **Averages / Overall** | â€” | â€” | **-0.003 dB** | **+15.45 dB** | **+15.45 dB** | **0.075** | **-8.60 dB** | **0.539** |
 
 ---
 
@@ -190,13 +190,13 @@ A central talking point for your evaluation is explaining the **architectural di
 
 ```
 [CONV-TASNET ARCHITECTURE: Time-Domain TCN]
-Raw 1D Audio Waveform ──► [1D Conv Encoder] ──► [Stacked Dilated TCN Masks] ──► [1D Conv Decoder] ──► Isolated Channels
+Raw 1D Audio Waveform â”€â”€â–º [1D Conv Encoder] â”€â”€â–º [Stacked Dilated TCN Masks] â”€â”€â–º [1D Conv Decoder] â”€â”€â–º Isolated Channels
 * Trained on: Libri2Mix (Multi-speaker speech separation)
 * Acoustic Target: Isolating concurrent human talkers with overlapping formants.
 * Result: +15.45 dB SI-SDR separation gain.
 
 [HYBRID DEMUCS ARCHITECTURE: Time-Frequency U-Net]
-Raw Audio Waveform ──► [STFT Spectrogram + 1D Waveform] ──► [U-Net with Cross-Domain Attention] ──► 4 Stems
+Raw Audio Waveform â”€â”€â–º [STFT Spectrogram + 1D Waveform] â”€â”€â–º [U-Net with Cross-Domain Attention] â”€â”€â–º 4 Stems
 * Trained on: MusDB18 (Music Demixing: Drums, Bass, Other, Vocals)
 * Acoustic Target: Isolating human vocal energy from musical instruments / noise.
 * Result: Groups ALL human speech into the 'vocals' stem rather than separating individual talkers.
@@ -210,7 +210,7 @@ Raw Audio Waveform ──► [STFT Spectrogram + 1D Waveform] ──► [U-Net w
 
 ## 7. How to Read the Generated Spectrogram Graph
 
-The high-resolution visualization artifact is saved in [`outputs/first_eval_demo/spectrogram_comparison.png`](file:///Users/vanshsharma/Documents/AI%20Project/outputs/first_eval_demo/spectrogram_comparison.png).
+The high-resolution visualization artifact is saved in [`outputs/first_eval_demo/spectrogram_comparison.png`](outputs/first_eval_demo/spectrogram_comparison.png).
 
 ### Anatomy of a Spectrogram
 * **X-Axis (Horizontal)**: Time in seconds (0.0s to 9.5s).
@@ -218,26 +218,26 @@ The high-resolution visualization artifact is saved in [`outputs/first_eval_demo
 * **Color Intensity**: Acoustic energy in decibels (Bright yellow = High energy speech harmonics; Dark purple/blue = Silence / Void).
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ PANEL 1 (TOP): ORIGINAL MIXTURE (controlled_mix_01)                                    │
-│ [0.0s - 3.5s]: Female voice alone (higher pitch harmonics 180-350 Hz)                  │
-│ [3.5s - 4.7s]: CRITICAL OVERLAP REGION: Female formants and Male formants COLLIDE      │
-│                into an acoustic cross-hatched grid (unintelligible to ASR)             │
-│ [4.7s - 9.5s]: Male voice alone (lower pitch harmonics 100-200 Hz)                     │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│ PANEL 2 (MIDDLE): SEPARATED SPEAKER 0 (FEMALE HINGLISH)                                │
-│ • Look at [3.5s - 4.7s]: The male low-frequency rumble is completely STRIPPED.         │
-│ • Look at [4.7s - 9.5s]: Clean dark purple SILENCE where the male was talking alone.   │
-│ • The female speaker's vocal envelope is preserved with 21.8 dB SI-SDR clarity.        │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│ PANEL 3 (BOTTOM): SEPARATED SPEAKER 1 (MALE HINDI)                                     │
-│ • Look at [0.0s - 3.5s]: Clean dark purple SILENCE where the female was talking alone. │
-│ • Look at [3.5s - 4.7s]: The female high-frequency formants are completely REMOVED.   │
-│ • The male formants shine through with zero cross-talk interference.                   │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ PANEL 1 (TOP): ORIGINAL MIXTURE (controlled_mix_01)                                    â”‚
+â”‚ [0.0s - 3.5s]: Female voice alone (higher pitch harmonics 180-350 Hz)                  â”‚
+â”‚ [3.5s - 4.7s]: CRITICAL OVERLAP REGION: Female formants and Male formants COLLIDE      â”‚
+â”‚                into an acoustic cross-hatched grid (unintelligible to ASR)             â”‚
+â”‚ [4.7s - 9.5s]: Male voice alone (lower pitch harmonics 100-200 Hz)                     â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ PANEL 2 (MIDDLE): SEPARATED SPEAKER 0 (FEMALE HINGLISH)                                â”‚
+â”‚ â€¢ Look at [3.5s - 4.7s]: The male low-frequency rumble is completely STRIPPED.         â”‚
+â”‚ â€¢ Look at [4.7s - 9.5s]: Clean dark purple SILENCE where the male was talking alone.   â”‚
+â”‚ â€¢ The female speaker's vocal envelope is preserved with 21.8 dB SI-SDR clarity.        â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ PANEL 3 (BOTTOM): SEPARATED SPEAKER 1 (MALE HINDI)                                     â”‚
+â”‚ â€¢ Look at [0.0s - 3.5s]: Clean dark purple SILENCE where the female was talking alone. â”‚
+â”‚ â€¢ Look at [3.5s - 4.7s]: The female high-frequency formants are completely REMOVED.   â”‚
+â”‚ â€¢ The male formants shine through with zero cross-talk interference.                   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
-When presenting to the professor, point to the middle and bottom panels during the **3.5s – 4.7s window**: this visualizes the exact mathematical suppression of the interfering speaker.
+When presenting to the professor, point to the middle and bottom panels during the **3.5s â€“ 4.7s window**: this visualizes the exact mathematical suppression of the interfering speaker.
 
 ---
 
@@ -247,7 +247,7 @@ When presenting to the professor, point to the middle and bottom panels during t
 1. **Apple Silicon MPS Hardware Acceleration**:
    * Routed tensor operations directly to Apple Silicon Metal Shading Language (`mps:0`), achieving an ultra-fast **0.075 RTF** (processing 9.5s of audio in 0.71 seconds).
 2. **C++ `soundfile` + Polyphase Resampling Engine**:
-   * Standard PyTorch 2.9 delegates audio loading to `torchcodec`, which had C++ dynamic library symbol conflicts on macOS. We implemented a rock-solid, CFFI-backed `libsndfile` + `scipy.signal.resample_poly` pipeline in [`src/core/audio_io.py`](file:///Users/vanshsharma/Documents/AI%20Project/src/core/audio_io.py).
+   * Standard PyTorch 2.9 delegates audio loading to `torchcodec`, which had C++ dynamic library symbol conflicts on macOS. We implemented a rock-solid, CFFI-backed `libsndfile` + `scipy.signal.resample_poly` pipeline in [`src/core/audio_io.py`](src/core/audio_io.py).
 3. **Dynamic Relative Epsilon Stabilization in SI-SDR**:
    * Standard SI-SDR implementations use a fixed epsilon ($10^{-8}$) in the denominator. When signals were nearly identical, this capped measured scores at $80\text{ dB}$. We stabilized epsilon relative to target energy ($\epsilon = 10^{-13} \cdot \|\mathbf{s}_{\text{target}}\|^2$), guaranteeing strict mathematical scale invariance.
 4. **Permutation Invariant Hungarian Assignment**:
@@ -258,13 +258,13 @@ When presenting to the professor, point to the middle and bottom panels during t
 ### How to Make the Model Even Better in Phase B (Future Improvements):
 
 1. **Acoustic Fine-Tuning on Indian Accents & Code-Switching**:
-   * The base Conv-TasNet model was pre-trained on English speech (Libri2Mix). Fine-tuning the 1D encoder/decoder filters on Indian speech mixtures will adapt the learned basis functions to Indic phonetic formants, aspirated stops (e.g., *kh, gh, th, dh*), and retroflex consonants (*ṭ, ḍ*).
+   * The base Conv-TasNet model was pre-trained on English speech (Libri2Mix). Fine-tuning the 1D encoder/decoder filters on Indian speech mixtures will adapt the learned basis functions to Indic phonetic formants, aspirated stops (e.g., *kh, gh, th, dh*), and retroflex consonants (*á¹­, á¸*).
 2. **Upgrading to Dual-Path Transformer Separation (SepFormer / TF-GridNet)**:
    * Conv-TasNet uses 1D dilated convolutions with a finite receptive field. Replacing the TCN block with **SepFormer** (dual-path transformer modeling intra-chunk and inter-chunk dependencies) can improve SI-SDR by an additional **2 to 3 dB** on long-duration speech.
 3. **Cascaded Denoising + Separation Architecture**:
    * Real-world audio has both multi-speaker cross-talk *and* street/room noise. We can pipeline Demucs first (to strip environmental noise) followed by Conv-TasNet (to isolate concurrent talkers).
 4. **VAD-Guided Gated Separation**:
-   * Running separation across an entire 1-hour audio file wastes compute when only one person is speaking. By using Voice Activity Detection (VAD) and Overlap Detection first, we only activate the separation module during detected overlapping frames ($\Omega > 0$), reducing overall system compute by **60–70%**.
+   * Running separation across an entire 1-hour audio file wastes compute when only one person is speaking. By using Voice Activity Detection (VAD) and Overlap Detection first, we only activate the separation module during detected overlapping frames ($\Omega > 0$), reducing overall system compute by **60â€“70%**.
 
 ---
 
@@ -276,3 +276,4 @@ When presenting to the professor, point to the middle and bottom panels during t
   * *Answer:* Training source separation models from scratch requires thousands of hours of compute and massive clusters. Industry best practice is to leverage foundational checkpoints (Conv-TasNet / Demucs) and benchmark / fine-tune them on domain-specific Indic acoustic conditions.
 * **Q: How does Stage 1 benefit Stage 2 (Diarization) and Stage 3 (ASR)?**  
   * *Answer:* ASR error rates (WER) spike to over 50% when voices overlap. By separating voices into clean single-speaker channels in Stage 1, Stage 2 assigns speaker turns with zero overlap confusion, and Stage 3 transcribes each speaker with pristine clarity.
+

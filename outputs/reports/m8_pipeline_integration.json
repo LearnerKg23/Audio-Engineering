@@ -3,26 +3,26 @@
     "session_id": "m8_demo_controlled_mix_01",
     "audio_file": "controlled_mix_01_pairAD_ov25_sir0.wav",
     "audio_duration_seconds": 9.54,
-    "total_wall_clock_seconds": 12.076,
-    "rtf": 1.2664,
-    "speedup_factor": 0.79,
+    "total_wall_clock_seconds": 10.512,
+    "rtf": 1.1024,
+    "speedup_factor": 0.91,
     "stems_count": 2,
     "speakers_count": 1,
     "utterances_count": 1,
     "findings_count": 1,
     "artifacts_verified": true,
     "telemetry": {
-      "output_dir": "/mnt/c/Users/Kushal Gupta/Desktop/AudioEngineering/Audio-Engineering/outputs/runs/m8_demo_controlled_mix_01",
+      "output_dir": "/mnt/d/Desktop/AudioEngineering/Audio-Engineering/outputs/runs/m8_demo_controlled_mix_01",
       "stage0_preprocessing": {
-        "elapsed_seconds": 0.0894,
+        "elapsed_seconds": 0.1504,
         "duration_seconds": 9.536,
         "sample_rate": 16000,
         "status": "SUCCESS"
       },
       "stage1_separation": {
-        "elapsed_seconds": 9.4073,
+        "elapsed_seconds": 6.0671,
         "num_sources": 2,
-        "rtf": 0.9865,
+        "rtf": 0.6362,
         "status": "SUCCESS"
       },
       "SpeakerDiarizer_metrics": {
@@ -31,10 +31,10 @@
         "total_segments": 1
       },
       "stage2_diarization": {
-        "elapsed_seconds": 0.0451,
+        "elapsed_seconds": 0.0391,
         "speakers_detected": 1,
         "num_segments": 1,
-        "rtf": 0.0047,
+        "rtf": 0.0041,
         "status": "SUCCESS"
       },
       "ASREngine_metrics": {
@@ -44,21 +44,21 @@
         "language_code": "hi"
       },
       "stage3_asr": {
-        "elapsed_seconds": 0.056,
+        "elapsed_seconds": 0.0439,
         "num_utterances": 1,
-        "rtf": 0.0059,
+        "rtf": 0.0046,
         "status": "SUCCESS"
       },
       "stage4_llm": {
-        "elapsed_seconds": 0.0014,
+        "elapsed_seconds": 0.0012,
         "status": "SUCCESS"
       },
-      "total_pipeline_time_seconds": 9.5994,
+      "total_pipeline_time_seconds": 6.3019,
       "audio_duration_seconds": 9.536,
-      "cumulative_rtf": 1.0066,
-      "throughput_ratio": 0.99,
-      "completed_at": "2026-11-03T14:04:40.590920+00:00"
+      "cumulative_rtf": 0.6608,
+      "throughput_ratio": 1.51,
+      "completed_at": "2026-11-23T18:47:14.094136+00:00"
     },
-    "run_dir": "/mnt/c/Users/Kushal Gupta/Desktop/AudioEngineering/Audio-Engineering/outputs/runs/m8_demo_controlled_mix_01"
+    "run_dir": "/mnt/d/Desktop/AudioEngineering/Audio-Engineering/outputs/runs/m8_demo_controlled_mix_01"
   }
 ]

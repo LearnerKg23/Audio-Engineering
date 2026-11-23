@@ -2,8 +2,8 @@
 
 **Presenter**: Technical Team / Lead Engineer  
 **Presentation Time**: 3 Minutes 30 Seconds (+ 30s Q&A Buffer)  
-**Slides**: 2 Slides ([`docs/flash_talk_slides.md`](file:///Users/vanshsharma/Documents/AI%20Project/docs/flash_talk_slides.md))  
-**Visual / Audio Demo**: [`outputs/first_eval_demo/spectrogram_comparison.png`](file:///Users/vanshsharma/Documents/AI%20Project/outputs/first_eval_demo/spectrogram_comparison.png)  
+**Slides**: 2 Slides ([`docs/flash_talk_slides.md`](docs/flash_talk_slides.md))  
+**Visual / Audio Demo**: [`outputs/first_eval_demo/spectrogram_comparison.png`](outputs/first_eval_demo/spectrogram_comparison.png)  
 
 ---
 

@@ -1,4 +1,4 @@
-# Speaker Counting & Continuous Speech Separation (CSS)
+﻿# Speaker Counting & Continuous Speech Separation (CSS)
 **Document**: Architectural Deep-Dive on Dynamic Speaker Counting and Real-World Long-Form Audio  
 **System Target**: Multi-Speaker Indian Conversational Audio (AIR Radio Debates, Agricultural Phone-Ins, Panel Discussions)  
 **Location**: `docs/SPEAKER_COUNTING_AND_CONTINUOUS_SEPARATION.md`  
@@ -24,10 +24,10 @@ This document explains:
 ## 2. The Core Problem: The Fixed-Channel Bottleneck
 
 ### Why Separation Models Cannot Count Speakers
-Deep generative separation models—such as **Conv-TasNet**, **Demucs**, and **SepFormer**—are designed with fixed neural network output heads:
+Deep generative separation modelsâ€”such as **Conv-TasNet**, **Demucs**, and **SepFormer**â€”are designed with fixed neural network output heads:
 
 ```
-[Input: 1 Mixed Audio Channel] ──► [Encoder + Separation Masks] ──► [Fixed Output Heads: Channel 0, Channel 1]
+[Input: 1 Mixed Audio Channel] â”€â”€â–º [Encoder + Separation Masks] â”€â”€â–º [Fixed Output Heads: Channel 0, Channel 1]
 ```
 
 When a model is compiled and trained (for example, on Libri2Mix), its final 1D convolutional decoder layer has a hard-coded output tensor shape:
@@ -51,22 +51,22 @@ To solve the speaker count problem, we pass the speech through **Stage 2: Acoust
 
 ```
 [Raw Audio Stream] 
-        │
-        ▼
-[Voice Activity Detection (VAD)] ──► Strips background silence and room rumble
-        │
-        ▼
-[Deep Embedding Extractor]       ──► Slices speech into 1.5s frames; maps each to a 
+        â”‚
+        â–¼
+[Voice Activity Detection (VAD)] â”€â”€â–º Strips background silence and room rumble
+        â”‚
+        â–¼
+[Deep Embedding Extractor]       â”€â”€â–º Slices speech into 1.5s frames; maps each to a 
                                      512-dimensional voice identity vector (e)
-        │
-        ▼
-[Cosine Affinity Matrix (A)]     ──► Measures similarity between all voice vectors
-        │
-        ▼
-[Normalized Graph Laplacian (L)] ──► Computes eigenvalue spectrum
-        │
-        ▼
-[Eigengap Heuristic]             ──► Mathematically discovers optimal speaker count K*
+        â”‚
+        â–¼
+[Cosine Affinity Matrix (A)]     â”€â”€â–º Measures similarity between all voice vectors
+        â”‚
+        â–¼
+[Normalized Graph Laplacian (L)] â”€â”€â–º Computes eigenvalue spectrum
+        â”‚
+        â–¼
+[Eigengap Heuristic]             â”€â”€â–º Mathematically discovers optimal speaker count K*
 ```
 
 ---
@@ -100,16 +100,16 @@ $$K^* = \arg\max_{k} \left( \lambda_{k+1} - \lambda_k \right)$$
 
 ```
 Eigenvalue Magnitude
-     │
-     │                                     ●  (λ4 = 0.88)
-     │                               ●        (λ3 = 0.82)
-     │                     ┌────────────────
-     │                     │  ★ MAXIMUM EIGENGAP (Gap = 0.74)
-     │                     │  Indicates exactly K = 2 true clusters!
-     │                     └────────────────
-     │           ●  (λ2 = 0.08)
-     │     ●        (λ1 = 0.01)
-     └─────┴─────┴─────┴─────┴─────┴─────────────► Eigenvalue Index
+     â”‚
+     â”‚                                     â—  (Î»4 = 0.88)
+     â”‚                               â—        (Î»3 = 0.82)
+     â”‚                     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+     â”‚                     â”‚  â˜… MAXIMUM EIGENGAP (Gap = 0.74)
+     â”‚                     â”‚  Indicates exactly K = 2 true clusters!
+     â”‚                     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+     â”‚           â—  (Î»2 = 0.08)
+     â”‚     â—        (Î»1 = 0.01)
+     â””â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º Eigenvalue Index
            1     2     3     4     5
 ```
 
@@ -124,45 +124,45 @@ Once we understand that real recordings have an arbitrary number of speakers and
 ### The Acoustic Reality of Multi-Party Speech
 In a real 3-person or 4-person radio debate:
 * Rarely do all 3 or 4 people shout at the exact same split-second.
-* Overlapping speech is almost always **pairwise** (Speaker A is talking, and Speaker B chimes in for 1–2 seconds to interrupt).
+* Overlapping speech is almost always **pairwise** (Speaker A is talking, and Speaker B chimes in for 1â€“2 seconds to interrupt).
 * Overlap typically accounts for **10% to 25%** of total conversational time.
 
 ### The 4-Step CSS Workflow
 
 ```
 [Long-Duration Continuous Audio: 10 Minutes]
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 1: SLIDING WINDOW CHUNKING                                  │
-│ Slice audio into 2.5-second windows with 1.25-second step (50%  │
-│ overlap) using AudioPreprocessor.sliding_window_segmentation.   │
-└─────────────────────────────────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 2: LOCAL 2-CHANNEL SEPARATION                               │
-│ Run Conv-TasNet on each 2.5s window. Within any tiny 2.5s chunk, │
-│ at most 2 people are active simultaneously.                     │
-│ Output: Channel 0 and Channel 1 for this local window.          │
-└─────────────────────────────────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 3: VOICE EMBEDDING STITCHING                                │
-│ Extract pyannote voice embedding on Channel 0 and Channel 1.    │
-│ Match embeddings against the global speaker clusters (from      │
-│ Diarization) using cosine similarity.                           │
-│ • Local Channel 0 matches Speaker A cluster ──► Assign to Spk A │
-│ • Local Channel 1 matches Speaker C cluster ──► Assign to Spk C │
-└─────────────────────────────────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 4: OVERLAP-ADD WAVEFORM RECONSTRUCTION                      │
-│ Smooth window boundaries using a Hann window taper. Stitch      │
-│ matched audio chunks into K separate, continuous audio tracks!  │
-└─────────────────────────────────────────────────────────────────┘
+                         â”‚
+                         â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ STEP 1: SLIDING WINDOW CHUNKING                                  â”‚
+â”‚ Slice audio into 2.5-second windows with 1.25-second step (50%  â”‚
+â”‚ overlap) using AudioPreprocessor.sliding_window_segmentation.   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                         â”‚
+                         â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ STEP 2: LOCAL 2-CHANNEL SEPARATION                               â”‚
+â”‚ Run Conv-TasNet on each 2.5s window. Within any tiny 2.5s chunk, â”‚
+â”‚ at most 2 people are active simultaneously.                     â”‚
+â”‚ Output: Channel 0 and Channel 1 for this local window.          â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                         â”‚
+                         â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ STEP 3: VOICE EMBEDDING STITCHING                                â”‚
+â”‚ Extract pyannote voice embedding on Channel 0 and Channel 1.    â”‚
+â”‚ Match embeddings against the global speaker clusters (from      â”‚
+â”‚ Diarization) using cosine similarity.                           â”‚
+â”‚ â€¢ Local Channel 0 matches Speaker A cluster â”€â”€â–º Assign to Spk A â”‚
+â”‚ â€¢ Local Channel 1 matches Speaker C cluster â”€â”€â–º Assign to Spk C â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                         â”‚
+                         â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ STEP 4: OVERLAP-ADD WAVEFORM RECONSTRUCTION                      â”‚
+â”‚ Smooth window boundaries using a Hann window taper. Stitch      â”‚
+â”‚ matched audio chunks into K separate, continuous audio tracks!  â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -199,7 +199,7 @@ If your evaluator asks:
 > *"What happens if there are 3 or 4 speakers in a real radio debate? How does your 2-channel separator handle that?"*
 
 ### Your Model Answer:
-> *"That is a fundamental limitation of fixed-head separation models like Conv-TasNet or Demucs—they cannot count speakers on their own.*
+> *"That is a fundamental limitation of fixed-head separation models like Conv-TasNet or Demucsâ€”they cannot count speakers on their own.*
 >
 > *In our 4-stage architecture, we solve this by coupling Stage 1 with **Stage 2 Diarization**:*
 > 1. *We use **`pyannote.audio` neural embeddings** and the **Eigengap Heuristic** on the graph Laplacian to automatically discover the true number of speakers ($K$).*
@@ -211,8 +211,9 @@ If your evaluator asks:
 
 ## 7. Document Reference Summary
 
-* **Master Architecture & Benchmarks**: [`docs/FIRST_EVALUATION_MASTER_GUIDE.md`](file:///Users/vanshsharma/Documents/AI%20Project/docs/FIRST_EVALUATION_MASTER_GUIDE.md)
-* **2-Slide Presentation Deck**: [`docs/flash_talk_slides.md`](file:///Users/vanshsharma/Documents/AI%20Project/docs/flash_talk_slides.md)
-* **Timed Presenter Script**: [`docs/flash_talk_script.md`](file:///Users/vanshsharma/Documents/AI%20Project/docs/flash_talk_script.md)
-* **Audio Preprocessor & Windowing Code**: [`src/preprocessing/audio_preprocessor.py`](file:///Users/vanshsharma/Documents/AI%20Project/src/preprocessing/audio_preprocessor.py)
-* **Separation Models Code**: [`src/models/separation.py`](file:///Users/vanshsharma/Documents/AI%20Project/src/models/separation.py)
+* **Master Architecture & Benchmarks**: [`docs/FIRST_EVALUATION_MASTER_GUIDE.md`](docs/FIRST_EVALUATION_MASTER_GUIDE.md)
+* **2-Slide Presentation Deck**: [`docs/flash_talk_slides.md`](docs/flash_talk_slides.md)
+* **Timed Presenter Script**: [`docs/flash_talk_script.md`](docs/flash_talk_script.md)
+* **Audio Preprocessor & Windowing Code**: [`src/preprocessing/audio_preprocessor.py`](src/preprocessing/audio_preprocessor.py)
+* **Separation Models Code**: [`src/models/separation.py`](src/models/separation.py)
+

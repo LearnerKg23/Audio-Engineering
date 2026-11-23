@@ -1,6 +1,6 @@
 # Milestone M8: End-to-End System Integration & CLI Orchestrator Report
 
-**Generated**: 2026-11-03 14:04:40 UTC  
+**Generated**: 2026-11-23 18:47:14 UTC  
 **Module Scope**: Stages 0, 1, 2, 3, and 4 (Unified Python Orchestrator)  
 **Verification Status**: [OK] **VERIFIED & OPERATIONAL**  
 
@@ -25,7 +25,7 @@ The orchestrator was benchmarked on both controlled synthetic overlapping mixtur
 
 | Sample Identifier | Audio Duration (s) | Total Time (s) | RTF | Speedup Ratio | Stems (C2) | Speakers (C3) | Utterances (C4) | Findings (C5) | All Contracts Valid |
 |---|---|---|---|---|---|---|---|---|---|
-| `m8_demo_controlled_mix_01` | 9.54s | 12.076s | **1.2664** | 0.79x | 2 | 1 | 1 | 1 | [OK] True |
+| `m8_demo_controlled_mix_01` | 9.54s | 10.512s | **1.1024** | 0.91x | 2 | 1 | 1 | 1 | [OK] True |
 
 ---
 

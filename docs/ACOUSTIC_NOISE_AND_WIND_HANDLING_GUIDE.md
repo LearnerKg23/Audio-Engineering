@@ -1,4 +1,4 @@
-# Acoustic Engineering Guide: Wind Turbulence, Environmental Noise & In-The-Wild Interference Mitigation
+﻿# Acoustic Engineering Guide: Wind Turbulence, Environmental Noise & In-The-Wild Interference Mitigation
 **Document**: Architectural & Physical Deep-Dive on Acoustic Noise and Wind Handling  
 **Project**: Indic Multi-Speaker Source Separation & Diarization Pipeline  
 **Location**: `docs/ACOUSTIC_NOISE_AND_WIND_HANDLING_GUIDE.md`  
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-A critical challenge when deploying computational speech separation in Indian conversational environments—such as All India Radio (AIR) field reporting, rural agricultural helplines (Project Vaani), and roadside mobile interviews—is **non-speech acoustic corruption**:
+A critical challenge when deploying computational speech separation in Indian conversational environmentsâ€”such as All India Radio (AIR) field reporting, rural agricultural helplines (Project Vaani), and roadside mobile interviewsâ€”is **non-speech acoustic corruption**:
 
 * **Wind Noise & Turbulence**: High-amplitude, chaotic pressure fluctuations slamming against mobile microphone diaphragms.
 * **Stationary Environmental Noise**: 50 Hz electrical AC power-line hum, ceiling fans, air conditioning drone, and vehicle motor hum.
@@ -30,17 +30,17 @@ To engineer robust separation filters, we must first analyze the fundamental phy
 
 ```
 Frequency Spectrum Comparison:
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ 0 Hz        80 Hz    150 Hz        300 Hz                 3,400 Hz             8,000 Hz│
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│ [── WIND TURBULENCE ──]                                                                │
-│ (Infrasonic rumble &   │                                                               │
-│  diaphragm buffeting)  │                                                               │
-│                        │ [──────── HUMAN SPEECH FORMANTS ────────]                     │
-│                        │ (Vocal pitch F0, Vowel formants F1-F3, Consonant bursts)      │
-│                        │                                          [── SIBILANTS ──]    │
-│                        │                                          ('s', 'sh', 'f')     │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ 0 Hz        80 Hz    150 Hz        300 Hz                 3,400 Hz             8,000 Hzâ”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ [â”€â”€ WIND TURBULENCE â”€â”€]                                                                â”‚
+â”‚ (Infrasonic rumble &   â”‚                                                               â”‚
+â”‚  diaphragm buffeting)  â”‚                                                               â”‚
+â”‚                        â”‚ [â”€â”€â”€â”€â”€â”€â”€â”€ HUMAN SPEECH FORMANTS â”€â”€â”€â”€â”€â”€â”€â”€]                     â”‚
+â”‚                        â”‚ (Vocal pitch F0, Vowel formants F1-F3, Consonant bursts)      â”‚
+â”‚                        â”‚                                          [â”€â”€ SIBILANTS â”€â”€]    â”‚
+â”‚                        â”‚                                          ('s', 'sh', 'f')     â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### Acoustic Contrast Matrix
@@ -77,7 +77,7 @@ $$E = \sum_{n=0}^{N-1} x^2[n]$$
 A wind gust has immense acoustic pressure that exceeds human vocal energy by $+15\text{ dB}$ to $+25\text{ dB}$. An unconditioned VAD will trigger continuously, misidentifying a silent windy field as non-stop speech.
 
 ### 4. Dynamic Range / Bit-Depth Starvation
-When a massive wind blast hits the microphone, the analog-to-digital converter (ADC) scales its 16-bit integer range (`-32768` to `+32767`) to accommodate the wind peak. The human voice—which is much softer—is pushed down into the lowest 3 or 4 bits of resolution, causing severe quantization distortion.
+When a massive wind blast hits the microphone, the analog-to-digital converter (ADC) scales its 16-bit integer range (`-32768` to `+32767`) to accommodate the wind peak. The human voiceâ€”which is much softerâ€”is pushed down into the lowest 3 or 4 bits of resolution, causing severe quantization distortion.
 
 ---
 
@@ -87,39 +87,39 @@ To ensure resilient operation under harsh Indian field conditions, our pipeline 
 
 ```
 [Raw Field Recording: Speech + Wind + Ambient Noise]
-                          │
-                          ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│ TIER 1: FRONT-END ACOUSTIC PREPROCESSING (DSP Layer)                   │
-│ • 80 Hz 4th-Order Butterworth High-Pass Filter (Low-Cut)               │
-│ • Spectral Flatness & Sub-band Energy-Ratio VAD                        │
-│ • Dynamic Peak Limiting & RMS Loudness Normalization (-20 dBFS)        │
-└────────────────────────────────────────────────────────────────────────┘
-                          │ (Cleaned Speech Bandwidth: 80 Hz - 8,000 Hz)
-                          ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│ TIER 2: HARMONIC TIME-DOMAIN SEPARATION (Conv-TasNet Masking)          │
-│ • 1D Learnable Convolutional Filterbank (L=16 samples / 1 ms)          │
-│ • Dilated TCN blocks isolate periodic vocal pitch harmonics (F0)       │
-│ • Rejects aperiodic, non-harmonic broadband noise                      │
-└────────────────────────────────────────────────────────────────────────┘
-                          │
-                          ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│ TIER 3: THE "K + 1" RESIDUAL NOISE SINK (WHAM! / Demucs Paradigm)       │
-│ • Problem re-formulation: x(t) = s1(t) + s2(t) + n(t)                  │
-│ • Allocates background hum/noise into a dedicated residual stem        │
-│ • Prevents noise from corrupting speaker channels                      │
-└────────────────────────────────────────────────────────────────────────┘
-                          │
-                          ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│ TIER 4: POST-SEPARATION ADAPTIVE WIENER FILTERING                      │
-│ • Computes time-frequency signal-to-noise ratio masks                  │
-│ • Suppresses residual musical noise and stationary hum                 │
-└────────────────────────────────────────────────────────────────────────┘
-                          │
-                          ▼
+                          â”‚
+                          â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ TIER 1: FRONT-END ACOUSTIC PREPROCESSING (DSP Layer)                   â”‚
+â”‚ â€¢ 80 Hz 4th-Order Butterworth High-Pass Filter (Low-Cut)               â”‚
+â”‚ â€¢ Spectral Flatness & Sub-band Energy-Ratio VAD                        â”‚
+â”‚ â€¢ Dynamic Peak Limiting & RMS Loudness Normalization (-20 dBFS)        â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                          â”‚ (Cleaned Speech Bandwidth: 80 Hz - 8,000 Hz)
+                          â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ TIER 2: HARMONIC TIME-DOMAIN SEPARATION (Conv-TasNet Masking)          â”‚
+â”‚ â€¢ 1D Learnable Convolutional Filterbank (L=16 samples / 1 ms)          â”‚
+â”‚ â€¢ Dilated TCN blocks isolate periodic vocal pitch harmonics (F0)       â”‚
+â”‚ â€¢ Rejects aperiodic, non-harmonic broadband noise                      â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                          â”‚
+                          â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ TIER 3: THE "K + 1" RESIDUAL NOISE SINK (WHAM! / Demucs Paradigm)       â”‚
+â”‚ â€¢ Problem re-formulation: x(t) = s1(t) + s2(t) + n(t)                  â”‚
+â”‚ â€¢ Allocates background hum/noise into a dedicated residual stem        â”‚
+â”‚ â€¢ Prevents noise from corrupting speaker channels                      â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                          â”‚
+                          â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ TIER 4: POST-SEPARATION ADAPTIVE WIENER FILTERING                      â”‚
+â”‚ â€¢ Computes time-frequency signal-to-noise ratio masks                  â”‚
+â”‚ â€¢ Suppresses residual musical noise and stationary hum                 â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                          â”‚
+                          â–¼
            [Isolated, Pristine Speaker Stems]
 ```
 
@@ -161,7 +161,7 @@ Conv-TasNet operates in the time domain using a 1D convolutional encoder with ke
 
 In early academic research, speech separation was formulated as:
 $$x(t) = s_1(t) + s_2(t)$$
-This naive equation assumes that the recording contains *only* clean speech and zero background noise—an assumption that fails in real-world India.
+This naive equation assumes that the recording contains *only* clean speech and zero background noiseâ€”an assumption that fails in real-world India.
 
 Our pipeline adopts the **WHAM! (WSJ0 Hipster Ambient Mixtures)** and **Demucs** formulation:
 $$x(t) = s_1(t) + s_2(t) + n(t)$$
@@ -177,7 +177,7 @@ where $n(t)$ represents the environmental noise field (wind, traffic, power hum)
 ## 5. Empirical Verification: The Project Vaani Rural Telephony Case Study
 
 We verified this noise-rejection architecture using our curated real-world benchmark clip:
-* **Audio File**: [`data/real_world_eval_suite/vaani_rural_call_01.wav`](file:///Users/vanshsharma/Documents/AI%20Project/data/real_world_eval_suite/vaani_rural_call_01.wav)
+* **Audio File**: [`data/real_world_eval_suite/vaani_rural_call_01.wav`](data/real_world_eval_suite/vaani_rural_call_01.wav)
 * **Acoustic Environment**: Rural agricultural phone-in helpline containing:
   - 8th-order Butterworth telephone bandpass filter ($300\text{ Hz} - 3,400\text{ Hz}$).
   - Continuous 50 Hz AC power-line hum.
@@ -201,7 +201,7 @@ Demucs Residual Stem    .../vaani_rural_call_01_source_1_residual.wav     0.55% 
 3. **SNR Elevation**: The estimated Signal-to-Noise Ratio improved from **$18\text{ dB}$ in the raw mixture** to **$38.91\text{ dB}$ in the extracted vocal stem**.
 
 Visual proof of this frequency cutoff and noise suppression is captured in the generated spectrogram:
-* [outputs/real_world_demo/vaani_rural_call_01_spectrogram_comparison.png](file:///Users/vanshsharma/Documents/AI%20Project/outputs/real_world_demo/vaani_rural_call_01_spectrogram_comparison.png)
+* [outputs/real_world_demo/vaani_rural_call_01_spectrogram_comparison.png](outputs/real_world_demo/vaani_rural_call_01_spectrogram_comparison.png)
 
 ---
 
@@ -213,13 +213,13 @@ Here are the exact answers to use when evaluators ask challenging questions rega
 **Your Answer**:
 > *"That is an acute risk if you feed raw audio directly into a naive 2-channel network. In our system, we mitigate this through a 2-stage mechanism:*
 > * 1. **Front-End DSP**: Before separation, audio passes through our 80 Hz 4th-order Butterworth high-pass filter. Because aerodynamic wind turbulence is overwhelmingly concentrated below 80 Hz, while human speech formants sit between 300 Hz and 3,400 Hz, this filter removes over 95% of turbulent diaphragm buffeting without touching the speech fundamental frequencies.*
-> * 2. **Harmonic Basis Detection**: Conv-TasNet’s 1D convolutional filterbank learns periodic vocal fold harmonic structures. Turbulent wind is completely non-harmonic and stochastic, so the TCN masks naturally suppress it."*
+> * 2. **Harmonic Basis Detection**: Conv-TasNetâ€™s 1D convolutional filterbank learns periodic vocal fold harmonic structures. Turbulent wind is completely non-harmonic and stochastic, so the TCN masks naturally suppress it."*
 
 ---
 
 ### Q2: *"What if the wind is blowing at 200 Hz or 300 Hz, overlapping with speech? A low-cut filter can't remove that without cutting the speaker's voice."*
 **Your Answer**:
-> *"When wind turbulence or vehicle roar bleeds into the 200–500 Hz speech band, simple linear filtering is insufficient because cutting those frequencies would make human speech sound thin and hollow. That is where our **Tier 3: 'K+1' Residual Noise Sink** operates:*
+> *"When wind turbulence or vehicle roar bleeds into the 200â€“500 Hz speech band, simple linear filtering is insufficient because cutting those frequencies would make human speech sound thin and hollow. That is where our **Tier 3: 'K+1' Residual Noise Sink** operates:*
 > * Rather than assuming the mixture is purely Speaker A + Speaker B, we formulate the audio as $x(t) = s_1(t) + s_2(t) + n(t)$.*
 > * The neural network isolates the harmonic vocal formants into the speaker channels and dumps the broadband, non-periodic turbulence into the residual channel.*
 > * In our Project Vaani evaluation (`vaani_rural_call_01`), Demucs dumped the line noise and low-frequency rumble into the residual channel at -47 dB RMS, achieving a 38.9 dB SNR on the extracted voice."*
@@ -244,3 +244,4 @@ Here are the exact answers to use when evaluators ask challenging questions rega
 | **Tier 2: Conv-TasNet Masks** | Broadband stochastic noise | 1D dilated convolutions selecting periodic pitch harmonics ($F_0$) | `src/separation/conv_tasnet_wrapper.py` |
 | **Tier 3: Residual Sink** | Ambient hum, telephone line hiss | Allocation of non-speech energy to residual stem ($< 1\%$ energy) | `src/separation/demucs_wrapper.py` |
 | **Tier 4: Wiener Post-Filter** | Residual musical noise | Adaptive time-frequency SNR soft masking | Post-processing utility |
+

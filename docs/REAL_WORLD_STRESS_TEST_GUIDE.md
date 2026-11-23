@@ -1,4 +1,4 @@
-# Real-World Audio Demonstration & In-The-Wild Stress-Testing Guide
+﻿# Real-World Audio Demonstration & In-The-Wild Stress-Testing Guide
 **Document**: Track B Real-World Indian Speech Evaluation, Acoustic Separation Results, and Spectrogram Interpretation  
 **Project**: Indic Multi-Speaker Source Separation & Diarization Pipeline  
 **Location**: `docs/REAL_WORLD_STRESS_TEST_GUIDE.md`  
@@ -14,7 +14,7 @@ This document presents the **Track B: In-The-Wild Stress-Testing Suite** of our 
 While **Track A** evaluated the model on controlled synthetic mixtures with mathematically verified ground-truth stems (yielding **+15.45 dB SI-SDR** and **+12.63 dB SDR** improvements), **Track B** subjects our separation models to uncurated, complex real-world Indian acoustic scenarios:
 
 1. **Multi-Party Spontaneous Debate with Barge-Ins (`air_spontaneous_panel_01`)**: A 3-speaker heated discussion modeled after All India Radio (AIR) panel programs featuring overlapping speech, natural interjections, conversational cross-talk, and room reverberation.
-2. **Narrowband Rural Telephony Call (`vaani_rural_call_01`)**: Modeled after Project Vaani agricultural advisory helplines, featuring 300–3400 Hz cellular bandpass filtering, 50 Hz power-line hum, mic distortion, and ambient acoustic noise.
+2. **Narrowband Rural Telephony Call (`vaani_rural_call_01`)**: Modeled after Project Vaani agricultural advisory helplines, featuring 300â€“3400 Hz cellular bandpass filtering, 50 Hz power-line hum, mic distortion, and ambient acoustic noise.
 3. **Formal Studio News Broadcast (`air_formal_news_01`)**: Professional newsreader delivering high-register formal Hindi speech in a clean broadcast studio environment.
 
 ### Key Benchmark Accomplishments
@@ -31,9 +31,9 @@ All evaluation audio clips are stored in `data/real_world_eval_suite/` and catal
 
 ```
 data/real_world_eval_suite/
-├── air_formal_news_01.wav          (6.000s, Studio News Broadcast, 1 Speaker)
-├── air_spontaneous_panel_01.wav    (13.017s, Spontaneous Multi-Party Debate, 3 Speakers)
-└── vaani_rural_call_01.wav         (8.299s, Rural Agricultural Helpline Call, 1 Speaker + Phone Noise)
+â”œâ”€â”€ air_formal_news_01.wav          (6.000s, Studio News Broadcast, 1 Speaker)
+â”œâ”€â”€ air_spontaneous_panel_01.wav    (13.017s, Spontaneous Multi-Party Debate, 3 Speakers)
+â””â”€â”€ vaani_rural_call_01.wav         (8.299s, Rural Agricultural Helpline Call, 1 Speaker + Phone Noise)
 ```
 
 ### Detailed Clip Specifications
@@ -41,7 +41,7 @@ data/real_world_eval_suite/
 | Clip ID | Target Domain | Duration | Speakers | Acoustic Degradations Present | Linguistic Style |
 |---|---|---|---|---|---|
 | `air_spontaneous_panel_01.wav` | AIR Spontaneous Panel Debate | 13.017 s | 3 (Host + 2 Guests) | Room reverb ($T_{60} \approx 0.35\text{s}$), cross-talk overlap, barge-in interruptions, studio floor noise | Spontaneous conversational Hindi-English (Code-switched) |
-| `vaani_rural_call_01.wav` | Project Vaani Rural Call | 8.299 s | 1 (Rural caller) | Cellular bandpass (300–3400 Hz), 50 Hz electrical hum, packet loss jitter, background SNR 18 dB | Dialectal Hindi inquiry |
+| `vaani_rural_call_01.wav` | Project Vaani Rural Call | 8.299 s | 1 (Rural caller) | Cellular bandpass (300â€“3400 Hz), 50 Hz electrical hum, packet loss jitter, background SNR 18 dB | Dialectal Hindi inquiry |
 | `air_formal_news_01.wav` | AIR Studio News Bulletin | 6.000 s | 1 (Newsreader) | Pristine broadcast studio ($T_{60} < 0.1\text{s}$), negligible noise floor | Formal Sanskritized Hindi read speech |
 
 ---
@@ -53,22 +53,22 @@ The primary stress-test for multi-speaker separation is `air_spontaneous_panel_0
 ```
 Timeline (seconds):
 0.0s          3.8s      4.7s          6.8s        8.4s                    12.5s   13.0s
-├─── Host ────┤
-              ├── Guest 1 ────────────┤
-                                      ├── Guest 2 ────────────────────────┤
+â”œâ”€â”€â”€ Host â”€â”€â”€â”€â”¤
+              â”œâ”€â”€ Guest 1 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+                                      â”œâ”€â”€ Guest 2 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
               [Overlap 1]             [Overlap 2]
                (0.915s)                (1.629s)
 ```
 
 ### Turn-by-Turn Annotation
-1. **Turn 1 (0.00s – 4.71s)**: `SPEAKER_PANEL_HOST` (Male, Hindi-English)
-   > *"उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा।"*
-2. **Turn 2 (3.80s – 8.43s)**: `SPEAKER_PANEL_GUEST_1` (Female, Hindi) — **Barge-in begins at 3.80s**
-   > *"इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी।"*
-   * *Overlap Window 1 (3.80s – 4.71s, duration 0.915s)*: Host is completing the sentence while Guest 1 begins interjecting with high assertive pitch.
-3. **Turn 3 (6.80s – 12.52s)**: `SPEAKER_PANEL_GUEST_2` (Male, Technical Hinglish) — **Interrupts Guest 1 at 6.80s**
-   > *"smartphone में विशेष तौर से इसी काम के लिए बने hardware और software का इस्तेमाल किया गया है।"*
-   * *Overlap Window 2 (6.80s – 8.43s, duration 1.629s)*: Guest 1 and Guest 2 speak concurrently.
+1. **Turn 1 (0.00s â€“ 4.71s)**: `SPEAKER_PANEL_HOST` (Male, Hindi-English)
+   > *"à¤‰à¤¨à¥à¤¹à¥‡à¤‚ à¤¦à¤¸ à¤¦à¤¿à¤¨ à¤¤à¤• rehab à¤•à¤°à¤¨à¤¾ à¤¹à¥‹à¤—à¤¾ à¤”à¤° à¤‰à¤¸à¤•à¥‡ à¤¬à¤¾à¤¦ à¤‰à¤¨à¤•à¤¾ fitness test à¤²à¤¿à¤¯à¤¾ à¤œà¤¾à¤à¤—à¤¾à¥¤"*
+2. **Turn 2 (3.80s â€“ 8.43s)**: `SPEAKER_PANEL_GUEST_1` (Female, Hindi) â€” **Barge-in begins at 3.80s**
+   > *"à¤‡à¤¸ à¤¯à¥‹à¤œà¤¨à¤¾ à¤•à¥‡ à¤…à¤‚à¤¤à¤°à¥à¤—à¤¤ à¤¸à¤­à¥€ à¤®à¤¹à¤¿à¤²à¤¾à¤“à¤‚ à¤•à¥‹ à¤µà¤¿à¤¶à¥‡à¤· à¤µà¤¿à¤¤à¥à¤¤à¥€à¤¯ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ à¤¦à¥€ à¤œà¤¾à¤à¤—à¥€à¥¤"*
+   * *Overlap Window 1 (3.80s â€“ 4.71s, duration 0.915s)*: Host is completing the sentence while Guest 1 begins interjecting with high assertive pitch.
+3. **Turn 3 (6.80s â€“ 12.52s)**: `SPEAKER_PANEL_GUEST_2` (Male, Technical Hinglish) â€” **Interrupts Guest 1 at 6.80s**
+   > *"smartphone à¤®à¥‡à¤‚ à¤µà¤¿à¤¶à¥‡à¤· à¤¤à¥Œà¤° à¤¸à¥‡ à¤‡à¤¸à¥€ à¤•à¤¾à¤® à¤•à¥‡ à¤²à¤¿à¤ à¤¬à¤¨à¥‡ hardware à¤”à¤° software à¤•à¤¾ à¤‡à¤¸à¥à¤¤à¥‡à¤®à¤¾à¤² à¤•à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾ à¤¹à¥ˆà¥¤"*
+   * *Overlap Window 2 (6.80s â€“ 8.43s, duration 1.629s)*: Guest 1 and Guest 2 speak concurrently.
 
 ---
 
@@ -101,10 +101,10 @@ Demucs          vaani_rural_call_01         8.299 s       4.734 s              0
 ### 5.1 The 3-Speaker Panel Debate (`air_spontaneous_panel_01`)
 * **Input Mix**: 3 overlapping speakers with acoustic reverberation and ambient studio noise.
 * **Separated Outputs**:
-  * Channel 0: [air_spontaneous_panel_01_speaker_0.wav](file:///Users/vanshsharma/Documents/AI%20Project/outputs/real_world_demo/conv_tasnet/air_spontaneous_panel_01/air_spontaneous_panel_01_speaker_0.wav)
+  * Channel 0: [air_spontaneous_panel_01_speaker_0.wav](outputs/real_world_demo/conv_tasnet/air_spontaneous_panel_01/air_spontaneous_panel_01_speaker_0.wav)
     - **Peak Amplitude**: 94.88 dBFS | **RMS Energy**: 74.37 dBFS | **Estimated SNR**: 49.67 dB
     - **Acoustic Behavior**: Captures the primary dominant speech stream (Host + Guest 2).
-  * Channel 1: [air_spontaneous_panel_01_speaker_1.wav](file:///Users/vanshsharma/Documents/AI%20Project/outputs/real_world_demo/conv_tasnet/air_spontaneous_panel_01/air_spontaneous_panel_01_speaker_1.wav)
+  * Channel 1: [air_spontaneous_panel_01_speaker_1.wav](outputs/real_world_demo/conv_tasnet/air_spontaneous_panel_01/air_spontaneous_panel_01_speaker_1.wav)
     - **Peak Amplitude**: 89.84 dBFS | **RMS Energy**: 72.87 dBFS | **Estimated SNR**: 41.73 dB
     - **Acoustic Behavior**: Successfully isolates Guest 1's interrupting interjection during Overlap Window 1 ($3.8\text{s} - 4.7\text{s}$) and Overlap Window 2 ($6.8\text{s} - 8.4\text{s}$).
 
@@ -119,15 +119,15 @@ This demonstrates the core premise of **Continuous Speech Separation (CSS)**: in
 ---
 
 ### 5.2 Rural Telephony Call (`vaani_rural_call_01`)
-* **Input Mix**: Single speaker distorted by cellular bandpass filtering (300–3400 Hz), 50 Hz power hum, and 18 dB background noise.
+* **Input Mix**: Single speaker distorted by cellular bandpass filtering (300â€“3400 Hz), 50 Hz power hum, and 18 dB background noise.
 * **Separated Outputs**:
-  * Conv-TasNet Channel 0: [vaani_rural_call_01_speaker_0.wav](file:///Users/vanshsharma/Documents/AI%20Project/outputs/real_world_demo/conv_tasnet/vaani_rural_call_01/vaani_rural_call_01_speaker_0.wav)
+  * Conv-TasNet Channel 0: [vaani_rural_call_01_speaker_0.wav](outputs/real_world_demo/conv_tasnet/vaani_rural_call_01/vaani_rural_call_01_speaker_0.wav)
     - Peak: 83.34 dBFS | RMS: 63.06 dBFS | SNR: 24.49 dB
-  * Conv-TasNet Channel 1: [vaani_rural_call_01_speaker_1.wav](file:///Users/vanshsharma/Documents/AI%20Project/outputs/real_world_demo/conv_tasnet/vaani_rural_call_01/vaani_rural_call_01_speaker_1.wav)
+  * Conv-TasNet Channel 1: [vaani_rural_call_01_speaker_1.wav](outputs/real_world_demo/conv_tasnet/vaani_rural_call_01/vaani_rural_call_01_speaker_1.wav)
     - Peak: 87.32 dBFS | RMS: 69.87 dBFS | SNR: 32.12 dB
-  * Demucs Vocal: [vaani_rural_call_01_source_0_vocal.wav](file:///Users/vanshsharma/Documents/AI%20Project/outputs/real_world_demo/demucs/vaani_rural_call_01/vaani_rural_call_01_source_0_vocal.wav)
+  * Demucs Vocal: [vaani_rural_call_01_source_0_vocal.wav](outputs/real_world_demo/demucs/vaani_rural_call_01/vaani_rural_call_01_source_0_vocal.wav)
     - **Energy Ratio**: **99.45%** | Peak: -7.23 dBFS | RMS: -24.43 dBFS | SNR: 38.91 dB
-  * Demucs Residual: [vaani_rural_call_01_source_1_residual.wav](file:///Users/vanshsharma/Documents/AI%20Project/outputs/real_world_demo/demucs/vaani_rural_call_01/vaani_rural_call_01_source_1_residual.wav)
+  * Demucs Residual: [vaani_rural_call_01_source_1_residual.wav](outputs/real_world_demo/demucs/vaani_rural_call_01/vaani_rural_call_01_source_1_residual.wav)
     - **Energy Ratio**: **0.55%** | Peak: -32.03 dBFS | RMS: -47.04 dBFS | SNR: 4.05 dB
 
 #### Acoustic Interpretation of the Telephony Scenario
@@ -155,19 +155,19 @@ Three high-resolution spectrogram comparison figures were generated and saved:
 Each figure is structured as a vertically stacked 3-panel comparative diagnostic:
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│ TOP PANEL: Real-World In-The-Wild Mixture (Raw Input)                  │
-│ Shows the full combined spectrum (0 - 8000 Hz) over time.              │
-│ Note overlapping harmonic ladders and wideband acoustic energy.        │
-├────────────────────────────────────────────────────────────────────────┤
-│ MIDDLE PANEL: Conv-TasNet Channel 0 (Isolated Primary Stream)          │
-│ Shows clean harmonic continuity of the host / dominant speaker.        │
-│ Notice the removal of the interrupting guest's high-frequency bursts.  │
-├────────────────────────────────────────────────────────────────────────┤
-│ BOTTOM PANEL: Conv-TasNet Channel 1 (Isolated Secondary / Interjection)│
-│ Shows isolated energy bursts corresponding exactly to the barge-in     │
-│ turn intervals (e.g. 3.8s - 8.4s). Quiet during non-overlap regions.   │
-└────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ TOP PANEL: Real-World In-The-Wild Mixture (Raw Input)                  â”‚
+â”‚ Shows the full combined spectrum (0 - 8000 Hz) over time.              â”‚
+â”‚ Note overlapping harmonic ladders and wideband acoustic energy.        â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ MIDDLE PANEL: Conv-TasNet Channel 0 (Isolated Primary Stream)          â”‚
+â”‚ Shows clean harmonic continuity of the host / dominant speaker.        â”‚
+â”‚ Notice the removal of the interrupting guest's high-frequency bursts.  â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ BOTTOM PANEL: Conv-TasNet Channel 1 (Isolated Secondary / Interjection)â”‚
+â”‚ Shows isolated energy bursts corresponding exactly to the barge-in     â”‚
+â”‚ turn intervals (e.g. 3.8s - 8.4s). Quiet during non-overlap regions.   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### Visual Features to Highlight During Presentation
@@ -202,7 +202,7 @@ Each figure is structured as a vertically stacked 3-panel comparative diagnostic
 **Your Answer**:
 > *"Classical Short-Time Fourier Transform (STFT) masking methods suffer from two major flaws:*
 > * 1. **Phase Distortion**: STFT masks only modify the magnitude spectrogram and reuse the corrupted phase of the noisy mixture, creating audible musical noise and synthetic phase artifacts.
-> * 2. **Time-Frequency Resolution Trade-off**: Large STFT window sizes give good frequency resolution but terrible time resolution, blurring fast Indian consonant transitions and stop consonants (like 'ट', 'ठ', 'ड').
+> * 2. **Time-Frequency Resolution Trade-off**: Large STFT window sizes give good frequency resolution but terrible time resolution, blurring fast Indian consonant transitions and stop consonants (like 'à¤Ÿ', 'à¤ ', 'à¤¡').
 > * **Conv-TasNet** operates directly in the **time domain** using an encoder with 1D learnable filters ($L=16$ samples, 1 ms window). It learns an optimal non-linear representation that captures both phase and amplitude, achieving an ultra-fast **RTF of 0.132** with zero STFT phase artifacts."*
 
 ---
@@ -236,3 +236,4 @@ To rerun the real-world dataset synthesis and separation demo from scratch:
 # 3. Verify that all 20 pipeline unit tests pass
 pytest tests/ -v
 ```
+
