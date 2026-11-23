@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>“Who Spoke What and When” — Advanced Computational Speech Engineering</title>
+  <meta name="description" content="Advanced Computational Speech Engineering: Blind Source Separation, Speaker Diarization, Code-Switched Multilingual ASR, and Guardrailed LLM Synthesis in Indian Acoustic Environments.">
+  <meta property="og:title" content="“Who Spoke What and When” — Advanced Computational Speech Engineering">
+  <meta property="og:description" content="Production-Grade Multi-Stage Speech Processing Pipeline for In-The-Wild Overlapping Indian Audio, Colloquial Code-Switching (Hinglish), and Semantic Intelligence Extraction.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://learnerkg23.github.io/Audio-Engineering/">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23FF8800'/><path d='M25 50h8v15h-8zm14-15h8v45h-8zm14-25h8v70h-8zm14 15h8v40h-8zm14 15h8v10h-8z' fill='%23fff'/></svg>">
   
   <!-- Plus Jakarta Sans & DM Sans & Space Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2466,6 +2472,17 @@ tests/test_separation.py (3 tests) ...................................... <span 
 
     // Init views
     switchTerminal('stage1');
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        if (activeAudioKey && !player.paused) {
+          stopAudio();
+        } else {
+          playChannel(activeAudioKey || 'mix');
+        }
+      }
+    });
+
     switchTrack('A');
   </script>
 </body>
