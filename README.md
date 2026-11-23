@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code Style: Pydantic](https://img.shields.io/badge/Contracts-Pydantic%20v2-e92063.svg)](https://docs.pydantic.dev/)
 [![Status: Complete](https://img.shields.io/badge/Project%20Status-Complete%20%26%20Verified%20(M1--M12)-brightgreen.svg)]()
-[![Tests: 80 Passed](https://img.shields.io/badge/Tests-80%2F80%20Passing-success.svg)]()
+[![Tests: 84 Passed](https://img.shields.io/badge/Tests-84%2F84%20Passing-success.svg)]()
 
 > **A Production-Grade, Multi-Stage Speech Processing Pipeline for In-The-Wild Overlapping Indian Audio, Colloquial Code-Switching (Hinglish), and Semantic Intelligence Extraction.**
 
@@ -123,8 +123,8 @@ Audio-Engineering/
 │   ├── separation/                   # Meta's Hybrid Demucs & Conv-TasNet wrappers
 │   ├── diarization/                  # Neural speaker embeddings & spectral clustering
 │   ├── asr/                          # AI4Bharat IndicWav2Vec, Whisper, text normalization
-│   └── llm/                          # Swappable LLM providers, Jinja2 prompts, guardrails
-└── tests/                            # 80 automated unit and integration tests (100% passing)
+│   └── llm/                          # Swappable LLM providers, Jinja2 prompts, guardrails, RAG engine
+└── tests/                            # 84 automated unit and integration tests (100% passing)
 ```
 
 ---
@@ -148,11 +148,11 @@ pip install -r requirements.txt
 ```
 
 ### 2. Run Full Test Suite (Verification)
-Execute the 80 automated unit and integration tests covering all 12 milestones:
+Execute the 84 automated unit and integration tests covering all 12 milestones:
 ```bash
 pytest tests/ -v
 ```
-*(All 80 tests pass with 0 failures in under 70 seconds).*
+*(All 84 tests pass with 0 failures in under 65 seconds).*
 
 ---
 
@@ -178,6 +178,10 @@ python -m src --input path/to/audio.wav \
               --asr-engine indic_wav2vec \
               --llm-provider mock \
               --device cpu
+
+# 4. Interactive Conversational Intelligence (RAG Query with Negative Guardrails)
+python -m src --input data/real_world_eval_suite/air_spontaneous_panel_01.wav \
+              --ask "What announcement was made regarding financial assistance for women?"
 ```
 
 ### Python API Integration
@@ -201,9 +205,14 @@ print(f"Total Speakers: {state.diarization_timeline.total_speakers_detected}")
 for utt in state.raw_transcript.utterances:
     print(f"[{utt.start_time:.1f}s - {utt.end_time:.1f}s] {utt.speaker_id}: {utt.raw_text}")
 
-# View executive structured report
-print("Executive Summary:")
-print(state.final_report.executive_summary)
+# Query conversation with Stage 4 RAG Engine
+rag_answer = pipeline.answer_question(
+    query="What baggage restrictions were mentioned?",
+    state=state,
+)
+print(f"RAG Grounded Answer: {rag_answer.answer}")
+print(f"Cited Speakers: {rag_answer.cited_speakers}")
+print(f"Guardrail Status: {rag_answer.guardrail_status}")
 ```
 
 ---

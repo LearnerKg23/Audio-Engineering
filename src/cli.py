@@ -149,6 +149,12 @@ Examples:
 
     # Performance, Caching & Mock Mode
     parser.add_argument(
+        "--ask",
+        type=str,
+        default=None,
+        help="Query the processed conversation using the Stage 4 RAG Engine (with negative guardrails).",
+    )
+    parser.add_argument(
         "--mock-mode",
         action="store_true",
         help="Run pipeline using lightweight mock inference (rapid CI verification).",
@@ -291,6 +297,23 @@ def main(argv: Optional[List[str]] = None) -> int:
         out_dir = Path(state.execution_telemetry.get("output_dir", args.output_dir or "outputs/runs"))
         if not args.quiet:
             print(format_summary_banner(state, out_dir))
+
+        if args.ask:
+            rag_ans = pipeline.answer_question(args.ask, state)
+            if not args.quiet:
+                print("\n" + "=" * 76)
+                print("   STAGE 4 CONVERSATIONAL INTELLIGENCE (RAG QUERY)")
+                print("=" * 76)
+                print(f" Question            : {rag_ans.query}")
+                print(f" Grounded Status     : {'[PASSED]' if rag_ans.is_grounded else '[NEGATIVE GUARDRAIL TRIGGERED]'}")
+                print(f" Confidence          : {rag_ans.confidence:.2f}")
+                if rag_ans.cited_speakers:
+                    print(f" Cited Speakers      : {', '.join(rag_ans.cited_speakers)}")
+                if rag_ans.relevant_timestamps:
+                    print(f" Relevant Timestamps : {', '.join(rag_ans.relevant_timestamps)}")
+                print("-" * 76)
+                print(f" Answer:\n {rag_ans.answer}")
+                print("=" * 76 + "\n")
 
         return 0
 

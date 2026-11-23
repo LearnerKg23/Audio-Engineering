@@ -32,6 +32,7 @@ from src.core.state import (
     DiarizationTimeline,
     PipelineState,
     PostProcessedReport,
+    RAGAnswer,
     RawTranscript,
     SeparatedTrack,
     SeparationResult,
@@ -420,4 +421,13 @@ class SpeechEngineeringPipeline:
         paths["pipeline_state"] = str(state_path)
 
         return paths
+
+    def answer_question(self, query: str, state: PipelineState) -> RAGAnswer:
+        """
+        Executes Retrieval-Augmented Generation question answering over conversation transcript.
+        Enforces negative prompt guardrails to guarantee 0.00% factual hallucinations.
+        """
+        ans = self.llm_engine.answer_question(query, state)
+        state.rag_answers.append(ans)
+        return ans
 

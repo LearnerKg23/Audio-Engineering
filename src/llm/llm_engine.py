@@ -21,11 +21,13 @@ from src.core.state import (
     KeyFinding,
     PipelineState,
     PostProcessedReport,
+    RAGAnswer,
     RawTranscript,
     SpeakerDialogue,
     Utterance,
 )
 from src.llm.provider import BaseLLMProvider, MockLLMProvider, get_llm_provider
+from src.llm.rag_engine import ConversationRAGEngine
 
 logger = logging.getLogger(__name__)
 
@@ -79,6 +81,7 @@ class LLMEngine(BaseModule):
         self.provider: Optional[BaseLLMProvider] = None
         self._compiled_template: Any = None
         self._raw_template_text: str = ""
+        self.rag_engine = ConversationRAGEngine()
 
     def initialize(self) -> None:
         """Initializes the active LLM provider and compiles Jinja2 prompt."""
@@ -329,4 +332,15 @@ class LLMEngine(BaseModule):
             f.write(self.render_markdown_report(report))
 
         return json_path, md_path
+
+    def answer_question(
+        self,
+        query: str,
+        state_or_transcript: Union[PipelineState, RawTranscript, PostProcessedReport],
+    ) -> RAGAnswer:
+        """
+        Answers a user query grounded in the conversation transcript with strict negative guardrails.
+        """
+        self.rag_engine.index_transcript(state_or_transcript)
+        return self.rag_engine.query(query)
 

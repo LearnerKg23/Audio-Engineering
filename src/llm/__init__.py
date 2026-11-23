@@ -2,7 +2,7 @@
 Stage 4: Semantic Post-Processing & LLM Guardrails Module.
 """
 
-from src.core.state import KeyFinding, PostProcessedReport, SpeakerDialogue
+from src.core.state import KeyFinding, PostProcessedReport, RAGAnswer, SpeakerDialogue
 from src.llm.llm_engine import LLMEngine
 from src.llm.provider import (
     BaseLLMProvider,
@@ -13,9 +13,12 @@ from src.llm.provider import (
     SarvamProvider,
     get_llm_provider,
 )
+from src.llm.rag_engine import ConversationRAGEngine
 
 __all__ = [
     "LLMEngine",
+    "ConversationRAGEngine",
+    "RAGAnswer",
     "BaseLLMProvider",
     "MockLLMProvider",
     "GroqProvider",
