@@ -67,11 +67,11 @@
 > *"Let's examine why this problem is notoriously difficult. In real-world audio, we have only a **single microphone channel**—meaning spatial beamforming is physically impossible. Furthermore, overlapping voices cause acoustic formants to collide, while dynamic Hinglish code-switching breaks standard monolingual speech models.
 > 
 > Rather than relying on a fragile black-box model, we engineered a mathematically decoupled **5-stage pipeline**:
-> 1. **Time-domain Blind Speech Separation** using Conv-TasNet to isolate voices,
-> 2. **Speaker Diarization** via pyannote ResNet embeddings and spectral clustering,
-> 3. **Bilingual ASR** combining AI4Bharat IndicWav2Vec and Whisper with Unicode normalization,
-> 4. **LLM Conversational Intelligence** powered by deterministic Pydantic schema contracts, and
-> 5. **Diagnostic Field Validation** across All India Radio and Project Vaani phone calls.
+> 1. **Stage 1 (Separation)**: Powered by **Conv-TasNet** with Hungarian Permutation Invariant Training to isolate overlapping waveforms,
+> 2. **Stage 2 (Diarization)**: Powered by **pyannote.audio 3.1** using ResNet x-vectors and Eigengap spectral clustering to track who spoke when,
+> 3. **Stage 3 (ASR)**: Powered by **AI4Bharat's IndicWav2Vec** paired with **Whisper** and Unicode NFKC normalization for code-switched Hindi-English,
+> 4. **Stage 4 (LLM Intel)**: Powered by **Meta LLaMA-3.1 on Groq** (with **AI4Bharat Airavata 7B**) bound by Pydantic Contract 5 guardrails, and
+> 5. **Stage 5 (Diagnostics)**: Our systematic ablation and telemetry suite discovering the **+4.20 dB SI-SDR critical breakdown threshold** across All India Radio and Project Vaani phone calls.
 > 
 > As shown in Quadrant 4, feeding raw overlapping speech into Whisper causes catastrophic failure—an infinite repetition loop and 100% Word Error Rate. But with our front-end separation, word-for-word accuracy is fully restored. Let’s see this live in action!"*
 
@@ -90,7 +90,7 @@
 
 > 🗣️ **SPOKEN SCRIPT**:
 > 
-> *"Here on our live interactive workbench, Stage 1 acts as an audio prism. 
+> *"Here on our live interactive workbench, Stage 1 acts as an audio prism using **Conv-TasNet** with 1D dilated convolutions and Hungarian Permutation Invariant Training. 
 > 
 > Listen to this raw input recording where a male and female speaker talk simultaneously:  
 > 🔊 `[Raw Mix plays: both voices clashing concurrently]`  
@@ -101,7 +101,7 @@
 > The male voice is cleanly extracted. And here is **Stem 2**:  
 > 🔊 `[Stem 2 plays: pristine Female Hinglish speech]`  
 > 
-> Both speakers are disentangled with a massive **+21.8 dB SI-SDR gain**, with zero phase distortion."*
+> Both speakers are disentangled with a massive **+21.8 dB SI-SDR gain**, outperforming Meta Hybrid Demucs with zero phase distortion."*
 
 ---
 
@@ -113,7 +113,7 @@
 
 > 🗣️ **SPOKEN SCRIPT**:
 > 
-> *"Next, in Stage 2, our diarization engine answers 'Who spoke when'. Using ResNet-based voice embeddings and automated Eigengap spectral clustering, the system draws precise speaker turn boundaries. 
+> *"Next, in Stage 2, our diarization engine answers 'Who spoke when' using **pyannote.audio 3.1** with ResNet voice x-vectors and automated Eigengap spectral clustering. 
 > 
 > It operates at a blazing **0.006 Real-Time Factor**—over 160 times faster than real-time—achieving an exceptional **9.20% Diarization Error Rate**, even through rapid speaker handoffs."*
 
@@ -127,7 +127,7 @@
 
 > 🗣️ **SPOKEN SCRIPT**:
 > 
-> *"In Stage 3, each separated stem is transcribed using AI4Bharat IndicWav2Vec coupled with Unicode NFKC normalization.
+> *"In Stage 3, each separated stem is transcribed using **AI4Bharat's IndicWav2Vec** CTC acoustic model paired with **Whisper** and Unicode NFKC normalization.
 > 
 > Notice how the transcript captures both pure Hindi grammar and English technical vocabulary—correctly recognizing words like 'rehab' and 'fitness test' alongside Devanagari script. We achieve a **21.88% Word Error Rate**, completely eliminating the hallucination loops that plague standard Whisper models."*
 
@@ -143,7 +143,7 @@
 
 > 🗣️ **SPOKEN SCRIPT**:
 > 
-> *"Finally, Stage 4 turns raw audio transcripts into executive intelligence. We query our grounded RAG assistant: 'What rehabilitation instructions were given?'. 
+> *"Finally, Stage 4 turns raw audio transcripts into executive intelligence using **Meta LLaMA-3.1 on Groq** (with **AI4Bharat Airavata 7B**) and our grounded RAG engine. We query our assistant: 'What rehabilitation instructions were given?'. 
 > 
 > Notice how the AI answers with an exact, clickable audio citation:  
 > 🖱️ `[Click citation badge: audio instantly plays back the exact spoken sentence]`  
