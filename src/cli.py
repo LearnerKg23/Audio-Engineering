@@ -19,6 +19,7 @@ import sys
 import time
 from typing import List, Optional
 
+from src.core.audio_io import load_audio
 from src.pipeline import SpeechEngineeringPipeline
 
 
@@ -130,6 +131,11 @@ Examples:
         "--bypass-separation",
         action="store_true",
         help="Bypass Stage 1 Blind Source Separation (ideal for single-speaker audio).",
+    )
+    parser.add_argument(
+        "--diagnose-separation",
+        action="store_true",
+        help="Print RMS energy and active-frame ratio for each separated track.",
     )
     parser.add_argument(
         "--bypass-diarization",
@@ -293,6 +299,34 @@ def main(argv: Optional[List[str]] = None) -> int:
             force_recompute=args.no_cache,
             save_artifacts=not args.no_save_artifacts,
         )
+
+        if args.diagnose_separation:
+            separated_tracks = (
+                state.separation_result.isolated_tracks
+                if state.separation_result
+                else []
+            )
+            if separated_tracks:
+                separated_wavs = [
+                    load_audio(track.track_path, target_sr=None, to_mono=True)[0].squeeze(0)
+                    for track in separated_tracks
+                ]
+                distribution = pipeline.separator.compute_channel_energy_distribution(
+                    separated_wavs
+                )
+                print("Separation channel energy diagnostics:")
+                for channel in distribution:
+                    print(
+                        f"  Track {int(channel['channel_index'])}: "
+                        f"RMS={channel['rms_energy']:.6f} "
+                        f"({channel['rms_energy_dbfs']:.2f} dBFS), "
+                        f"active speech ratio={channel['active_speech_ratio']:.1%}"
+                    )
+            else:
+                logger.warning(
+                    "Separation diagnostics unavailable: separation was bypassed "
+                    "or produced no tracks."
+                )
 
         out_dir = Path(state.execution_telemetry.get("output_dir", args.output_dir or "outputs/runs"))
         if not args.quiet:

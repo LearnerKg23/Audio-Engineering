@@ -17,9 +17,10 @@ import torchaudio
 from src.core.audio_io import compute_audio_metrics, load_audio, save_audio
 from src.core.base_module import BaseModule
 from src.core.state import PipelineState, SeparatedTrack, SeparationResult
+from src.separation.diagnostics import SeparationDiagnosticsMixin
 
 
-class ConvTasNetSeparator(BaseModule):
+class ConvTasNetSeparator(SeparationDiagnosticsMixin, BaseModule):
     """
     Inference wrapper for Conv-TasNet 2-speaker separation architecture.
     """

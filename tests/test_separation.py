@@ -13,6 +13,28 @@ from src.separation.conv_tasnet_wrapper import ConvTasNetSeparator
 from src.separation.demucs_wrapper import DemucsSeparator
 
 
+def test_compute_channel_energy_distribution():
+    separator = ConvTasNetSeparator(device="cpu")
+    active_track = np.full(16000, 0.1, dtype=np.float32)
+    silent_track = np.zeros(16000, dtype=np.float32)
+
+    distribution = separator.compute_channel_energy_distribution(
+        [active_track, torch.from_numpy(silent_track)]
+    )
+
+    assert distribution[0]["channel_index"] == 0
+    assert distribution[0]["rms_energy"] == pytest.approx(0.1)
+    assert distribution[0]["active_speech_ratio"] == 1.0
+    assert distribution[1]["rms_energy"] == 0.0
+    assert distribution[1]["active_speech_ratio"] == 0.0
+
+
+def test_compute_channel_energy_distribution_rejects_empty_track():
+    separator = ConvTasNetSeparator(device="cpu")
+    with pytest.raises(ValueError, match="must not be empty"):
+        separator.compute_channel_energy_distribution([np.array([])])
+
+
 @pytest.fixture
 def short_mixture_file(tmp_path: Path):
     sr = 16000

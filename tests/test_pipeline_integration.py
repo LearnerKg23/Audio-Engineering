@@ -13,9 +13,12 @@ Validates:
 import json
 from pathlib import Path
 import tempfile
+from types import SimpleNamespace
+import numpy as np
 import pytest
 
-from src.cli import main as cli_main
+import src.cli as cli_module
+from src.cli import build_parser, main as cli_main
 from src.core.state import (
     AudioMetadata,
     DiarizationTimeline,
@@ -25,6 +28,7 @@ from src.core.state import (
     SeparationResult,
 )
 from src.pipeline import SpeechEngineeringPipeline
+from src.separation.conv_tasnet_wrapper import ConvTasNetSeparator
 
 
 # Fixture for a synthetic test audio file
@@ -218,6 +222,52 @@ def test_cli_execution_success(sample_audio_path: Path):
         ])
         assert exit_code == 0
         assert (out_p / "final_report.json").exists()
+
+
+def test_cli_accepts_diagnose_separation_flag(sample_audio_path: Path):
+    args = build_parser().parse_args([
+        "--input", str(sample_audio_path),
+        "--diagnose-separation",
+    ])
+    assert args.diagnose_separation is True
+
+
+def test_cli_prints_separation_diagnostics(tmp_path: Path, monkeypatch, capsys):
+    input_path = tmp_path / "input.wav"
+    input_path.touch()
+    state = SimpleNamespace(
+        separation_result=SimpleNamespace(
+            isolated_tracks=[SimpleNamespace(track_path="track.wav")]
+        ),
+        execution_telemetry={},
+    )
+
+    class FakePipeline:
+        def __init__(self, **kwargs):
+            self.separator = ConvTasNetSeparator(device="cpu")
+
+        def run(self, **kwargs):
+            return state
+
+    monkeypatch.setattr(cli_module, "SpeechEngineeringPipeline", FakePipeline)
+    monkeypatch.setattr(
+        cli_module,
+        "load_audio",
+        lambda *args, **kwargs: (
+            np.full((1, 16000), 0.1, dtype=np.float32),
+            16000,
+        ),
+    )
+
+    assert cli_main([
+        "--input", str(input_path),
+        "--diagnose-separation",
+        "--quiet",
+    ]) == 0
+    output = capsys.readouterr().out
+    assert "Separation channel energy diagnostics:" in output
+    assert "Track 0: RMS=0.100000" in output
+    assert "active speech ratio=100.0%" in output
 
 
 def test_cli_execution_bypass_flag(sample_audio_path: Path):

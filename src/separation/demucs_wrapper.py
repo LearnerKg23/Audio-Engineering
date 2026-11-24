@@ -17,9 +17,10 @@ import torch
 from src.core.audio_io import compute_audio_metrics, load_audio, save_audio
 from src.core.base_module import BaseModule
 from src.core.state import PipelineState, SeparatedTrack, SeparationResult
+from src.separation.diagnostics import SeparationDiagnosticsMixin
 
 
-class DemucsSeparator(BaseModule):
+class DemucsSeparator(SeparationDiagnosticsMixin, BaseModule):
     """
     Production inference wrapper for Meta's Demucs separation model.
     """
