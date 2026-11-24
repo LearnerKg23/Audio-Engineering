@@ -240,6 +240,18 @@ def main():
       filter: brightness(1.05);
     }}
 
+    .nav-btn.active {{
+      color: var(--accent);
+      box-shadow: var(--shadow-inset-sm);
+      border: 1px solid rgba(255, 136, 0, 0.3);
+    }}
+
+    .nav-btn.highlight {{
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }}
+
     /* ==========================================================================
        HERO BANNER
        ========================================================================== */
@@ -370,6 +382,241 @@ def main():
       border-radius: var(--radius-pill);
       color: var(--fg-heading);
       font-weight: 700;
+    }}
+
+    /* ==========================================================================
+       PRESENTATION VIEW MODE SELECTOR (WORKBENCH VS OVERVIEW)
+       ========================================================================== */
+    .view-mode-selector-wrap {{
+      display: flex;
+      justify-content: center;
+      margin: 24px 0 28px;
+    }}
+
+    .view-mode-tabs {{
+      display: inline-flex;
+      background: var(--bg);
+      padding: 6px;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-inset);
+      gap: 10px;
+      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }}
+
+    .view-mode-btn {{
+      border: none;
+      background: transparent;
+      padding: 12px 26px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }}
+
+    .view-mode-btn.active {{
+      background: var(--bg);
+      color: var(--accent);
+      box-shadow: var(--shadow-extruded-sm);
+      border: 1px solid rgba(255, 136, 0, 0.3);
+    }}
+
+    .view-mode-btn:hover:not(.active) {{
+      color: var(--fg-heading);
+    }}
+
+    .view-mode-btn .v-icon {{
+      font-size: 18px;
+    }}
+
+    /* ==========================================================================
+       METHODOLOGY & PROBLEM OVERVIEW DASHBOARD (SLIDE 2 EMBEDDED)
+       ========================================================================== */
+    .overview-dashboard {{
+      margin-bottom: 40px;
+      animation: fadeInOverview 0.35s ease-in-out;
+    }}
+
+    @keyframes fadeInOverview {{
+      from {{ opacity: 0; transform: translateY(10px); }}
+      to {{ opacity: 1; transform: translateY(0); }}
+    }}
+
+    .overview-hero-card {{
+      background: var(--bg);
+      box-shadow: var(--shadow-extruded);
+      border-radius: var(--radius-card);
+      padding: 24px 30px;
+      margin-bottom: 24px;
+      border-left: 5px solid var(--accent);
+    }}
+
+    .overview-hero-card .ov-badge {{
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }}
+
+    .overview-hero-card h2 {{
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--fg-heading);
+      margin-bottom: 8px;
+    }}
+
+    .overview-hero-card p {{
+      color: var(--fg);
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 0;
+    }}
+
+    .overview-quad-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 28px;
+    }}
+
+    @media (max-width: 960px) {{
+      .overview-quad-grid {{
+        grid-template-columns: 1fr;
+      }}
+    }}
+
+    .quad-card {{
+      background: var(--bg);
+      box-shadow: var(--shadow-extruded);
+      border-radius: var(--radius-card);
+      padding: 24px 26px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }}
+
+    .quad-header {{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(163, 177, 198, 0.25);
+    }}
+
+    .quad-icon {{
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--bg);
+      box-shadow: var(--shadow-extruded-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }}
+
+    .quad-title {{
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--fg-heading);
+    }}
+
+    .quad-item {{
+      margin-bottom: 14px;
+    }}
+
+    .quad-item-title {{
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--fg-heading);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }}
+
+    .quad-item-desc {{
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-left: 20px;
+    }}
+
+    .quad-badge {{
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      margin-left: auto;
+    }}
+
+    .badge-completed {{
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }}
+
+    .badge-error {{
+      background: rgba(239, 68, 68, 0.15);
+      color: #DC2626;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }}
+
+    .badge-success {{
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }}
+
+    .overview-cta-box {{
+      text-align: center;
+      padding: 22px;
+      background: var(--bg);
+      box-shadow: var(--shadow-inset);
+      border-radius: var(--radius-card);
+      margin-bottom: 20px;
+    }}
+
+    .proceed-cta-btn {{
+      background: linear-gradient(135deg, #FF8800, #E67A00);
+      color: #FFFFFF;
+      border: none;
+      padding: 14px 34px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 136, 0, 0.4);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }}
+
+    .proceed-cta-btn:hover {{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(255, 136, 0, 0.55);
     }}
 
     /* ==========================================================================
@@ -1410,13 +1657,15 @@ def main():
       </a>
 
       <nav class="nav-links">
-        <a href="#bss" class="nav-btn">🎛️ Stage 1: Separation</a>
-        <a href="#diarization" class="nav-btn">⏱️ Stage 2: Diarization</a>
-        <a href="#asr" class="nav-btn">🎙️ Stage 3: ASR</a>
-        <a href="#llm" class="nav-btn">🤖 Stage 4: LLM</a>
-        <a href="#ablation" class="nav-btn">🧪 Stage 5: Diagnostics</a>
-        <a href="#figures" class="nav-btn">📈 Figures</a>
-        <a href="#terminal" class="nav-btn">💻 Console</a>
+        <a href="javascript:void(0)" onclick="switchPresentationView('overview')" id="navBtnOverview" class="nav-btn highlight">📑 Problem & Architecture</a>
+        <a href="javascript:void(0)" onclick="switchPresentationView('workbench')" id="navBtnWorkbench" class="nav-btn active">🎛️ Live Workbench</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('bss')" class="nav-btn">Stage 1: Separation</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('diarization')" class="nav-btn">Stage 2: Diarization</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('asr')" class="nav-btn">Stage 3: ASR</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('llm')" class="nav-btn">Stage 4: LLM</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('ablation')" class="nav-btn">Stage 5: Diagnostics</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('figures')" class="nav-btn">📈 Figures</a>
+        <a href="javascript:void(0)" onclick="scrollToSection('terminal')" class="nav-btn">💻 Console</a>
         <a href="https://github.com/LearnerKg23/Audio-Engineering" target="_blank" class="nav-btn primary">GitHub Repo ↗</a>
       </nav>
     </div>
@@ -1439,7 +1688,7 @@ def main():
 
       <!-- 5-Stage Pipeline Sequence Flow (ALL ACTIVE) -->
       <div class="hero-pipeline-row">
-        <a href="#bss" class="pipeline-step-card active-card" title="Stage 1: Speech Separation">
+        <a href="javascript:void(0)" onclick="scrollToSection('bss')" class="pipeline-step-card active-card" title="Stage 1: Speech Separation">
           <div class="step-icon-well">🎛️</div>
           <div class="step-meta">
             <span class="step-title">Stage 1: Separation</span>
@@ -1449,7 +1698,7 @@ def main():
 
         <span class="step-arrow">→</span>
 
-        <a href="#diarization" class="pipeline-step-card active-card" title="Stage 2: Speaker Diarization">
+        <a href="javascript:void(0)" onclick="scrollToSection('diarization')" class="pipeline-step-card active-card" title="Stage 2: Speaker Diarization">
           <div class="step-icon-well">⏱️</div>
           <div class="step-meta">
             <span class="step-title">Stage 2: Diarization</span>
@@ -1459,7 +1708,7 @@ def main():
 
         <span class="step-arrow">→</span>
 
-        <a href="#asr" class="pipeline-step-card active-card" title="Stage 3: Multilingual ASR">
+        <a href="javascript:void(0)" onclick="scrollToSection('asr')" class="pipeline-step-card active-card" title="Stage 3: Multilingual ASR">
           <div class="step-icon-well">🎙️</div>
           <div class="step-meta">
             <span class="step-title">Stage 3: Indic ASR</span>
@@ -1469,7 +1718,7 @@ def main():
 
         <span class="step-arrow">→</span>
 
-        <a href="#llm" class="pipeline-step-card active-card" title="Stage 4: LLM Guardrails">
+        <a href="javascript:void(0)" onclick="scrollToSection('llm')" class="pipeline-step-card active-card" title="Stage 4: LLM Guardrails">
           <div class="step-icon-well">🤖</div>
           <div class="step-meta">
             <span class="step-title">Stage 4: LLM Intel</span>
@@ -1479,7 +1728,7 @@ def main():
 
         <span class="step-arrow">→</span>
 
-        <a href="#ablation" class="pipeline-step-card active-card" title="Stage 5: Diagnostics & Field Validation">
+        <a href="javascript:void(0)" onclick="scrollToSection('ablation')" class="pipeline-step-card active-card" title="Stage 5: Diagnostics & Field Validation">
           <div class="step-icon-well">🧪</div>
           <div class="step-meta">
             <span class="step-title">Stage 5: Diagnostics</span>
@@ -1497,6 +1746,203 @@ def main():
         <span class="team-badge">Pranav</span>
       </div>
     </section>
+
+    <!-- Presentation View Mode Selector Tabs -->
+    <div class="view-mode-selector-wrap">
+      <div class="view-mode-tabs">
+        <button id="btnTabWorkbench" class="view-mode-btn active" onclick="switchPresentationView('workbench')">
+          <span class="v-icon">🎛️</span>
+          <span>Live Interactive Workbench</span>
+        </button>
+        <button id="btnTabOverview" class="view-mode-btn" onclick="switchPresentationView('overview')">
+          <span class="v-icon">📑</span>
+          <span>Problem Statement & 5-Stage Architecture</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         PRESENTATION VIEW: PROBLEM STATEMENT & METHODOLOGY OVERVIEW (SLIDE 2)
+         ========================================================================== -->
+    <div id="presentationOverviewView" class="overview-dashboard" style="display: none;">
+      <div class="overview-hero-card">
+        <div class="ov-badge">CS F407 Artificial Intelligence • Advanced Computational Speech Engineering</div>
+        <h2>Who Spoke What and When: End-to-End Multistage Architecture</h2>
+        <p>
+          A Rigorously Grounded Multi-Stage Architecture Decoupling Acoustic Disentanglement from Linguistic Decoding for Overlapping, Dynamic Hinglish Speech in Indian Acoustic Environments.
+        </p>
+      </div>
+
+      <!-- 4-Quadrant Architecture Grid (Mirroring Slide 2) -->
+      <div class="overview-quad-grid">
+        
+        <!-- Quadrant 1: The Real-World Acoustic Problem -->
+        <div class="quad-card">
+          <div class="quad-header">
+            <div class="quad-icon">🎙️</div>
+            <div class="quad-title">The Real-World Acoustic Problem</div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>Single-Channel Mono Constraint</span>
+            </div>
+            <div class="quad-item-desc">
+              Real Indian broadcasts, panel debates, and rural mobile calls use 1 uncalibrated microphone; spatial microphone beamforming is physically impossible.
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>Conversational Overlapping Speech</span>
+            </div>
+            <div class="quad-item-desc">
+              Speakers interrupt and talk concurrently (Ω = 25%–75%); colliding acoustic formants corrupt the harmonic spectrum.
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>Dynamic Code-Switching (Hinglish)</span>
+            </div>
+            <div class="quad-item-desc">
+              Intra-sentential shifts between Hindi grammar and English technical terms blur phonetic representations (e.g., <em>"उन्हें 10 दिन तक rehab करना होगा..."</em>).
+            </div>
+          </div>
+        </div>
+
+        <!-- Quadrant 2: End-to-End Pipeline Architecture -->
+        <div class="quad-card">
+          <div class="quad-header">
+            <div class="quad-icon">⚙️</div>
+            <div class="quad-title">End-to-End Pipeline Architecture</div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>1. Speech Separation (BSS)</span>
+              <span class="quad-badge badge-completed">Verified</span>
+            </div>
+            <div class="quad-item-desc">
+              Disentangle overlapping voices into single-speaker channels using Conv-TasNet (1D TCN) & Meta Hybrid Demucs with Hungarian PIT.
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>2. Speaker Diarization ("Who & When?")</span>
+              <span class="quad-badge badge-completed">Verified</span>
+            </div>
+            <div class="quad-item-desc">
+              Track "Who spoke when" timeline using pyannote.audio 3.1 ResNet x-vectors and automated Eigengap spectral clustering (Δλₖ = λₖ₊₁ - λₖ).
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>3. Multilingual & Hinglish ASR ("What Said?")</span>
+              <span class="quad-badge badge-completed">Verified</span>
+            </div>
+            <div class="quad-item-desc">
+              Transcribe speech to text using AI4Bharat IndicWav2Vec with Unicode NFKC normalization and CTC beam search rescoring.
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>4. LLM Structuring & Intelligence</span>
+              <span class="quad-badge badge-completed">Verified</span>
+            </div>
+            <div class="quad-item-desc">
+              Extract minutes, action items, and structured JSON with Pydantic Contract 5 validation, guaranteeing 0.00% hallucination.
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>5. Diagnostics & Field Validation</span>
+              <span class="quad-badge badge-completed">Verified</span>
+            </div>
+            <div class="quad-item-desc">
+              Ablation studies & critical acoustic breakdown threshold modeling (+4.20 dB SI-SDR) across authentic broadcast & telephony audio.
+            </div>
+          </div>
+        </div>
+
+        <!-- Quadrant 3: Dual-Track Data Strategy & Sources -->
+        <div class="quad-card">
+          <div class="quad-header">
+            <div class="quad-icon">🗄️</div>
+            <div class="quad-title">Dual-Track Data Strategy & Sources</div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>The Ground-Truth Challenge</span>
+            </div>
+            <div class="quad-item-desc">
+              Real radio audio lacks isolated single-mic stems; clean reference signals are mathematically required to compute SI-SDR and SDR distortion metrics.
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>Track A: Calibrated Controlled Suite</span>
+            </div>
+            <div class="quad-item-desc">
+              Clean human stems from Hugging Face (hindi-english-bilingual & Hindi-Speech) and AI4Bharat IndicVoices. 6 synthetic mixes across Overlap Ratios (Ω = 25%, 50%) and SIR (0 dB, ±6 dB) with exact sample-aligned reference stems.
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>Track B: In-The-Wild Stress-Tests</span>
+            </div>
+            <div class="quad-item-desc">
+              Authentic unsegmented broadcasts from All India Radio (AIR-RS-DB debates) and IISc/ARTPARK Project Vaani rural helpline phone-in calls (300–3400 Hz bandpass).
+            </div>
+          </div>
+        </div>
+
+        <!-- Quadrant 4: Downstream ASR Proof (Why Separation Matters) -->
+        <div class="quad-card">
+          <div class="quad-header">
+            <div class="quad-icon">📈</div>
+            <div class="quad-title">Downstream ASR Proof (Why Separation Matters)</div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>The Unseparated Collision Catastrophe</span>
+              <span class="quad-badge badge-error">Failed Baseline</span>
+            </div>
+            <div class="quad-item-desc">
+              Feeding unseparated cross-talk directly into Whisper causes infinite repetition loops ("कृपया..."), 100% Word Error Rate (WER), and severe latency spikes (16.7s).
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>The Separated Stem Recovery</span>
+              <span class="quad-badge badge-success">Clean Recovery</span>
+            </div>
+            <div class="quad-item-desc">
+              Whisper & IndicWav2Vec transcribe separated stems in &lt;1.0s with flawless word-for-word accuracy:
+              <br>• <strong>Stem 0 (Female Hinglish)</strong>: <em>"उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा"</em>
+              <br>• <strong>Stem 1 (Male Hindi)</strong>: <em>"इस वॉइस डेटासेट का मुख्य उद्देश्य भारतीय भाषाओं के लिए बेहतर एआई मॉडल तैयार करना है"</em>
+            </div>
+          </div>
+          <div class="quad-item">
+            <div class="quad-item-title">
+              <span>Core Takeaway</span>
+            </div>
+            <div class="quad-item-desc">
+              Front-end source separation restores downstream AI from catastrophic failure to production quality (+21.8 dB gain).
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Call to Action Banner: Proceed to Live Demo -->
+      <div class="overview-cta-box">
+        <button class="proceed-cta-btn" onclick="scrollToSection('bss')">
+          <span>🚀 Proceed to Live Working Audio & RAG Demonstration ↓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         WORKBENCH CONTAINER: TELEMETRY, DATASETS & STAGES 1-5
+         ========================================================================== -->
+    <div id="workbenchContainer">
 
     <!-- ==========================================================================
          TOP EMPIRICAL TELEMETRY CARDS
@@ -2002,6 +2448,8 @@ def main():
       </div>
     </section>
 
+    </div> <!-- /#workbenchContainer -->
+
     <!-- ==========================================================================
          FOOTER & BIBTEX CITATION
          ========================================================================== -->
@@ -2280,6 +2728,35 @@ def main():
         }}
       }}
     }};
+
+    function switchPresentationView(view) {{
+      const isOverview = (view === 'overview');
+      const overviewEl = document.getElementById('presentationOverviewView');
+      const workbenchEl = document.getElementById('workbenchContainer');
+      const btnWb = document.getElementById('btnTabWorkbench');
+      const btnOv = document.getElementById('btnTabOverview');
+      const navWb = document.getElementById('navBtnWorkbench');
+      const navOv = document.getElementById('navBtnOverview');
+
+      if (overviewEl) overviewEl.style.display = isOverview ? 'block' : 'none';
+      if (workbenchEl) workbenchEl.style.display = isOverview ? 'none' : 'block';
+      if (btnWb) btnWb.classList.toggle('active', !isOverview);
+      if (btnOv) btnOv.classList.toggle('active', isOverview);
+      if (navWb) navWb.classList.toggle('active', !isOverview);
+      if (navOv) navOv.classList.toggle('active', isOverview);
+
+      if (isOverview) {{
+        overviewEl.scrollIntoView({{ behavior: 'smooth' }});
+      }}
+    }}
+
+    function scrollToSection(secId) {{
+      switchPresentationView('workbench');
+      setTimeout(() => {{
+        const el = document.getElementById(secId);
+        if (el) el.scrollIntoView({{ behavior: 'smooth' }});
+      }}, 80);
+    }}
 
     function switchTrack(track) {{
       stopAudio();
