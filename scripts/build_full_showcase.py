@@ -66,6 +66,14 @@ def main():
     spec_b = "./assets/plots/air_spontaneous_panel_01_spectrogram_comparison.png"
     spec_c = "./assets/plots/vaani_rural_call_01_spectrogram_comparison.png"
 
+    waveform_p = os.path.join(root_dir, "docs", "assets", "waveform_hero.jpg")
+    waveform_base64 = ""
+    if os.path.exists(waveform_p):
+        with open(waveform_p, "rb") as wf_f:
+            waveform_base64 = "data:image/jpeg;base64," + base64.b64encode(wf_f.read()).decode("utf-8")
+    else:
+        waveform_base64 = "./assets/waveform_hero.jpg"
+
     # Now assemble the comprehensive HTML
     # Now assemble the comprehensive HTML with strictly valid JavaScript strings
     html = f"""<!DOCTYPE html>
@@ -92,16 +100,16 @@ def main():
        ========================================================================== */
     :root {{
       --bg: #EBECF0;
-      --fg: #4A5568;
-      --fg-heading: #2D3748;
-      --muted: #718096;
+      --fg: #1E293B;
+      --fg-heading: #0F172A;
+      --muted: #475569;
       --accent: #FF8800;
       --accent-hover: #E67A00;
       --accent-violet: #6C63FF;
-      --accent-teal: #38B2AC;
-      --accent-emerald: #10B981;
-      --accent-blue: #3B82F6;
-      --accent-red: #EF4444;
+      --accent-teal: #0D9488;
+      --accent-emerald: #059669;
+      --accent-blue: #2563EB;
+      --accent-red: #DC2626;
       
       /* Neumorphic Shadow Physics (Dual Opposing RGBA) */
       --shadow-extruded: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.6);
@@ -286,10 +294,34 @@ def main():
     }}
 
     .hero-subtitle {{
-      font-size: clamp(16px, 2vw, 19px);
-      color: var(--muted);
-      max-width: 820px;
-      margin: 0 auto 28px;
+      font-size: clamp(16px, 2.2vw, 20px);
+      color: #334155;
+      max-width: 860px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+      font-weight: 500;
+    }}
+
+    /* Hero Waveform Visual (Matching Slide 1) */
+    .hero-waveform-wrap {{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 14px auto 30px;
+      max-width: 860px;
+      padding: 10px 20px;
+      background: var(--bg);
+      box-shadow: var(--shadow-inset-sm);
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+    }}
+
+    .hero-waveform-img {{
+      width: 100%;
+      max-height: 120px;
+      object-fit: contain;
+      display: block;
+      border-radius: var(--radius-inner);
     }}
 
     /* 5-Stage Pipeline Sequence Row */
@@ -345,16 +377,17 @@ def main():
     .step-title {{
       display: block;
       font-family: var(--font-display);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--fg-heading);
     }}
 
     .step-sub {{
       display: block;
-      font-size: 11px;
-      color: var(--muted);
+      font-size: 12.5px;
+      color: #334155;
       font-family: var(--font-mono);
+      font-weight: 500;
     }}
 
     .step-arrow {{
@@ -369,19 +402,20 @@ def main():
       justify-content: center;
       align-items: center;
       gap: 12px;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 500;
-      margin-top: 10px;
+      font-size: 14.5px;
+      color: #334155;
+      font-weight: 600;
+      margin-top: 14px;
     }}
 
     .team-badge {{
       background: var(--bg);
       box-shadow: var(--shadow-extruded-sm);
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: var(--radius-pill);
       color: var(--fg-heading);
       font-weight: 700;
+      font-size: 14px;
     }}
 
     /* ==========================================================================
@@ -532,7 +566,7 @@ def main():
 
     .quad-title {{
       font-family: var(--font-display);
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 800;
       color: var(--fg-heading);
     }}
@@ -543,7 +577,7 @@ def main():
 
     .quad-item-title {{
       font-family: var(--font-display);
-      font-size: 13.5px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--fg-heading);
       display: flex;
@@ -553,10 +587,11 @@ def main():
     }}
 
     .quad-item-desc {{
-      font-size: 12.5px;
-      color: var(--muted);
+      font-size: 13.5px;
+      color: #334155;
       line-height: 1.55;
       margin-left: 20px;
+      font-weight: 450;
     }}
 
     .quad-badge {{
@@ -641,7 +676,7 @@ def main():
 
     .t-val {{
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 30px;
       font-weight: 800;
       line-height: 1.1;
       margin-bottom: 6px;
@@ -655,16 +690,17 @@ def main():
 
     .t-label {{
       font-family: var(--font-display);
-      font-size: 13px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--fg-heading);
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }}
 
     .t-sub {{
-      font-size: 11px;
-      color: var(--muted);
+      font-size: 12.5px;
+      color: #334155;
       font-family: var(--font-mono);
+      font-weight: 600;
     }}
 
     /* ==========================================================================
@@ -763,9 +799,10 @@ def main():
     }}
 
     .section-title-wrap p {{
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 2px;
+      font-size: 15px;
+      color: #334155;
+      font-weight: 500;
+      margin-top: 3px;
     }}
 
     /* ==========================================================================
@@ -1653,7 +1690,6 @@ def main():
     <div class="container navbar-inner">
       <a href="#" class="brand-title">
         <span>“Who Spoke What and When”</span>
-        <span class="brand-badge">M1–M12 Complete</span>
       </a>
 
       <nav class="nav-links">
@@ -1685,6 +1721,11 @@ def main():
       <p class="hero-subtitle">
         A Rigorously Grounded Multi-Stage Architecture for Blind Separation, Speaker Diarization, Code-Switched Multilingual ASR, and Guardrailed LLM Synthesis in Indian Acoustic Environments
       </p>
+
+      <!-- Acoustic Waveform Visual (Matching Slide 1) -->
+      <div class="hero-waveform-wrap">
+        <img src="{waveform_base64}" alt="Acoustic Disentanglement Waveform" class="hero-waveform-img">
+      </div>
 
       <!-- 5-Stage Pipeline Sequence Flow (ALL ACTIVE) -->
       <div class="hero-pipeline-row">
@@ -1740,7 +1781,7 @@ def main():
       <!-- Team Attribution Row -->
       <div class="team-row">
         <span>Project Team:</span>
-        <span class="team-badge">Kushal Gupta</span>
+        <span class="team-badge">Kushal</span>
         <span class="team-badge">Vansh</span>
         <span class="team-badge">Dorothy</span>
         <span class="team-badge">Pranav</span>
@@ -2451,26 +2492,15 @@ def main():
     </div> <!-- /#workbenchContainer -->
 
     <!-- ==========================================================================
-         FOOTER & BIBTEX CITATION
+         CLEAN MINIMAL FOOTER
          ========================================================================== -->
-    <footer class="footer-soft">
-      <p style="font-family:var(--font-display); font-weight: 800; color: var(--fg-heading); font-size: 15px;">
+    <footer class="footer-soft" style="text-align: center; padding: 24px 0 36px; margin-top: 30px; border-top: 1px solid rgba(163, 177, 198, 0.3);">
+      <p style="font-family: var(--font-display); font-weight: 700; color: var(--fg-heading); font-size: 14.5px;">
         Advanced Computational Speech Engineering: “Who Spoke What and When”
       </p>
-      <p style="margin-top: 6px; color: var(--muted); font-size: 13px;">
-        Project Team: Kushal Gupta • Vansh • Dorothy • Pranav
+      <p style="margin-top: 4px; color: var(--muted); font-size: 13px; font-weight: 500;">
+        Project Team: Kushal • Vansh • Dorothy • Pranav &nbsp;|&nbsp; CS F407 Artificial Intelligence
       </p>
-      <p style="margin-top: 6px; color: var(--muted); font-size: 12px;">
-        Fully Integrated End-to-End Pipeline for Multi-Speaker Indian Conversational Audio
-      </p>
-
-      <div class="bibtex-box">
-@software{{speech_engineering_2026,
-  author = {{Gupta, Kushal and Vansh and Dorothy and Pranav}},
-  title  = {{Who Spoke What and When: Advanced Computational Speech Engineering for Indian Conversational Audio}},
-  year   = {{2026}},
-  url    = {{https://github.com/LearnerKg23/Audio-Engineering}}
-}}</div>
     </footer>
 
   </main>
