@@ -19,6 +19,11 @@ import sys
 import time
 from typing import List, Optional
 
+# Ensure repository root is on sys.path when invoked directly as `python src/cli.py`
+repo_root = Path(__file__).resolve().parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
+
 from src.core.audio_io import load_audio
 from src.pipeline import SpeechEngineeringPipeline
 

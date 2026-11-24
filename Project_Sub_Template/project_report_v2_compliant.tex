@@ -145,13 +145,10 @@ We have presented and validated a multi-stage speech engineering system addressi
 \toprule
 Name & Contribution \\
 \midrule
-Kushal Gupta & Automated Eigengap spectral clustering for speaker count estimation, IndicWav2Vec regional ASR integration with Unicode NFKC normalization, Pydantic Contract 5 deterministic LLM guardrails, end-to-end pipeline CLI orchestrator, cross-stage error cascading experiments, empirical critical breakdown threshold modeling (+4.20 dB SI-SDR), and conversational RAG retrieval engine with audio playback deep-linking, Sections 1, 3, and 5. \\
-\midrule
-Vansh Sharma & Multi-speaker acoustic problem formulation and controlled mixture synthesis design, Conv-TasNet and Meta Demucs time-domain separation with Hungarian PIT SI-SDR evaluation, PyAnnote dual-mode neural speaker embeddings, downstream ASR WER failure analysis comparing unseparated vs separated speech streams, and Python backend RAG engine with unit test suite, Sections 2, 4, and 6. \\
-\midrule
-Dorothy & Stage 0 audio preprocessing and VAD conditioning, spectrogram frequency analysis, real-world field dataset curation (AIR broadcast panel and Project Vaani), Sections 4 and 5. \\
-\midrule
-Pranav & Pydantic runtime schema definitions, monolithic Whisper baseline profiling, computational latency and RTF system benchmarking, Sections 2, 5, and 7. \\
+Kushal Gupta & Eigengap spectral clustering, Indic ASR NFKC normalization, Pydantic Contract 5 guardrails, CLI orchestrator, error cascading experiments, RAG engine, Sections 1, 3, and 5. \\
+Vansh Sharma & Multi-speaker problem formulation, Conv-TasNet and Demucs BSS separation, Hungarian PIT SI-SDR, PyAnnote embeddings, WER failure analysis, Sections 2, 4, and 6. \\
+Dorothy & Stage 0 audio preprocessing, VAD conditioning, spectrogram frequency analysis, Track B field dataset curation (AIR and Project Vaani), Sections 4 and 5. \\
+Pranav & Pydantic schema contracts, monolithic Whisper baseline profiling, computational latency and RTF system benchmarking, Sections 2, 5, and 7. \\
 \bottomrule
 \end{tabularx}}
 
@@ -162,11 +159,9 @@ Pranav & Pydantic runtime schema definitions, monolithic Whisper baseline profil
 Anthropic Claude 3.5 Sonnet and OpenAI GPT-4o assisted in debugging tensor routines, generating Pydantic v2 boilerplate schemas, drafting unit tests, and proofreading text. All mathematical formulations, pipeline implementations, benchmarks, and reported results were independently conceived, verified, and validated by the team members, who take full intellectual responsibility for this work. Use of an LLM as part of the method itself is detailed in Section~3, not here.
 
 \section*{Code availability}
-\noindent Code and data:\\
-\url{\githuburl}\\
-\noindent Interactive Showcase:\\
-\url{\demourl}\\
-The repository is public and contains a README with instructions to reproduce the results reported here.
+\noindent Code and data: \url{\githuburl}\\
+\noindent Interactive Showcase: \url{\demourl}\\
+The repository is public and contains a README with reproduction instructions.
 
 \begin{thebibliography}{9}
 \small
