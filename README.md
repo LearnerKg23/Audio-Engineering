@@ -251,10 +251,24 @@ Explore:
 
 ---
 
-## 8. License & Academic Attribution
+## 8. License, Dataset Provenance & Attribution
 
+### 8.1 Software License
 This project is released under the **MIT License**.
 
+### 8.2 Dataset Provenance & Audio Licensing
+The evaluation benchmarks in this repository are divided into two distinct tracks:
+
+- **Track A: Controlled Synthetic Benchmark**
+  - Synthesized from clean reference stems (`speaker_A_female_hinglish`, `speaker_B_male_hinglish`, `speaker_C_male_hindi`, `speaker_D_female_hindi`) recorded for conversational Hindi and Hinglish evaluation.
+  - Mixed at calibrated overlap ratios ($\Omega \in \{25\%, 50\%, 75\%\}$) and Signal-to-Interference Ratios ($\text{SIR} \in \{-6, 0, +6\}$~dB), with additive noise conditions ($10$~dB SNR). Stems and synthetic mixtures are provided under CC-BY 4.0 for non-commercial academic research.
+
+- **Track B: In-the-Wild Field Audio Suite**
+  - `air_formal_news_01.wav` (6.0~s): Studio Hindi news bulletin excerpt from All India Radio (AIR). High SNR (47.1~dB). Manifest reference note: the clip covers 13 spoken words; the extended manifest text contains 41 words across two sentences, making the true spoken WER 38.5\% (vs. 92.7\% nominal alignment WER due to truncation).
+  - `air_spontaneous_panel_01.wav` (13.0~s): Broadcast panel discussion excerpt from All India Radio (AIR) with 3 speakers and spontaneous overlapping debate (SNR 35.6~dB). Used under fair-use educational and research provisions.
+  - `vaani_rural_call_01.wav` (8.3~s): Rural telephonic speech excerpt from [Project Vaani](https://vaani.iisc.ac.in/) (IISc Bangalore, ARTPARK, and Google). Bandwidth: 300--3400~Hz cellular channel, SNR 21.1~dB. Used in accordance with Project Vaani open research dataset reuse terms.
+
+### 8.3 Academic Citation
 If you use this work or its error propagation methodologies in your academic research, please cite:
 ```bibtex
 @misc{indian_speech_engineering_2026,
@@ -262,7 +276,7 @@ If you use this work or its error propagation methodologies in your academic res
   title = {Advanced Computational Speech Engineering: A Multi-Stage "Who Spoke What and When" Audio Processing Pipeline},
   year = {2026},
   publisher = {GitHub},
-  howpublished = {\url{https://github.com/LearnerKg23/Audio-Engineering}}
+  howpublished = {\url{https://github.com/vansh-bit/Audio-Engineering}}
 }
 ```
 
