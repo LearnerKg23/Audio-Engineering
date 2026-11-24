@@ -43,6 +43,13 @@ ZERO_WIDTH_PATTERN = re.compile(r"[\u200b\u200c\u200d\u200e\u200f\ufeff]")
 WHITESPACE_PATTERN = re.compile(r"\s+")
 
 
+def verify_nfkc_compliance(text: str) -> bool:
+    """Return True if ``text`` is already in Unicode NFKC normalized form."""
+    if not isinstance(text, str):
+        raise TypeError(f"Expected str, got {type(text).__name__}")
+    return unicodedata.is_normalized("NFKC", text)
+
+
 class IndicTextNormalizer:
     """
     Standardizes bilingual Hindi/English and Indian regional transcripts
