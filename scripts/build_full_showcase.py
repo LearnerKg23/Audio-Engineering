@@ -3620,9 +3620,9 @@ Domain Findings:
 
       pytest: `$ .venv/bin/python -m pytest tests/ -v
 ================================================== test session starts ==================================================
-platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0
-rootdir: /mnt/c/Users/Kushal Gupta/Desktop/AudioEngineering/Audio-Engineering
-collected 80 items
+platform linux -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
+rootdir: /workspace/Audio-Engineering
+collected 97 items
 
 tests/test_ablation.py (7 tests) ........................................ <span class="t-green">PASSED</span>
 tests/test_asr.py (10 tests) ............................................ <span class="t-green">PASSED</span>
@@ -3630,16 +3630,18 @@ tests/test_audio_io.py (6 tests) ........................................ <span 
 tests/test_benchmarking.py (6 tests) .................................... <span class="t-green">PASSED</span>
 tests/test_bss_metrics.py (4 tests) ..................................... <span class="t-green">PASSED</span>
 tests/test_core.py (3 tests) ............................................ <span class="t-green">PASSED</span>
+tests/test_dataset_integrity.py (4 tests) ............................... <span class="t-green">PASSED</span>
 tests/test_diarization.py (6 tests) ..................................... <span class="t-green">PASSED</span>
 tests/test_final_deliverables.py (5 tests) .............................. <span class="t-green">PASSED</span>
-tests/test_llm.py (9 tests) ............................................. <span class="t-green">PASSED</span>
+tests/test_llm.py (10 tests) ............................................ <span class="t-green">PASSED</span>
 tests/test_mixture_generator.py (4 tests) ............................... <span class="t-green">PASSED</span>
-tests/test_pipeline_integration.py (10 tests) ........................... <span class="t-green">PASSED</span>
+tests/test_pipeline_integration.py (11 tests) ........................... <span class="t-green">PASSED</span>
 tests/test_rag.py (4 tests) ............................................. <span class="t-green">PASSED</span>
 tests/test_real_world_validation.py (7 tests) ........................... <span class="t-green">PASSED</span>
-tests/test_separation.py (3 tests) ...................................... <span class="t-green">PASSED</span>
+tests/test_separation.py (5 tests) ...................................... <span class="t-green">PASSED</span>
+tests/test_separation_metrics.py (5 tests) .............................. <span class="t-green">PASSED</span>
 
-=========================================== <span class="t-green">84 passed in 125.19s (100% Pass Rate)</span> ===========================================`
+=========================================== <span class="t-green">97 passed in 77.40s (100% Pass Rate)</span> ===========================================`
     }};
 
     function switchTerminal(tab) {{
