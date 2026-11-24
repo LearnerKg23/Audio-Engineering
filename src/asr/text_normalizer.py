@@ -32,9 +32,11 @@ NUKTA_MAPPINGS = {
 NUKTA_COMPOSED_MAPPINGS = {v: k for k, v in NUKTA_MAPPINGS.items()}
 
 # Punctuation to strip (Devanagari danda, double danda, Western punctuation, currency symbols, quotes)
+# Note: Intra-word hyphens (e.g., 'code-switch', 'pre-paid') are preserved; standalone dashes/hyphens are stripped.
 PUNCTUATION_PATTERN = re.compile(
-    r"[।॥.,!?;:\"'()\[\]{}—\-–/\\|*~`@#$%^&+=_<>«»“”‘’₹\u20b9]"
+    r"[।॥.,!?;:\"'()\[\]{}—–/\\|*~`@#$%^&+=_<>«»“”‘’₹\u20b9]"
 )
+STANDALONE_HYPHEN_PATTERN = re.compile(r"(?<!\w)-|-(?!\w)")
 
 # Zero-Width characters to remove
 ZERO_WIDTH_PATTERN = re.compile(r"[\u200b\u200c\u200d\u200e\u200f\ufeff]")
@@ -124,6 +126,7 @@ class IndicTextNormalizer:
         # 4. Strip punctuation (danda, commas, periods, quotation marks, dashes)
         if self.strip_punctuation:
             norm_text = PUNCTUATION_PATTERN.sub(" ", norm_text)
+            norm_text = STANDALONE_HYPHEN_PATTERN.sub(" ", norm_text)
 
         # 5. Lowercase Latin characters for bilingual code-switching
         if self.lowercase_latin:
