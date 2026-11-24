@@ -69,7 +69,7 @@ The Demucs wrapper is evaluated as a comparison system. It selects the model's `
 \subsection{Diarization, ASR, and transcript tools}
 Stage 2 extracts window-level speaker representations and builds a cosine-similarity affinity matrix. The implementation attempts to load a pyannote embedding model when available and otherwise uses projected acoustic statistics. Spectral clustering estimates groups from the graph; an eigengap heuristic selects the cluster count. Given the fixed two-stream separator, this estimate cannot recover a speaker whose voice has not been separated into an output stream.
 
-Stage 3 slices speech according to the diarization timeline and runs CTC recognition with the Hindi Vakyansh Wav2Vec2 checkpoint used by the loader~\cite{vakyansh}. The code's runtime label calls it \texttt{ai4bharat\_indic\_wav2vec}, so the checkpoint description is more precise than that label. Decoding uses framewise argmax followed by text cleanup and Unicode normalization; the implemented path does not use the beam search or external language-model rescoring described in earlier drafts. The Hindi-focused checkpoint also does not, by itself, establish reliable Latin-script English recognition.
+Stage 3 slices speech according to the diarization timeline and runs CTC recognition with the Hindi Vakyansh Wav2Vec2 checkpoint~\cite{baevski2020wav2vec,vakyansh} used by the loader. The code's runtime label calls it \texttt{ai4bharat\_indic\_wav2vec}, so the checkpoint description is more precise than that label. Decoding uses framewise argmax followed by text cleanup and Unicode normalization; the implemented path does not use the beam search or external language-model rescoring described in earlier drafts. The Hindi-focused checkpoint also does not, by itself, establish reliable Latin-script English recognition.
 
 Stage 4 converts the transcript into a structured report and validates it against Pydantic models. Schema validation catches missing or malformed fields, but does not prove that every generated statement is factually supported. The RAG extension expands tokens using a fixed Hindi-English synonym list, scores transcript segments with a BM25-inspired lexical function, and returns matched transcript text with speaker and time references. It does not use dense vector embeddings or generate a new semantic answer.
 
@@ -78,7 +78,7 @@ The project has three controlled evaluation records with different scopes. The s
 
 The field suite contains three clips labelled as formal AIR news, an AIR panel, and a Project Vaani rural call, with a combined duration of 27.3 seconds. These clips are useful case studies, but are too few and short to represent the corresponding domains. DER is reported with a 0.25-second collar in the controlled diarization evaluation. ASR uses word error rate (WER), the fraction of reference-word edits after alignment. SI-SDR improvement (SI-SDRi) is the estimated-source SI-SDR relative to the mixture baseline.
 
-The supplied field manifest records clip labels and transcripts but does not include external source URLs or license details. We therefore treat AIR and Project Vaani as the manifest's domain labels; the provenance and reuse permissions should be documented before public redistribution.
+The supplied field manifest records clip labels and transcripts but does not include external source URLs or license details. The AIR clips originate from All India Radio, India's public service broadcaster; the Vaani clip is labelled after Project Vaani, a large-scale telephony speech corpus led by IIT Madras. We were unable to verify redistribution permissions for the specific excerpts used, so we treat them as domain-labelled case studies and recommend confirming reuse terms before any public redistribution of the audio files.
 
 \section{Results}
 \subsection{Controlled evaluations}
@@ -90,7 +90,7 @@ Table~\ref{tab:results} keeps the evaluation scope beside each result so the fig
 \toprule
 Evaluation & Scope & Recorded result \\
 \midrule
-Separation & 6 mixtures & Conv-TasNet mean SI-SDRi: +15.45 dB; mean RTF: 0.075 on Apple Silicon. \\
+Separation & 6 mixtures & Conv-TasNet mean SI-SDRi: +15.45 dB; separator RTF: 0.075 (Apple Silicon, separation stage only). \\
 Diarization & 9 mixtures & Mean DER: 40.52\% raw spectral baseline; 23.97\% after separation. \\
 ASR & 1 clip, 9.54 s & WER: 86.28\% raw; 70.78\% with diarization; 51.57\% with separation and diarization. \\
 \bottomrule
