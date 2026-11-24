@@ -10,7 +10,6 @@ Validates:
 """
 
 from pathlib import Path
-import unicodedata
 import numpy as np
 import pytest
 import soundfile as sf
@@ -27,6 +26,7 @@ from src.asr.text_normalizer import (
     normalize_indic_text,
     tokenize_indic_characters,
     tokenize_indic_words,
+    verify_nfkc_compliance,
 )
 from src.core.state import (
     AudioMetadata,
@@ -56,6 +56,21 @@ def test_indic_normalizer_nfkc_and_nuktas():
 
     assert normalizer.normalize(decomposed) == composed
     assert normalizer.normalize(composed) == composed
+
+
+@pytest.mark.parametrize(
+    ("text", "expected_compliance"),
+    [
+        ("नमस्ते", True),
+        ("é", True),
+        ("e\u0301", False),
+        ("\ufb01", False),
+        ("fi", True),
+    ],
+)
+def test_verify_nfkc_compliance(text: str, expected_compliance: bool):
+    """Checks the helper against canonical and compatibility normalization cases."""
+    assert verify_nfkc_compliance(text) is expected_compliance
 
 
 def test_indic_normalizer_punctuation_and_case():
@@ -110,6 +125,8 @@ def test_indic_normalizer_intra_word_hyphens(raw_text: str, expected_tokens: lis
         ("SQL query run करो", ["sql", "query", "run", "करो"]),
         ("GPS lock मिला", ["gps", "lock", "मिला"]),
         ("YAML config update हुआ", ["yaml", "config", "update", "हुआ"]),
+        ("Aadhaarकार्ड लिंक", ["aadhaarकार्ड", "लिंक"]),
+        ("emailआईडी verify करें", ["emailआईडी", "verify", "करें"]),
     ],
 )
 def test_indic_normalizer_mixed_devanagari_latin_tokens(
@@ -124,25 +141,26 @@ def test_indic_normalizer_mixed_devanagari_latin_tokens(
 
 
 @pytest.mark.parametrize(
-    ("raw_text", "joiner"),
+    ("raw_text", "joiner", "expected_normalized"),
     [
-        ("क\u094d\u200dष", "\u200d"),  # ZWJ (U+200D)
-        ("क\u094d\u200cष", "\u200c"),  # ZWNJ (U+200C)
-        ("प्र\u200dयोग", "\u200d"),     # ZWJ inside word
-        ("प्र\u200cयोग", "\u200c"),     # ZWNJ inside word
+        ("क\u094d\u200dष", "\u200d", "क्ष"),  # ZWJ (U+200D)
+        ("क\u094d\u200cष", "\u200c", "क्ष"),  # ZWNJ (U+200C)
+        ("प्र\u200dयोग", "\u200d", "प्रयोग"),  # ZWJ inside word
+        ("प्र\u200cयोग", "\u200c", "प्रयोग"),  # ZWNJ inside word
     ],
 )
-def test_indic_normalizer_zwj_zwnj_joiners(raw_text: str, joiner: str):
+def test_indic_normalizer_zwj_zwnj_joiners(
+    raw_text: str, joiner: str, expected_normalized: str
+):
     """Validates handling of ZWJ and ZWNJ characters in Devanagari text."""
     assert joiner in raw_text
     normalizer = IndicTextNormalizer()
     normalized = normalizer.normalize(raw_text)
     words = tokenize_indic_words(normalized)
 
-    assert isinstance(normalized, str)
-    assert len(normalized) > 0
+    assert normalized == expected_normalized
     assert len(words) == 1
-    assert unicodedata.normalize("NFKC", normalized) == normalized
+    assert verify_nfkc_compliance(normalized)
 
 
 @pytest.mark.parametrize(
@@ -151,6 +169,7 @@ def test_indic_normalizer_zwj_zwnj_joiners(raw_text: str, joiner: str):
         ("  नमस्ते   दुनिया  ", "नमस्ते दुनिया"),
         ("line1\n\tline2   test", "line1 line2 test"),
         ("   mixed   code-switch   text   ", "mixed code-switch text"),
+        ("\u00a0API\tकॉल\nकरो\u00a0", "api कॉल करो"),
         ("   ", ""),
     ],
 )

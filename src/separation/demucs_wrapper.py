@@ -2,7 +2,7 @@
 Demucs Blind Source Separation Module.
 
 Wraps Meta's Hybrid Demucs (htdemucs) deep generative architecture for acoustic
-speech separation and vocal isolation. Conforms to BaseModule lifecycle and
+speech separation and vocal isolation. Conforms to BaseModule Lifecycle and
 populates Contract 2 (SeparationResult) in PipelineState.
 """
 
