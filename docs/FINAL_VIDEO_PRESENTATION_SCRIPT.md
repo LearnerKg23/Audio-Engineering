@@ -8,9 +8,9 @@
 * **Institution**: BITS Pilani, K.K. Birla Goa Campus
 * **Team**: Team 14
 * **Authors**: 
-  - Kushal Gupta (2022A7PS0023G) — *Interactive Web Hub, RAG Chatbot, Indic ASR, Benchmarking*
-  - Vansh Sharma (2022A7PS0042G) — *Mathematical Formulation, BSS, Diarization, Backend Engine*
-  - Dorothy (2022A7PS0110G), Pranav (2022A7PS0188G)
+  - Kushal Gupta (2023B1A70698G) — *Interactive Web Hub, RAG Chatbot, Indic ASR, Benchmarking*
+  - Vansh Sharma (2023B1A70715G) — *Mathematical Formulation, BSS, Diarization, Backend Engine*
+  - Dorothy (2023B1A70714G), Pranav (2024A7PS0515G)
 * **Strict Time Constraint**: **3 Minutes (180 Seconds) Maximum**  
   > *Evaluator Note: "If your video is longer, we will watch and score only the first 3 minutes."*
 * **Target Recorded Runtime**: **2 Minutes 48 Seconds (168 Seconds)** *(Leaves a 12-second safety buffer)*
