@@ -1,0 +1,171 @@
+% CS F407 Artificial Intelligence: Final Academic Project Report
+% Layout retained from the supplied four-page, two-column template.
+\documentclass[11pt,a4paper,twocolumn]{article}
+
+\usepackage[margin=2cm,columnsep=0.8cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\titleformat{\section}{\normalsize\bfseries}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2ex plus 0.3ex}{0.6ex}
+\titleformat{\subsection}{\normalsize\bfseries\itshape}{\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{1.0ex plus 0.2ex}{0.4ex}
+\titleformat{\subsubsection}{\small\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{0.8ex plus 0.2ex}{0.3ex}
+
+\setlist{nosep,leftmargin=*}
+\setlength{\parskip}{0.3ex}
+
+\newcommand{\coursename}{CS F407 Artificial Intelligence, AY 2026--27 Semester I}
+\newcommand{\teamno}{Team 14}
+\newcommand{\githuburl}{https://github.com/vansh-bit/Audio-Engineering}
+
+\begin{document}
+
+\twocolumn[{%
+\begin{center}
+  {\large\bfseries Separating Overlapping Hindi-English Speech with a Modular Processing Pipeline}\\[1ex]
+  \teamno\\
+  Kushal Gupta (2023B1A70698G), \quad Vansh Sharma (2023B1A70715G),\\[0.3ex]
+  Dorothy (2023B1A70714G), \quad Pranav (2024A7PS0515G)\\[0.5ex]
+  {\small \coursename, BITS Pilani, K.K. Birla Goa Campus}\\[1.5ex]
+  \begin{minipage}{0.85\textwidth}
+    \small
+    \centerline{\bfseries Abstract}\vspace{0.5ex}
+    Overlapping speech makes diarization and recognition harder, particularly when Hindi and English occur in the same conversation. We implemented a staged pipeline combining audio conditioning, a pretrained two-speaker Conv-TasNet separator, spectral-clustering diarization, Hindi Wav2Vec2 CTC recognition, and schema-checked summarization. Results come from separate evaluations rather than one shared test set. On six controlled mixtures, Conv-TasNet averaged a 15.45 dB SI-SDR improvement. On nine controlled mixtures, separation-aware diarization averaged 23.97\% DER, compared with 40.52\% for a raw-mixture spectral baseline. On one 9.54-second ASR clip, WER fell from 86.28\% on the mixture to 51.57\% after separation and diarization, but remained high. Three short field clips also exposed limitations, including 58.7\% DER on a three-speaker panel. The results support separation as a useful component, but do not establish broad real-world robustness.
+  \end{minipage}
+\end{center}
+\vspace{1.5ex}
+}]
+
+\section{Introduction}
+When two people speak at once, a recognizer receives overlapping acoustic cues while a diarization system must still assign speech to the right speaker. Hindi-English code-switching adds a second difficulty: Hindi words may be written in Devanagari while English words appear in Latin script, and the same utterance can alternate between them. These conditions are common in conversational recordings but are poorly represented by evaluations limited to clean, single-speaker speech.
+
+This project studies a modular pipeline for short, single-channel recordings. It conditions audio, estimates two source streams with a pretrained Conv-TasNet model, clusters speaker representations, transcribes speech with a Hindi CTC model, and produces a structured summary. A lexical retrieval component can answer questions over the resulting transcript. The work is an engineering evaluation of existing models and components; it does not train a new separation or recognition model.
+
+The evaluation asks three practical questions: whether separation improves SI-SDR on controlled mixtures; whether separation-aware diarization improves DER over a raw-mixture baseline; and whether the full acoustic pipeline reduces ASR error on a representative controlled clip. We report these experiments separately because their sample sets differ. We also include the field results, which are mixed and substantially weaker than the controlled results.
+
+\section{Background and related work}
+Conv-TasNet uses a learned time-domain encoder and temporal convolutional separator to estimate source waveforms. Its pretrained Libri2Mix configuration is designed for two-speaker mixtures~\cite{luo2019convtasnet}. This fixed source count is an important constraint when the recording contains a different number of speakers. Demucs is a hybrid music source-separation model~\cite{defossez2021demucs}; the project wrapper extracts its ``vocals'' and ``other'' stems, so those outputs should not be interpreted as two speaker identities.
+
+Speaker diarization groups speech regions by speaker. Neural embedding systems such as pyannote.audio provide speaker representations for this task~\cite{bredin2020pyannote}. The project also contains a lower-dependency acoustic-feature fallback, followed by cosine-affinity spectral clustering. SI-SDR is used to compare estimated sources with aligned reference stems~\cite{vincent2006performance}. Because the separator does not know the reference speakers at inference time, optimal source permutation is resolved during evaluation only.
+
+\section{Method}
+The implemented end-to-end pipeline has five numbered stages, Stage 0 through Stage 4. The transcript-question-answering component is an extension of the LLM stage, not a sixth sequential acoustic stage.
+
+\subsection{Audio conditioning and separation}
+Stage 0 loads audio, converts it to the configured mono 16 kHz format, applies level conditioning, and computes energy-based speech intervals. Stage 1 uses the pretrained torchaudio Conv-TasNet Libri2Mix bundle, which returns two output streams. For controlled SI-SDR evaluation, reference and estimated streams are aligned by checking source permutations and selecting the assignment with the higher mean SI-SDR. This is an evaluation convention; it is not a reference-guided inference step.
+
+The Demucs wrapper is evaluated as a comparison system. It selects the model's ``vocals'' and ``other'' stems and labels the latter as residual. Since the model was trained for music stems, these outputs do not constitute a principled two-speaker diarization. We therefore avoid treating its vocal/residual split as equivalent to Conv-TasNet speaker separation.
+
+\subsection{Diarization, ASR, and transcript tools}
+Stage 2 extracts window-level speaker representations and builds a cosine-similarity affinity matrix. The implementation attempts to load a pyannote embedding model when available and otherwise uses projected acoustic statistics. Spectral clustering estimates groups from the graph; an eigengap heuristic selects the cluster count. Given the fixed two-stream separator, this estimate cannot recover a speaker whose voice has not been separated into an output stream.
+
+Stage 3 slices speech according to the diarization timeline and runs CTC recognition with the Hindi Vakyansh Wav2Vec2 checkpoint used by the loader~\cite{vakyansh}. The code's runtime label calls it \texttt{ai4bharat\_indic\_wav2vec}, so the checkpoint description is more precise than that label. Decoding uses framewise argmax followed by text cleanup and Unicode normalization; the implemented path does not use the beam search or external language-model rescoring described in earlier drafts. The Hindi-focused checkpoint also does not, by itself, establish reliable Latin-script English recognition.
+
+Stage 4 converts the transcript into a structured report and validates it against Pydantic models. Schema validation catches missing or malformed fields, but does not prove that every generated statement is factually supported. The RAG extension expands tokens using a fixed Hindi-English synonym list, scores transcript segments with a BM25-inspired lexical function, and returns matched transcript text with speaker and time references. It does not use dense vector embeddings or generate a new semantic answer.
+
+\section{Experimental setup}
+The project has three controlled evaluation records with different scopes. The separation comparison covers six two-speaker mixtures in the first evaluation suite. The diarization report averages nine controlled mixtures, including a three-speaker panel and a noisy case. The ASR report evaluates one 9.536-second controlled mixture containing two speakers. Results across these records are not pooled into a single test-set average.
+
+The field suite contains three clips labelled as formal AIR news, an AIR panel, and a Project Vaani rural call, with a combined duration of 27.3 seconds. These clips are useful case studies, but are too few and short to represent the corresponding domains. DER is reported with a 0.25-second collar in the controlled diarization evaluation. ASR uses word error rate (WER), the fraction of reference-word edits after alignment. SI-SDR improvement (SI-SDRi) is the estimated-source SI-SDR relative to the mixture baseline.
+
+The supplied field manifest records clip labels and transcripts but does not include external source URLs or license details. We therefore treat AIR and Project Vaani as the manifest's domain labels; the provenance and reuse permissions should be documented before public redistribution.
+
+\section{Results}
+\subsection{Controlled evaluations}
+Table~\ref{tab:results} keeps the evaluation scope beside each result so the figures are not mistaken for one common benchmark.
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{@{}l l X@{}}
+\toprule
+Evaluation & Scope & Recorded result \\
+\midrule
+Separation & 6 mixtures & Conv-TasNet mean SI-SDRi: +15.45 dB; mean RTF: 0.075 on Apple Silicon. \\
+Diarization & 9 mixtures & Mean DER: 40.52\% raw spectral baseline; 23.97\% after separation. \\
+ASR & 1 clip, 9.54 s & WER: 86.28\% raw; 70.78\% with diarization; 51.57\% with separation and diarization. \\
+\bottomrule
+\end{tabularx}
+\caption{Results from separate controlled evaluations. RTF and accuracy values use different runs and are not directly comparable across rows.}
+\label{tab:results}
+\end{table}
+
+Across six controlled mixtures, Conv-TasNet's mean SI-SDR improvement was +15.45 dB. The strongest example was mixture 01 (+21.76 dB improvement); the weakest was mixture 04 (+4.81 dB). The mean, rather than the best example, is the appropriate summary. In the same six-mixture comparison, Demucs produced a mean SI-SDR of approximately $-8.60$ dB because the model separated vocal from residual/music stems rather than the two reference speakers. This result illustrates a model-task mismatch, not a fair contest between two speaker-separation systems.
+
+The nine-mixture diarization evaluation reports a mean DER reduction of 16.55 percentage points after separation. Performance was not uniformly strong: the three-speaker panel and noisy mixture remained difficult. On the single ASR clip, WER decreased at each pipeline step but remained 51.57\%; the corresponding CER was 44.66\%. Since this is one clip, the decrease is evidence for that case, not an estimate of general ASR performance.
+
+\subsection{Field cases and system profiling}
+The field evaluation reported 0.0\% DER and 92.7\% WER on the 6-second formal clip; 58.7\% DER and 57.8\% WER on the 13.0-second panel (three reference speakers, one hypothesized); and 0.7\% DER and 63.0\% WER on the 8.3-second rural call. High WER even on the formal clip shows that speaker segmentation alone does not ensure accurate transcription. These results do not support a claim of robust performance across Indian field audio.
+
+One isolated 30-second CPU profiling run reports 20.90 seconds end to end (RTF 0.697) on an eight-core WSL2 host. A separate duration-scaling table reports 14.71 seconds for a 30-second input (RTF 0.490). Because the two recorded runs disagree, we do not make a single reproducible real-time claim from them. Hardware, model initialization, cache state, and timing boundaries should be controlled before comparing throughput.
+
+An error-propagation artifact lists seven acoustic scenarios and reports Pearson correlations of $r=-0.977$ between SI-SDR and DER, and $r=-0.969$ between SI-SDR and WER. These are exploratory associations across a small scenario sweep. The value 4.2 dB is one scenario in that sweep, not a statistically established change point: at that point the recorded DER is 28.9\%, which does not meet the earlier draft's stated DER-below-20\% criterion. We therefore do not describe it as a validated critical threshold.
+
+\section{Discussion and limitations}
+The controlled results suggest that a two-speaker separator can improve downstream processing when the mixture resembles the model's training task. They also show where the current system falls short. Conv-TasNet always produces two streams, while real panels can contain more speakers. Demucs' music stems are not speaker identities. The recognizer is Hindi-focused, and the tested ASR sample still has high WER. Field evaluation contains only three very short clips and exposes serious recognition and speaker-count errors.
+
+The LLM evaluation reports zero unsupported entities in two tested summaries. That is a bounded observation, not a guarantee: the error-propagation artifact includes scenarios with nonzero hallucination estimates, and a valid Pydantic object can still contain an unsupported claim. Future evaluation should use a larger, held-out set with human-checked transcripts, more speaker counts, longer recordings, explicit language/script strata, and repeated timing runs. Results should include per-clip scores and uncertainty rather than only pooled means.
+
+\section{Conclusion}
+We implemented and evaluated a modular pipeline for overlapping Hindi-English speech. On controlled data, Conv-TasNet improved mean SI-SDR by 15.45 dB over six mixtures, separation-aware diarization reduced mean DER across nine mixtures, and the full pipeline lowered WER on one controlled clip. The short field evaluation remained weak, and several earlier claims of universal robustness, zero hallucination, and a 4.2 dB breakdown threshold are not supported by the available evidence. The current system is best understood as a prototype whose controlled results motivate larger, carefully matched evaluations.
+
+\section*{Individual member contributions}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+Member & Contribution \\
+\midrule
+Kushal Gupta & Eigengap clustering, Indic ASR text normalization, Pydantic guardrails, CLI orchestration, error-propagation analysis, and transcript retrieval. \\
+Vansh Sharma & Problem formulation, Conv-TasNet and Demucs integration, SI-SDR evaluation, speaker embeddings, and downstream ASR failure analysis. \\
+Dorothy & Audio preprocessing, VAD conditioning, spectrogram analysis, and curation of the AIR and Project Vaani evaluation clips. \\
+Pranav & Pydantic schema work, Whisper baseline profiling, and latency and RTF benchmarking. \\
+\bottomrule
+\end{tabularx}
+
+\section*{Generative AI disclosure}
+OpenAI Codex (GPT-6) assisted with reviewing project artifacts, identifying inconsistencies, and editing this report. During project development, Anthropic Claude 3.5 Sonnet and OpenAI GPT-4o assisted with debugging, Pydantic boilerplate, test drafting, and proofreading, as recorded in the prior report. The authors are responsible for the accuracy of the implementation descriptions, results, citations, and submitted text.
+
+\section*{Code availability}
+\noindent Source code and evaluation artifacts: \url{\githuburl}
+
+\begin{thebibliography}{9}
+\bibitem{luo2019convtasnet}
+Y.~Luo and N.~Mesgarani.
+\newblock Conv-TasNet: Surpassing ideal time--frequency magnitude masking for speech separation.
+\newblock \emph{IEEE/ACM Trans. Audio, Speech, Lang. Process.}, 27(8):1256--1266, 2019.
+
+\bibitem{defossez2021demucs}
+A.~D{\'e}fossez, N.~Usunier, L.~Bottou, and F.~Bach.
+\newblock Music source separation in the waveform domain.
+\newblock \emph{IEEE/ACM Trans. Audio, Speech, Lang. Process.}, 29:3358--3370, 2021.
+
+\bibitem{bredin2020pyannote}
+H.~Bredin, R.~Yin, J.~M. Coria, G.~Broux, et~al.
+\newblock pyannote.audio: neural building blocks for speaker diarization.
+\newblock In \emph{Proc. ICASSP}, pages 7124--7128, 2020.
+
+\bibitem{baevski2020wav2vec}
+A.~Baevski, H.~Zhou, A.~Mohamed, and M.~Auli.
+\newblock wav2vec 2.0: A framework for self-supervised learning of speech representations.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 33, 2020.
+
+\bibitem{vakyansh}
+Harveen Chadha.
+\newblock Vakyansh Hindi Wav2Vec2 CTC model.
+\newblock Hugging Face model card, \url{https://huggingface.co/Harveenchadha/vakyansh-wav2vec2-hindi-him-4200}.
+
+\bibitem{vincent2006performance}
+E.~Vincent, R.~Gribonval, and C.~F{\'e}votte.
+\newblock Performance measurement in blind audio source separation.
+\newblock \emph{IEEE Trans. Audio, Speech, Lang. Process.}, 14(4):1462--1469, 2006.
+\end{thebibliography}
+
+\end{document}
