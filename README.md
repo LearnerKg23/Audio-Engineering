@@ -65,12 +65,22 @@ This repository implements a modular, mathematically rigorous, multi-stage speec
 
 Across 12 systematic engineering milestones, the pipeline was benchmarked over **Track A (Controlled Synthetic Mixtures)** and **Track B (In-The-Wild All India Radio & Project Vaani Recordings)**:
 
-* **Blind Source Separation (Stage 1)**: Achieved **$+7.2\text{ dB}$ SI-SDR improvement** using Meta's Hybrid Demucs over raw overlapping speech, resolving permutation confusion via Hungarian-optimized Permutation Invariant Training (PIT).
-* **Speaker Diarization (Stage 2)**: Maintained **$0.0\%\text{–}0.7\%$ Diarization Error Rate (DER)** with automated speaker count ($K$) discovery via the Eigengap heuristic, outperforming GMM baselines by $6.8\times$.
-* **Critical Acoustic Breakdown Threshold**: Empirically proved that below **$\text{SI-SDR}_{\text{crit}} = +4.2\text{ dB}$**, downstream ASR word error rates and diarization errors cascade catastrophically ($r = -0.977$).
-* **Factual Hallucination Elimination**: Engineered 4 negative prompt guardrails and an automated factual auditor that achieved **$0.0\%$ factual hallucination rate** across all real-world tests while preserving 100% of critical domain entities.
-* **Real-World Indian Robustness (Stage 0–4)**: Successfully processed Project Vaani $2\text{G}/3\text{G}$ cellular field calls with **$88.4\%$ energy concentration** in the narrowband $300\text{–}3400\text{ Hz}$ telephone band down to **$\text{SNR} = 21.0\text{ dB}$**.
-* **High-Throughput Computation**: Real-Time Factor (RTF) of **$0.49\text{–}0.69$** ($1.4\times\text{–}2.0\times$ faster than realtime) on standard CPU runtimes.
+* **Blind Source Separation (Stage 1)**: Achieved **$+15.45\text{ dB}$ mean SI-SDR improvement** (peaking at **$+21.76\text{ dB}$**) using **Conv-TasNet** over raw overlapping speech, resolving permutation confusion via Hungarian-optimized Permutation Invariant Training (PIT). Hybrid Demucs was evaluated as a music baseline ($-8.60\text{ dB}$ SI-SDR on speech).
+* **Speaker Diarization (Stage 2)**: Reduced mean Diarization Error Rate across nine controlled mixtures from **$40.52\%$ to $23.97\%$** (a $16.55\%$ absolute reduction) with automated speaker count ($K$) discovery via the Eigengap heuristic on pyannote embeddings, achieving $0.0\%\text{–}0.7\%$ on clean single-speaker field clips.
+* **Bilingual ASR Recovery (Stage 3)**: Reduced Word Error Rate on overlapping bilingual speech from **$86.28\%$ (monolithic attention collapse) down to $51.57\%$** using Vakyansh Hindi Wav2Vec2 CTC decoding with Unicode NFKC normalization.
+* **Critical Acoustic Breakdown Threshold**: Empirically proved that below **$\text{SI-SDR}_{\text{crit}} = +4.20\text{ dB}$**, downstream ASR word error rates and diarization errors cascade catastrophically ($r = -0.977$ with DER, $r = -0.969$ with WER).
+* **Factual Hallucination Elimination (Stage 4)**: Engineered 4 negative prompt guardrails and runtime Pydantic v2 schemas that enforce valid JSON structure and speaker-attributed entity grounding, backed by an in-memory BM25 conversational retrieval engine.
+* **High-Throughput Computation**: Real-Time Factor (RTF) of **$0.075$** on Apple Silicon GPU and **$0.49\text{–}0.69$** on standard 8-core CPU ($1.4\times\text{–}2.0\times$ faster than realtime).
+
+### Empirical Benchmark Summary
+
+| Evaluation Dimension | Monolithic Baseline | Proposed Modular Pipeline | Measured Impact |
+|---|---|---|---|
+| **Separation Fidelity ($\Delta\text{SI-SDR}$)** | $0.0\text{ dB}$ (Acoustic collision) | **$+15.45\text{ dB}$** (Peak $+21.76\text{ dB}$) | $+15.45\text{ dB}$ clean stem isolation |
+| **Diarization Error Rate (DER)** | $40.52\%$ (Raw spectral baseline) | **$23.97\%$** (Separation-aware) | $-16.55\%$ absolute DER error reduction |
+| **Bilingual Word Error Rate (WER)** | $86.28\%$ (Attention loop collapse) | **$51.57\%$** (Separated Indic CTC) | $-34.71\%$ absolute WER error reduction |
+| **Character Error Rate (CER)** | $100.28\%$ (Repetitive token loop) | **$44.66\%$** (Bilingual NFKC normalized) | $-55.62\%$ absolute CER error reduction |
+| **Execution Latency (RTF)** | --- | **$0.075$** (MPS) / **$0.49$** (CPU) | Runs $1.4\times\text{–}2.0\times$ faster than real-time |
 
 ---
 
@@ -137,7 +147,7 @@ Audio-Engineering/
 
 ### 1. Clone & Set Up Virtual Environment
 ```bash
-git clone https://github.com/LearnerKg23/Audio-Engineering.git
+git clone https://github.com/vansh-bit/Audio-Engineering.git
 cd Audio-Engineering
 
 python3 -m venv .venv
@@ -223,7 +233,7 @@ print(f"Guardrail Status: {rag_answer.guardrail_status}")
 | **M0** | Setup | Environment, PyTorch hardware resolution, Audio I/O contracts | **VERIFIED** | `tests/test_audio_io.py`, `tests/test_core.py` |
 | **M1** | Data | Controlled multi-speaker mixture generator with calibrated overlap | **VERIFIED** | `tests/test_mixture_generator.py` |
 | **M2** | Stage 1 | Demucs & Conv-TasNet BSS with PIT SI-SDR evaluation | **VERIFIED** | `tests/test_separation.py`, `tests/test_bss_metrics.py` |
-| **M3** | Demo | Evaluation presentation package & timed script | **VERIFIED** | `docs/flash_talk_slides.md`, `demo.html` |
+| **M3** | Demo | Interactive evaluation web showcase & audio players | **VERIFIED** | [`docs/index.html`](docs/index.html) |
 | **M4** | Corpus | Expansion to IndicVoices, Nirantar, Project Vaani, and AIR-RS-DB | **VERIFIED** | `data/manifests/controlled_ground_truth.json` |
 | **M5** | Stage 2 | Speaker Diarization with Eigengap spectral clustering & DER/JER | **VERIFIED** | `tests/test_diarization.py` |
 | **M6** | Stage 3 | Regional IndicWav2Vec ASR with Unicode NFKC normalization | **VERIFIED** | `tests/test_asr.py` |
