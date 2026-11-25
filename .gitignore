@@ -65,12 +65,7 @@ LEARNING/
 project_milestones/
 first eval prep/
 "first eval prep/"
-docs/FIRST_EVALUATION_MASTER_GUIDE.md
-docs/TECHNICAL_INTERVIEW_PORTFOLIO.md
-docs/PROJECT_CHANGES_AND_AUDIT_REPORT.md
-docs/flash_talk_script.md
-docs/flash_talk_slides.md
-
+docs/*.md
 # --- Project Submission Folder ---
 Project_Sub_Template/
 project_sub_template/
