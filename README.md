@@ -78,6 +78,9 @@ Across 12 systematic engineering milestones, the pipeline was benchmarked over *
 
 ```
 Audio-Engineering/
+├── Project_report/                   # Official 4-Page Academic Report & LaTeX Source
+│   ├── Final_project_submission.pdf  # Compiled 4-page camera-ready academic report
+│   └── Final_project_submission.tex  # Verified LaTeX template source
 ├── configs/                          # Production YAML configurations
 │   ├── default_config.yaml           # Master system default configuration
 │   ├── pipeline.yaml                 # Master orchestrator config (alias)
@@ -87,10 +90,9 @@ Audio-Engineering/
 │   ├── real_world_eval_suite/        # Track B: AIR Radio & Vaani field slices (M11)
 │   ├── benchmark_fixtures/           # Standard duration sweeps (15s, 30s, 60s, 120s)
 │   └── manifests/                    # Ground-truth JSON manifests
-├── docs/                             # Academic & architectural documentation
-│   ├── FINAL_ACADEMIC_REPORT.md      # Comprehensive academic paper & thesis report
-│   ├── TECHNICAL_INTERVIEW_PORTFOLIO.md # Deep-dive ML interview defense cheat-sheet
-│   ├── flash_talk_slides.md          # 2-Slide academic evaluation presentation
+├── docs/                             # Interactive Demonstration & Web Showcase (GitHub Pages)
+│   ├── assets/                       # Scientific benchmark plots and waveform diagrams
+│   ├── .nojekyll                     # GitHub Pages deployment configuration
 │   └── index.html                    # Interactive audio showcase & demonstration
 ├── evaluation/                       # Evaluation engines & metrics
 │   ├── bss_metrics.py                # SI-SDR, SDR, SIR, PIT Hungarian assignment
@@ -107,9 +109,6 @@ Audio-Engineering/
 │   ├── benchmarks/                   # Latency, RTF, and memory waterfall plots
 │   ├── real_world_validation/        # Domain WER/CER, radar charts, and JSON dataset
 │   └── reports/                      # Formal Markdown reports for M0 through M11
-├── project_milestones/               # Authoritative milestone requirements & roadmap
-│   ├── MASTER_MILESTONES.md          # Master record of all 12 completed milestones
-│   └── 11_IMPLEMENTATION_ROADMAP.md  # Detailed implementation tracking
 ├── scripts/                          # Standalone CLI benchmark & evaluation runners
 │   ├── run_ablation_study.py         # M9 Scientific ablation & error propagation CLI
 │   ├── run_system_benchmark.py       # M10 System benchmarking & profiling CLI
@@ -233,14 +232,13 @@ print(f"Guardrail Status: {rag_answer.guardrail_status}")
 | **M9** | Science | Cross-stage error propagation & progressive ablation study | **VERIFIED** | `outputs/reports/error_propagation_study.md` |
 | **M10**| Benchmarking| Official computational profiling notebook (Latency, RTF, RAM, VRAM) | **VERIFIED** | `notebooks/01_system_benchmark.ipynb` |
 | **M11**| Validation | In-the-wild Indian audio domain robustness (AIR News, Panel, Vaani) | **VERIFIED** | `outputs/reports/real_world_domain_robustness_report.md` |
-| **M12**| Portfolio | Final Academic Report, Technical Interview Defense, and Packaging | **VERIFIED** | `docs/FINAL_ACADEMIC_REPORT.md` |
+| **M12**| Portfolio | Final Academic Report, Technical Interview Defense, and Packaging | **VERIFIED** | [`Project_report/Final_project_submission.pdf`](Project_report/Final_project_submission.pdf) |
 
 ---
 
 ## 7. Interactive Showcase & Web Audio Demonstrator
 
-- **Live Application**: [https://learnerkg23.github.io/Audio-Engineering/](https://learnerkg23.github.io/Audio-Engineering/) (or local [`docs/index.html`](docs/index.html) / [`demo.html`](demo.html))
-- **Presentation Playbook**: For a step-by-step walkthrough script and defense Q&A, consult the [**Official Demonstration Master Guide**](docs/DEMONSTRATION_MASTER_GUIDE.md).
+- **Live Application**: [https://learnerkg23.github.io/Audio-Engineering/](https://learnerkg23.github.io/Audio-Engineering/) (or local [`docs/index.html`](docs/index.html))
 
 Explore:
 - Interactive A/B waveform and audio players comparing Raw Overlapping Mixtures against Clean Stems.
@@ -251,7 +249,7 @@ Explore:
 
 ---
 
-## 8. License, Dataset Provenance & Attribution
+## 8. License & Academic Attribution
 
 ### 8.1 Software License
 This project is released under the **MIT License**.
