@@ -72,25 +72,25 @@ Stage~4 structures transcripts into Pydantic~v2 schemas (\texttt{PostProcessedRe
 \section{Results}
 \noindent\textbf{Controlled evaluations:} Table~\ref{tab:results} summarizes results across distinct controlled suites.
 
-\begin{table}[ht]
+\begin{table*}[t]
 \centering
 \small
-\begin{tabularx}{\linewidth}{@{}l l X@{}}
+\begin{tabularx}{\textwidth}{@{}l l X@{}}
 \toprule
 Evaluation & Scope & Recorded result \\
 \midrule
-Separation & 6 mixtures & Conv-TasNet: mean $\Delta$SI-SDR +15.45~dB (peak +21.76~dB, min +4.81~dB, output 15.45~dB, baseline $-0.00$~dB; mean RTF 0.090). Demucs: output $-8.60$~dB ($\Delta$SI-SDR $-8.60$~dB; RTF 0.561). \\
-Diarization & 9 mixtures & Mean DER: 40.52\% (raw spectral); 55.51\% (raw GMM); 23.97\% (with separation). Reduction: 16.55 pp. \\
-ASR & 1 clip (9.54 s) & WER on \texttt{mix\_01}: 86.28\% (raw); 70.78\% (diarized); 51.57\% (separated+diarized; CER 44.66\%, RTF 0.194). Whisper: 100.0\% (raw); 103.34\% (separated). \\
+Separation & 6 mixtures & Conv-TasNet: mean $\Delta$SI-SDR +15.45~dB (peak +21.76~dB, min +4.81~dB, output 15.45~dB, baseline $-0.00$~dB; mean RTF 0.090). Demucs comparator: output $-8.60$~dB ($\Delta$SI-SDR $-8.60$~dB; RTF 0.561). \\
+Diarization & 9 mixtures & Mean DER: 40.52\% (raw spectral); 55.51\% (raw GMM); 23.97\% (with separation). Absolute reduction: 16.55 pp. \\
+ASR & 1 clip (9.54 s) & WER on \texttt{mix\_01}: 86.28\% (raw); 70.78\% (diarized); 51.57\% (separated+diarized; CER 44.66\%, RTF 0.194). Whisper comparator: 100.0\% (raw); 103.34\% (separated). \\
 \bottomrule
 \end{tabularx}
 \caption{Results across separate controlled evaluations (not directly comparable across rows).}
 \label{tab:results}
-\end{table}
+\end{table*}
 
 Across the six two-speaker mixtures (\texttt{stage1\_separation\_results.json}), raw mixture SI-SDR averaged $-0.003$~dB ($-0.00$~dB rounded). Conv-TasNet reached 15.448~dB mean output SI-SDR, yielding $\Delta\text{SI-SDR} = +15.451$~dB ($+15.45$~dB; peak $+21.76$~dB on \texttt{mix\_01}, min $+4.81$~dB on \texttt{mix\_04}); committed Stage~1 JSON records mean RTF 0.090 (earlier M2 MPS report \texttt{e712501} logged 0.075). Hybrid Demucs averaged $-8.598$~dB output ($\Delta\text{SI-SDR} = -8.595$~dB, $-8.60$~dB rounded) due to music-stem grouping. Across nine mixtures, separation reduced mean DER from 40.52\% to 23.97\% (16.55 pp gain; GMM 55.51\%), with higher error on 3-speaker \texttt{mix\_08} (49.57\%) and 10~dB noisy \texttt{mix\_09} (46.60\%). On \texttt{controlled\_mix\_01}, Vakyansh WER fell from 86.28\% (raw) to 70.78\% (diarized) and 51.57\% (separated+diarized; CER 44.66\%, CPU RTF 0.194), whereas \texttt{whisper-tiny} suffered repetition collapse (100.0\% raw; 103.34\% separated).
 
-In an exploratory analysis (\texttt{run\_ablation\_study.py}), seven predefined synthetic scenarios ($n=7$, \texttt{EXP-2.1}--\texttt{EXP-2.7}, $\Omega \in \{25\%, 40\%, 50\%, 75\%\}$) are configured separately from end-to-end execution (which uses \texttt{htdemucs} and \texttt{mock\_mode=True}). Across these synthetic scenarios, SI-SDR correlates inversely with DER ($r = -0.977$) and WER ($r = -0.969$), with configured boundary \texttt{EXP-2.5} (4.2~dB SI-SDR, 28.9\% DER, 42.7\% WER) marking an exploratory stress point rather than a universal empirical threshold.
+In an exploratory analysis (\texttt{run\_\allowbreak ablation\_\allowbreak study.py}), seven predefined synthetic scenarios ($n=7$, \texttt{EXP-2.1}--\texttt{EXP-2.7}, $\Omega \in \{25\%, 40\%, 50\%, 75\%\}$) are configured separately from end-to-end execution (which uses \texttt{htdemucs} and \texttt{mock\_mode=True}). Across these synthetic scenarios, SI-SDR correlates inversely with DER ($r = -0.977$) and WER ($r = -0.969$), with configured boundary \texttt{EXP-2.5} (4.2~dB SI-SDR, 28.9\% DER, 42.7\% WER) marking an exploratory stress point rather than a universal empirical threshold.
 
 \noindent\textbf{Simulated domain stress and profiling:} On Track~B: (1)~\texttt{air\_formal\_news\_01}: DER was 0.0\%; WER against the 41-word manifest was 92.7\% (8 subs, 30 deletions, CER 75.4\%) because the manifest combines altered Sentence~1 wording with an unuttered 24-word Sentence~2 (27 divergent/unuttered words vs.\ 30 edit-distance deletions from 11 glued tokens). Against the clip's actual 14 spoken words (\texttt{air\_formal\_news\_01\_diagnostic.json}), diagnostic WER is 57.1\% (8/14: 5 subs, 3 dels) with 0.0\% CER (69/69 chars match when AI is written in Devanagari), isolating CTC single-delimiter word merging. (2)~\texttt{air\_spontaneous\_panel\_01}: DER was 58.7\% and WER 57.8\% due to spectral cluster collapse ($k^* = 1$) under dense overlap. (3)~\texttt{vaani\_rural\_call\_01}: DER was 0.7\% and WER 63.0\% (CER 42.4\%) from 300--3400~Hz bandpass loss. On WSL2 CPU (\texttt{benchmark\_summary.json}), isolated 30~s end-to-end execution took 20.90~s (RTF 0.697; Stage~1 separation alone 19.40~s, RTF 0.647), continuous 30~s scaling achieved RTF 0.490, and cold-start Track~B news ran at RTF 19.98.
 
@@ -99,6 +99,9 @@ Limitations include: (1)~\textbf{Fixed two-stream separation}: Conv-TasNet outpu
 
 \section{Conclusion}
 We evaluated a modular five-stage pipeline for single-channel overlapping Hinglish speech across controlled mixtures and simulated broadcast/telephony stress clips. Pretrained Conv-TasNet improved separation fidelity ($\Delta$SI-SDR $+15.45$~dB over a $-0.00$~dB baseline), lowered mean DER from 40.52\% to 23.97\%, and reduced \texttt{controlled\_mix\_01} WER from 86.28\% to 51.57\%, whereas Stage~4 zero-hallucination scores reflect deterministic template validation. Stress diagnostics revealed spectral cluster collapse under dense overlap ($k^*=1$, 58.7\% DER), CTC delimiter word merging, and 300--3400~Hz bandpass degradation, motivating $N>2$ separation and bilingual LM decoding.
+
+\section*{Generative AI disclosure}
+AI assistants were used for targeted engineering and editing support: Anthropic Claude Opus 4.6 assisted in PyTorch polyphase resampling and Stage~1 tensor-dimension debugging; Google Gemini 3.8 Flash assisted in Stage~4 Pydantic~v2 schema and prompt-template drafting; OpenAI GPT-4o (accessed via ChatGPT Plus) aided LaTeX table formatting and proofreading; and the Google Antigravity agent (powered by Google Gemini 3.8 Flash and Gemini 4 models) assisted in code consistency audits, test validation, and report/README/demo synchronization. All experimental protocols, code, benchmarks, and analyses were executed and verified by the student authors, who take full responsibility for this submission.
 
 \section*{Individual member contributions}
 {\small
@@ -116,11 +119,8 @@ Pranav & Pydantic schema contracts, benchmark profiling, latency and RTF benchma
 \smallskip
 \noindent All members have read this report and agree with the statement above.
 
-\section*{Generative AI disclosure}
-AI assistants were used for targeted engineering and editing support: Anthropic Claude Opus 4.6 assisted in PyTorch polyphase resampling and Stage~1 tensor-dimension debugging; Google Gemini 3.8 Flash assisted in Stage~4 Pydantic~v2 schema and prompt-template drafting; OpenAI GPT-4o (accessed via ChatGPT Plus) aided LaTeX table formatting and proofreading; and the Google Antigravity agent (powered by Google Gemini 3.8 Flash and Gemini 4 models) assisted in code consistency audits, test validation, and report/README/demo synchronization. All experimental protocols, code, benchmarks, and analyses were executed and verified by the student authors, who take full responsibility for this submission.
-
 \section*{Code availability}
-\noindent Source code: \url{\githuburl} (public, includes reproduction scripts and 127 passing unit tests). Interactive Web Demo: \url{\demourl}
+{\raggedright\noindent Source code: \url{\githuburl}. Interactive Web Demo: \url{\demourl}\par}
 
 \begin{thebibliography}{11}
 \small
