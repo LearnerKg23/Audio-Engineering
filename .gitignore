@@ -42,11 +42,43 @@ temp/
 *.tmp
 *.log
 
-# --- Internal Developer Notes & Checklists (Not for Evaluation) ---
-project_milestones/12_RESUME_AND_INTERVIEW_VALUE.md
-project_milestones/REVIEW_BEFORE_IMPLEMENTATION.md
+# --- LaTeX Intermediate Build Artifacts ---
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.out
+*.synctex.gz
+*.toc
 
-# --- Evaluation Preparation & Presentation Drafts ---
+# --- Initial Semester Proposal & Word Documents ---
+Audio_Engineering_AI_Project_Proposal.docx
+*.docx
+
+# --- Redundant Root HTML Duplicates (docs/index.html is authoritative) ---
+/index.html
+/demo.html
+
+# --- Internal Study, Milestones & Viva Defense Documents ---
+LEARNING/
+project_milestones/
 first eval prep/
 "first eval prep/"
+docs/FIRST_EVALUATION_MASTER_GUIDE.md
+docs/TECHNICAL_INTERVIEW_PORTFOLIO.md
+docs/PROJECT_CHANGES_AND_AUDIT_REPORT.md
+docs/flash_talk_script.md
+docs/flash_talk_slides.md
 
+# --- Project Submission Folder ---
+Project_Sub_Template/
+project_sub_template/
+
+# --- Model Checkpoints & Notebook Autosaves ---
+.ipynb_checkpoints/
+*.pt
+*.pth
+*.bin
+*.onnx
+*.ckpt
