@@ -1695,7 +1695,7 @@
           <div class="step-icon-well">🧪</div>
           <div class="step-meta">
             <span class="step-title">Stage 5: Diagnostics</span>
-            <span class="step-sub">AIR & Vaani (80/80 Tests)</span>
+            <span class="step-sub">AIR & Vaani (127/127 Tests Passed)</span>
           </div>
         </a>
       </div>
@@ -1792,7 +1792,7 @@
               <span class="quad-badge badge-completed">Verified</span>
             </div>
             <div class="quad-item-desc">
-              Track "Who spoke when" timeline using pyannote.audio 3.1 ResNet x-vectors and automated Eigengap spectral clustering (Δλₖ = λₖ₊₁ - λₖ).
+              Track "Who spoke when" timeline using native 192-d acoustic hyperspherical embeddings and automated Eigengap spectral clustering (Δλₖ = λₖ₊₁ - λₖ).
             </div>
           </div>
           <div class="quad-item">
@@ -1801,7 +1801,7 @@
               <span class="quad-badge badge-completed">Verified</span>
             </div>
             <div class="quad-item-desc">
-              Transcribe speech to text using AI4Bharat IndicWav2Vec with Unicode NFKC normalization and CTC beam search rescoring.
+              Transcribe speech to text using AI4Bharat IndicWav2Vec with Unicode NFKC normalization and greedy CTC argmax decoding.
             </div>
           </div>
           <div class="quad-item">
@@ -2216,7 +2216,7 @@
           <div>
             <strong style="color:var(--fg-heading); font-size:13px;">Critical Acoustic Breakdown Threshold (Δ SI-SDR<sub>crit</sub> = +4.2 dB):</strong>
             <p style="font-size:12px; color:var(--muted); margin-top:2px;">
-              Empirical correlation reveals that when Stage 1 separation gain drops below +4.2 dB, Stage 2 DER degrades quadratically and Stage 3 WER collapses above 80%, triggering cascading hallucinations in unguardrailed LLMs (r = -0.977).
+              In exploratory synthetic scenario sweeps (n=7, r = -0.977), when Stage 1 separation gain drops below +4.2 dB, Stage 2 DER degrades and Stage 3 WER exceeds 40%, identifying an exploratory stress boundary for downstream processing.
             </p>
           </div>
         </div>
@@ -2231,7 +2231,7 @@
           <div style="font-family:var(--font-mono); font-size:12px; line-height:1.7;">
             <div>• Measured SNR: <span class="t-green">47.07 dB</span></div>
             <div>• Diarization DER: <span class="t-green">0.00%</span> (Perfect single speaker)</div>
-            <div>• Bilingual WER: <span class="t-yellow">92.5%</span> (Devanagari normalization mismatch)</div>
+            <div>• Bilingual WER: <span class="t-yellow">92.7% nominal</span> (38.5% on 13 spoken words; 30 unuttered deletions)</div>
             <div>• Hallucination: <span class="t-green">0.00%</span> (Factual entity recall)</div>
           </div>
         </div>
@@ -2242,7 +2242,7 @@
           <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Acoustic Environment: Multi-talker table mic, rapid Hinglish interruptions.</p>
           <div style="font-family:var(--font-mono); font-size:12px; line-height:1.7;">
             <div>• Measured SNR: <span class="t-green">35.59 dB</span></div>
-            <div>• Diarization DER: <span class="t-green">16.25%</span> (3 talkers disentangled)</div>
+            <div>• Diarization DER: <span class="t-yellow">58.70%</span> (k*=1 cluster collapse under cross-talk)</div>
             <div>• Bilingual WER: <span class="t-green">57.78%</span> (Overcoming overlap)</div>
             <div>• Hallucination: <span class="t-green">0.00%</span> (100% Attribution integrity)</div>
           </div>
@@ -2760,8 +2760,8 @@
       } else if (track === 'B') {
         cSpeakers.textContent = "3 Speakers";
         cSpeakersSub.textContent = "Interleaved Studio Panel (k=3)";
-        cDER.textContent = "16.25% DER";
-        cDERSub.innerHTML = '<span class="t-green">Separation-Aware Decoupled</span>';
+        cDER.textContent = "58.70% DER";
+        cDERSub.innerHTML = '<span class="t-yellow">k*=1 Cluster Collapse (Dense Overlap)</span>';
         cOverlap.textContent = "2.54s (Total)";
         cOverlapSub.textContent = "2 Distinct Collisions: OV1 (0.91s) & OV2 (1.63s)";
         cRTF.textContent = "0.007 RTF";
@@ -3532,7 +3532,7 @@ STAGE 5: REAL-WORLD INDIAN AUDIO VALIDATION & DOMAIN ROBUSTNESS (MILESTONE M11)
 Domain                  | Duration | SNR (dB) | DER (%) | WER (%) | Cellular Bandpass Ratio
 -------------------------------------------------------------------------------------------------------------
 AIR Formal Studio News  |    6.00s | 47.07 dB |   0.00% |  92.68% |  0.902 (Clean Studio)
-AIR Spontaneous Debate  |   13.02s | 35.59 dB |  16.25% |  57.78% |  0.884 (3 Concurrent Talkers)
+AIR Spontaneous Debate  |   13.02s | 35.59 dB |  58.70% |  57.78% |  0.884 (3 Concurrent Talkers)
 Project Vaani Rural Call|    8.30s | 21.14 dB |   0.65% |  62.96% |  0.902 (2G/3G Cellular Narrowband)
 -------------------------------------------------------------------------------------------------------------
 Domain Findings:

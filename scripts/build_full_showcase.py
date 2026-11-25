@@ -2320,7 +2320,7 @@ def main():
           <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Acoustic Environment: Multi-talker table mic, rapid Hinglish interruptions.</p>
           <div style="font-family:var(--font-mono); font-size:12px; line-height:1.7;">
             <div>• Measured SNR: <span class="t-green">35.59 dB</span></div>
-            <div>• Diarization DER: <span class="t-green">16.25%</span> (3 talkers disentangled)</div>
+            <div>• Diarization DER: <span class="t-yellow">58.70%</span> (k*=1 cluster collapse under cross-talk)</div>
             <div>• Bilingual WER: <span class="t-green">57.78%</span> (Overcoming overlap)</div>
             <div>• Hallucination: <span class="t-green">0.00%</span> (100% Attribution integrity)</div>
           </div>
@@ -2838,8 +2838,8 @@ def main():
       }} else if (track === 'B') {{
         cSpeakers.textContent = "3 Speakers";
         cSpeakersSub.textContent = "Interleaved Studio Panel (k=3)";
-        cDER.textContent = "16.25% DER";
-        cDERSub.innerHTML = '<span class="t-green">Separation-Aware Decoupled</span>';
+        cDER.textContent = "58.70% DER";
+        cDERSub.innerHTML = '<span class="t-yellow">k*=1 Cluster Collapse (Dense Overlap)</span>';
         cOverlap.textContent = "2.54s (Total)";
         cOverlapSub.textContent = "2 Distinct Collisions: OV1 (0.91s) & OV2 (1.63s)";
         cRTF.textContent = "0.007 RTF";
@@ -3610,7 +3610,7 @@ STAGE 5: REAL-WORLD INDIAN AUDIO VALIDATION & DOMAIN ROBUSTNESS (MILESTONE M11)
 Domain                  | Duration | SNR (dB) | DER (%) | WER (%) | Cellular Bandpass Ratio
 -------------------------------------------------------------------------------------------------------------
 AIR Formal Studio News  |    6.00s | 47.07 dB |   0.00% |  92.68% |  0.902 (Clean Studio)
-AIR Spontaneous Debate  |   13.02s | 35.59 dB |  16.25% |  57.78% |  0.884 (3 Concurrent Talkers)
+AIR Spontaneous Debate  |   13.02s | 35.59 dB |  58.70% |  57.78% |  0.884 (3 Concurrent Talkers)
 Project Vaani Rural Call|    8.30s | 21.14 dB |   0.65% |  62.96% |  0.902 (2G/3G Cellular Narrowband)
 -------------------------------------------------------------------------------------------------------------
 Domain Findings:

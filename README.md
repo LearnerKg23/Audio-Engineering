@@ -35,14 +35,14 @@ This repository implements a modular, mathematically rigorous, multi-stage speec
                         ▼                                                ▼
      ┌──────────────────────────────────────┐     ┌─────────────────────────────────────┐
      │  GRACEFUL BYPASS MODE                │     │  STAGE 1: BLIND SOURCE SEPARATION   │
-     │  (Zero Artifact Generation)          │     │  (Hybrid Demucs / Conv-TasNet U-Net)│
+     │  (Zero Artifact Generation)          │     │  (Conv-TasNet TCN / Hybrid Demucs)  │
      └──────────────────┬───────────────────┘     └──────────────────┬──────────────────┘
                         │                                            │ Isolated Stems
                         └───────────────────────┬────────────────────┘
                                                 │
                                                 ▼
      ┌──────────────────────────────────────────────────────────────────────────────────┐
-     │  STAGE 2: SPEAKER DIARIZATION (pyannote.audio + Eigengap Spectral Clustering)    │
+     │  STAGE 2: SPEAKER DIARIZATION (192-d Embeddings + Eigengap Spectral Clustering)  │
      │  Outputs: [Contract 3] DiarizationTimeline JSON with millisecond bounds          │
      └──────────────────────────────────────────┬───────────────────────────────────────┘
                                                 │ Sliced Acoustic Segments
