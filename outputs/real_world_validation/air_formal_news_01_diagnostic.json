@@ -1,0 +1,155 @@
+{
+  "clip_id": "air_formal_news_01",
+  "audio_path": "data/real_world_eval_suite/air_formal_news_01.wav",
+  "duration_seconds": 6.0,
+  "generated_at": "2026-11-25T14:41:36.962664+00:00",
+  "models": {
+    "stage1_separation": "htdemucs",
+    "stage3_asr": "ai4bharat_indic_wav2vec",
+    "asr_hf_id": "Harveenchadha/vakyansh-wav2vec2-hindi-him-4200"
+  },
+  "references": {
+    "manifest_41_words": "यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं। प्रत्येक रिकॉर्डिंग को सावधानीपूर्वक तैयार किया गया है ताकि स्पष्ट उच्चारण और मशीन लर्निंग अनुप्रयोगों के लिए स्थिर ऑडियो गुणवत्ता सुनिश्चित की जा सके।",
+    "spoken_14_words_devanagari_ai": "यह एक वॉइस ऑडियो डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस एआई के प्रशिक्षण",
+    "spoken_14_words_latin_ai": "यह एक वॉइस ऑडियो डेटासेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस AI के प्रशिक्षण",
+    "manifest_word_count": 41,
+    "spoken_word_count": 14,
+    "additional_unmatched_manifest_words": 27
+  },
+  "proposed_pipeline": {
+    "raw_ctc_hypothesis": "s य s ह s ए s क s s व s ॉ s इ s स s s ऑ s ड s ि s यो s ड s े s ट s ा s s स s े s ट s s ह s ै s s ज s ि s स s क s ा s उ s प s य s ो s ग s s आ s प s s आ s र s ्ट s ि s फ s ि s शिय s ल s s इ s ं s ट s े s ल s ि s ज s े s ं s स s s ए s आ s ई s क s े s s प s ् s र s श s ि s क् s षण",
+    "cleaned_hypothesis": "यहएक वॉइस ऑडियोडेटा सेट है जिसकाउपयोग आप आर्टिफिशियल इंटेलिजेंस एआईके प्रशिक्षण",
+    "normalized_tokens": [
+      "यहएक",
+      "वॉइस",
+      "ऑडियोडेटा",
+      "सेट",
+      "है",
+      "जिसकाउपयोग",
+      "आप",
+      "आर्टिफिशियल",
+      "इंटेलिजेंस",
+      "एआईके",
+      "प्रशिक्षण"
+    ],
+    "vs_manifest_41_wer": {
+      "wer": 0.9268,
+      "wer_percent": 92.68,
+      "substitutions": 8,
+      "deletions": 30,
+      "insertions": 0,
+      "hits": 3,
+      "ref_words": 41,
+      "hyp_words": 11
+    },
+    "vs_manifest_41_cer": {
+      "cer": 0.7538,
+      "cer_percent": 75.38,
+      "substitutions": 21,
+      "deletions": 126,
+      "insertions": 0,
+      "hits": 48,
+      "ref_chars": 195,
+      "hyp_chars": 69
+    },
+    "vs_spoken_14_devanagari_ai_wer": {
+      "wer": 0.5714,
+      "wer_percent": 57.14,
+      "substitutions": 5,
+      "deletions": 3,
+      "insertions": 0,
+      "hits": 6,
+      "ref_words": 14,
+      "hyp_words": 11
+    },
+    "vs_spoken_14_devanagari_ai_cer": {
+      "cer": 0.0,
+      "cer_percent": 0.0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0,
+      "hits": 69,
+      "ref_chars": 69,
+      "hyp_chars": 69
+    },
+    "vs_spoken_14_latin_ai_wer": {
+      "wer": 0.5714,
+      "wer_percent": 57.14,
+      "substitutions": 5,
+      "deletions": 3,
+      "insertions": 0,
+      "hits": 6,
+      "ref_words": 14,
+      "hyp_words": 11
+    },
+    "vs_spoken_14_latin_ai_cer": {
+      "cer": 0.0441,
+      "cer_percent": 4.41,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 1,
+      "hits": 66,
+      "ref_chars": 68,
+      "hyp_chars": 69
+    }
+  },
+  "baseline_unseparated": {
+    "raw_ctc_hypothesis": "s ह s ए s क s s व s ॉ s इ s स s s ऑ s ड s ि s यो s s ड s े s ट s ा s s स s े s ट s s ह s ै s s ज s ि s स s क s ा s उ s प s य s ो s ग s s आ s प s s आ s र s ्ट s ि s फ s ि s शिय s ल s s इ s ं s ट s े s ल s ि s ज s े s ं s स s s ए s आ s ई s s क s े s s प् s र s श s ि s क्ष s",
+    "cleaned_hypothesis": "हएक वॉइस ऑडियो डेटा सेट है जिसकाउपयोग आप आर्टिफिशियल इंटेलिजेंस एआई के प्रशिक्ष",
+    "normalized_tokens": [
+      "हएक",
+      "वॉइस",
+      "ऑडियो",
+      "डेटा",
+      "सेट",
+      "है",
+      "जिसकाउपयोग",
+      "आप",
+      "आर्टिफिशियल",
+      "इंटेलिजेंस",
+      "एआई",
+      "के",
+      "प्रशिक्ष"
+    ],
+    "vs_manifest_41_wer": {
+      "wer": 0.9024,
+      "wer_percent": 90.24,
+      "substitutions": 9,
+      "deletions": 28,
+      "insertions": 0,
+      "hits": 4,
+      "ref_words": 41,
+      "hyp_words": 13
+    },
+    "vs_spoken_14_devanagari_ai_wer": {
+      "wer": 0.5,
+      "wer_percent": 50.0,
+      "substitutions": 6,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 7,
+      "ref_words": 14,
+      "hyp_words": 13
+    },
+    "vs_spoken_14_devanagari_ai_cer": {
+      "cer": 0.029,
+      "cer_percent": 2.9,
+      "substitutions": 0,
+      "deletions": 2,
+      "insertions": 0,
+      "hits": 67,
+      "ref_chars": 69,
+      "hyp_chars": 67
+    },
+    "vs_spoken_14_latin_ai_wer": {
+      "wer": 0.5714,
+      "wer_percent": 57.14,
+      "substitutions": 7,
+      "deletions": 1,
+      "insertions": 0,
+      "hits": 6,
+      "ref_words": 14,
+      "hyp_words": 13
+    }
+  }
+}

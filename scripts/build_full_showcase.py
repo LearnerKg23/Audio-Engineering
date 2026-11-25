@@ -84,7 +84,7 @@ def main():
   <title>“Who Spoke What and When” — Advanced Computational Speech Engineering</title>
   <meta name="description" content="Advanced Computational Speech Engineering: Blind Source Separation, Speaker Diarization, Code-Switched Multilingual ASR, and Guardrailed LLM Synthesis in Indian Acoustic Environments.">
   <meta property="og:title" content="“Who Spoke What and When” — Advanced Computational Speech Engineering">
-  <meta property="og:description" content="Production-Grade Multi-Stage Speech Processing Pipeline for In-The-Wild Overlapping Indian Audio, Colloquial Code-Switching (Hinglish), and Semantic Intelligence Extraction.">
+  <meta property="og:description" content="Multi-Stage Speech Processing Pipeline for Overlapping Hindi/Hinglish Audio, Speaker Diarization, ASR, and Schema-Validated LLM Synthesis.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://learnerkg23.github.io/Audio-Engineering/">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23FF8800'/><path d='M25 50h8v15h-8zm14-15h8v45h-8zm14-25h8v70h-8zm14 15h8v40h-8zm14 15h8v10h-8z' fill='%23fff'/></svg>">
@@ -1733,7 +1733,7 @@ def main():
           <div class="step-icon-well">🎛️</div>
           <div class="step-meta">
             <span class="step-title">Stage 1: Separation</span>
-            <span class="step-sub">Conv-TasNet (+21.8 dB)</span>
+            <span class="step-sub">Conv-TasNet (+15.45 dB Mean)</span>
           </div>
         </a>
 
@@ -1743,7 +1743,7 @@ def main():
           <div class="step-icon-well">⏱️</div>
           <div class="step-meta">
             <span class="step-title">Stage 2: Diarization</span>
-            <span class="step-sub">Spectral Lap. (9.20% DER)</span>
+            <span class="step-sub">Spectral (23.97% Mean DER)</span>
           </div>
         </a>
 
@@ -1753,7 +1753,7 @@ def main():
           <div class="step-icon-well">🎙️</div>
           <div class="step-meta">
             <span class="step-title">Stage 3: Indic ASR</span>
-            <span class="step-sub">IndicWav2Vec (21.9% WER)</span>
+            <span class="step-sub">Vakyansh CTC (51.57% WER)</span>
           </div>
         </a>
 
@@ -1763,7 +1763,7 @@ def main():
           <div class="step-icon-well">🤖</div>
           <div class="step-meta">
             <span class="step-title">Stage 4: LLM Intel</span>
-            <span class="step-sub">Schema Contract (0.0% Halluc)</span>
+            <span class="step-sub">Mock Contract (0.0% Entity)</span>
           </div>
         </a>
 
@@ -1773,7 +1773,7 @@ def main():
           <div class="step-icon-well">🧪</div>
           <div class="step-meta">
             <span class="step-title">Stage 5: Diagnostics</span>
-            <span class="step-sub">AIR & Vaani (80/80 Tests)</span>
+            <span class="step-sub">Domain Stress (127/127 Passed)</span>
           </div>
         </a>
       </div>
@@ -1861,43 +1861,43 @@ def main():
               <span class="quad-badge badge-completed">Verified</span>
             </div>
             <div class="quad-item-desc">
-              Disentangle overlapping voices into single-speaker channels using Conv-TasNet (1D TCN) & Meta Hybrid Demucs with Hungarian PIT.
+              Track A: Conv-TasNet (1D TCN, 8 kHz Libri2Mix via polyphase resampling) &amp; Hybrid Demucs comparator (`htdemucs` in Track B) with Hungarian PIT.
             </div>
           </div>
           <div class="quad-item">
             <div class="quad-item-title">
-              <span>2. Speaker Diarization ("Who & When?")</span>
+              <span>2. Speaker Diarization ("Who &amp; When?")</span>
               <span class="quad-badge badge-completed">Verified</span>
             </div>
             <div class="quad-item-desc">
-              Track "Who spoke when" timeline using pyannote.audio 3.1 ResNet x-vectors and automated Eigengap spectral clustering (Δλₖ = λₖ₊₁ - λₖ).
+              Track "Who spoke when" timeline using native 192-d acoustic hyperspherical embeddings (`pyannote` absent in runtime) and Eigengap spectral clustering (Δλₖ = λₖ₊₁ - λₖ).
             </div>
           </div>
           <div class="quad-item">
             <div class="quad-item-title">
-              <span>3. Multilingual & Hinglish ASR ("What Said?")</span>
+              <span>3. Multilingual &amp; Hinglish ASR ("What Said?")</span>
               <span class="quad-badge badge-completed">Verified</span>
             </div>
             <div class="quad-item-desc">
-              Transcribe speech to text using AI4Bharat IndicWav2Vec with Unicode NFKC normalization and CTC beam search rescoring.
+              Transcribe speech with Vakyansh Hindi Wav2Vec2 (greedy CTC argmax decoding without LM rescoring) and NFKC normalization; Whisper-tiny evaluated as comparator.
             </div>
           </div>
           <div class="quad-item">
             <div class="quad-item-title">
-              <span>4. LLM Structuring & Intelligence</span>
+              <span>4. LLM Structuring &amp; Intelligence</span>
               <span class="quad-badge badge-completed">Verified</span>
             </div>
             <div class="quad-item-desc">
-              Extract minutes, action items, and structured JSON with Pydantic Contract 5 validation, guaranteeing 0.00% hallucination.
+              Convert transcripts to Pydantic Contract 5 JSON using deterministic `MockLLMProvider` templates and rule-based entity checks (0.0% mock unsupported-entity rate).
             </div>
           </div>
           <div class="quad-item">
             <div class="quad-item-title">
-              <span>5. Diagnostics & Field Validation</span>
+              <span>5. Diagnostics &amp; Domain Stress Tests</span>
               <span class="quad-badge badge-completed">Verified</span>
             </div>
             <div class="quad-item-desc">
-              Ablation studies & critical acoustic breakdown threshold modeling (+4.20 dB SI-SDR) across authentic broadcast & telephony audio.
+              Exploratory synthetic scenario sweep (EXP-2.1–2.7, +4.2 dB stress point) &amp; Track B simulated broadcast/cellular stress clips.
             </div>
           </div>
         </div>
@@ -1906,14 +1906,14 @@ def main():
         <div class="quad-card">
           <div class="quad-header">
             <div class="quad-icon">🗄️</div>
-            <div class="quad-title">Dual-Track Data Strategy & Sources</div>
+            <div class="quad-title">Dual-Track Data Strategy &amp; Sources</div>
           </div>
           <div class="quad-item">
             <div class="quad-item-title">
               <span>The Ground-Truth Challenge</span>
             </div>
             <div class="quad-item-desc">
-              Real radio audio lacks isolated single-mic stems; clean reference signals are mathematically required to compute SI-SDR and SDR distortion metrics.
+              Unseparated multi-talker mixtures lack isolated reference waveforms; clean single-speaker stems are required to compute SI-SDR distortion metrics.
             </div>
           </div>
           <div class="quad-item">
@@ -1921,15 +1921,15 @@ def main():
               <span>Track A: Calibrated Controlled Suite</span>
             </div>
             <div class="quad-item-desc">
-              Clean human stems from Hugging Face (hindi-english-bilingual & Hindi-Speech) and AI4Bharat IndicVoices. 6 synthetic mixes across Overlap Ratios (Ω = 25%, 50%) and SIR (0 dB, ±6 dB) with exact sample-aligned reference stems.
+              7 Hindi/Hinglish stems (HF hindi-english-bilingual for A/B, HF Hindi-Speech for D; C/E/F/G local stems): 6 two-speaker separation mixes (Ω = 25%, 50%; SIR 0, ±6 dB) and 9 diarization mixes.
             </div>
           </div>
           <div class="quad-item">
             <div class="quad-item-title">
-              <span>Track B: In-The-Wild Stress-Tests</span>
+              <span>Track B: Simulated Domain Stress-Tests</span>
             </div>
             <div class="quad-item-desc">
-              Authentic unsegmented broadcasts from All India Radio (AIR-RS-DB debates) and IISc/ARTPARK Project Vaani rural helpline phone-in calls (300–3400 Hz bandpass).
+              3 domain-stress clips (27.3s total) synthesized from Track A stems in scripts/expand_data_pipeline.py: studio news (D), 3-talker panel (A,F,G), and 300–3400 Hz cellular bandpass call (E).
             </div>
           </div>
         </div>
@@ -1938,26 +1938,26 @@ def main():
         <div class="quad-card">
           <div class="quad-header">
             <div class="quad-icon">📈</div>
-            <div class="quad-title">Downstream ASR Proof (Why Separation Matters)</div>
+            <div class="quad-title">Downstream ASR Evaluation (controlled_mix_01)</div>
           </div>
           <div class="quad-item">
             <div class="quad-item-title">
-              <span>The Unseparated Collision Catastrophe</span>
-              <span class="quad-badge badge-error">Failed Baseline</span>
+              <span>Unseparated Mixture Baseline</span>
+              <span class="quad-badge badge-error">High WER</span>
             </div>
             <div class="quad-item-desc">
-              Feeding unseparated cross-talk directly into Whisper causes infinite repetition loops ("कृपया..."), 100% Word Error Rate (WER), and severe latency spikes (16.7s).
+              Feeding raw `controlled_mix_01` into Vakyansh CTC yields 86.28% WER (100.28% CER), while `whisper-tiny` collapses into an infinite repetition loop ("पुप्प्...", 100.0% WER).
             </div>
           </div>
           <div class="quad-item">
             <div class="quad-item-title">
-              <span>The Separated Stem Recovery</span>
-              <span class="quad-badge badge-success">Clean Recovery</span>
+              <span>Separated + Diarized Vakyansh Recovery</span>
+              <span class="quad-badge badge-success">51.57% WER</span>
             </div>
             <div class="quad-item-desc">
-              Whisper & IndicWav2Vec transcribe separated stems in &lt;1.0s with flawless word-for-word accuracy:
+              Separation + diarization lowers `controlled_mix_01` Vakyansh WER from 86.28% to 51.57% (44.66% CER; Speaker 0: 26.67%, Speaker 1: 76.47%). Target Hindi stems:
               <br>• <strong>Stem 0 (Female Hinglish)</strong>: <em>"उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा"</em>
-              <br>• <strong>Stem 1 (Male Hindi)</strong>: <em>"इस वॉइस डेटासेट का मुख्य उद्देश्य भारतीय भाषाओं के लिए बेहतर एआई मॉडल तैयार करना है"</em>
+              <br>• <strong>Stem 1 (Male Hindi)</strong>: <em>"यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं"</em>
             </div>
           </div>
           <div class="quad-item">
@@ -1965,7 +1965,7 @@ def main():
               <span>Core Takeaway</span>
             </div>
             <div class="quad-item-desc">
-              Front-end source separation restores downstream AI from catastrophic failure to production quality (+21.8 dB gain).
+              Stage 1 Conv-TasNet (+15.45 dB mean ΔSI-SDR; +21.76 dB peak on mix_01) reduces downstream WER by 34.71 percentage points, though monolingual CTC still drops Latin loanwords.
             </div>
           </div>
         </div>
@@ -1990,50 +1990,50 @@ def main():
          ========================================================================== -->
     <section class="telemetry-summary-grid">
       <div class="telemetry-card-soft">
-        <div class="t-val orange">+21.77 dB</div>
-        <div class="t-label">Conv-TasNet SI-SDR Gain</div>
-        <div class="t-sub">Monaural Waveform Separation</div>
+        <div class="t-val orange">+15.45 dB</div>
+        <div class="t-label">Conv-TasNet Mean ΔSI-SDR</div>
+        <div class="t-sub">6 Mixes (+21.76 dB Peak, -0.00 dB Base)</div>
       </div>
       <div class="telemetry-card-soft">
-        <div class="t-val green">9.20% DER</div>
-        <div class="t-label">Diarization Error Rate</div>
-        <div class="t-sub">-33.3% Error vs Raw Mixture</div>
+        <div class="t-val green">23.97% DER</div>
+        <div class="t-label">Mean Diarization Error (9 Mixes)</div>
+        <div class="t-sub">vs 40.52% Raw (mix_01: 9.20% DER)</div>
       </div>
       <div class="telemetry-card-soft">
-        <div class="t-val blue">21.88% WER</div>
-        <div class="t-label">Bilingual Code-Switched ASR</div>
-        <div class="t-sub">-64.4% Recovery vs Attention Collapse</div>
+        <div class="t-val blue">51.57% WER</div>
+        <div class="t-label">Vakyansh CTC on mix_01</div>
+        <div class="t-sub">-34.71 pp vs 86.28% Raw Mixture</div>
       </div>
       <div class="telemetry-card-soft">
         <div class="t-val violet">0.00%</div>
-        <div class="t-label">LLM Hallucination Rate</div>
-        <div class="t-sub">100% Attribution Integrity Guardrail</div>
+        <div class="t-label">MockLLM Entity Unsupported Rate</div>
+        <div class="t-sub">Rule-Based Template Check (2 Clips)</div>
       </div>
       <div class="telemetry-card-soft">
-        <div class="t-val teal">0.006 RTF</div>
-        <div class="t-label">166.7× Diarization Speed</div>
-        <div class="t-sub">Eigengap Spectral Clustering</div>
+        <div class="t-val teal">0.090 RTF</div>
+        <div class="t-label">Stage 1 Conv-TasNet JSON</div>
+        <div class="t-sub">WSL2 CPU E2E: 0.697 (0.490 Scaling)</div>
       </div>
     </section>
 
     <!-- ==========================================================================
-         DATASET ENVIRONMENT SELECTOR (CONTROLLED TRAINING VS REAL-WORLD IN-THE-WILD)
+         DATASET ENVIRONMENT SELECTOR (CONTROLLED TRAINING VS SIMULATED STRESS)
          ========================================================================== -->
     <div class="dataset-control-bar">
       <div class="track-switch-pills">
         <button id="tabTrackA" class="track-btn active" onclick="switchTrack('A')">
-          🧪 Track A: Controlled Synthetic Dataset (IndicVoices & Nirantar)
+          🧪 Track A: Controlled Mix 01 (Pair A+D, 25% Overlap)
         </button>
         <button id="tabTrackB" class="track-btn" onclick="switchTrack('B')">
-          📻 Track B: Authentic Broadcast Field Data (AIR Spontaneous Panel - 3 Speakers)
+          📻 Track B: Simulated Panel Debate (Synthetic 3-Spk Mix)
         </button>
         <button id="tabTrackC" class="track-btn" onclick="switchTrack('C')">
-          📞 Track C: In-The-Wild Telephony Data (Project Vaani Rural Phone-In)
+          📞 Track C: Simulated Cellular Call (300–3400 Hz Filter)
         </button>
       </div>
 
       <div class="env-badge-readout" id="envMetricsBadge">
-        +21.8 dB SI-SDR Gain | 0.075 RTF
+        +21.76 dB Peak ΔSI-SDR (mix_01) | 0.089 RTF
       </div>
     </div>
 
@@ -2074,7 +2074,7 @@ def main():
           </div>
           <div>
             <div class="card-title-soft" id="nameSpk0">Speaker 1 (Female Hinglish)</div>
-            <div class="card-metric-soft" id="metricSpk0">+21.8 dB SI-SDR (Isolated)</div>
+            <div class="card-metric-soft" id="metricSpk0">+23.72 dB ΔSI-SDR (22.69 dB Out)</div>
             <div class="wave-bars-well">
               <div class="wb"></div><div class="wb"></div><div class="wb"></div>
               <div class="wb"></div><div class="wb"></div>
@@ -2090,7 +2090,7 @@ def main():
           </div>
           <div>
             <div class="card-title-soft" id="nameSpk1">Speaker 2 (Male Hindi)</div>
-            <div class="card-metric-soft" id="metricSpk1">+21.8 dB SI-SDR (Isolated)</div>
+            <div class="card-metric-soft" id="metricSpk1">+19.79 dB ΔSI-SDR (20.85 dB Out)</div>
             <div class="wave-bars-well">
               <div class="wb"></div><div class="wb"></div><div class="wb"></div>
               <div class="wb"></div><div class="wb"></div>
@@ -2201,8 +2201,8 @@ def main():
       <div class="section-head">
         <div class="section-icon-well">🤖</div>
         <div class="section-title-wrap">
-          <h2>Stage 4: Semantic LLM Intelligence & Structural Guardrails</h2>
-          <p>Converting Raw Code-Switched Transcripts into Hallucination-Free Structured Intelligence (Contract 5)</p>
+          <h2>Stage 4: Semantic LLM Structuring &amp; Rule-Based Grounding</h2>
+          <p>Formatting Code-Switched Transcripts into Pydantic Contract 5 Reports (MockLLMProvider Evaluation)</p>
         </div>
       </div>
 
@@ -2210,7 +2210,7 @@ def main():
         <div class="llm-tab-row">
           <button class="llm-tab-btn active" id="tabLlmReport" onclick="switchLlmTab('report')">Rendered Markdown Report</button>
           <button class="llm-tab-btn" id="tabLlmJson" onclick="switchLlmTab('json')">Structured JSON Contract 5</button>
-          <button class="llm-tab-btn" id="tabLlmAudit" onclick="switchLlmTab('audit')">Factual Guardrails Audit (0.0% Hallucination)</button>
+          <button class="llm-tab-btn" id="tabLlmAudit" onclick="switchLlmTab('audit')">Entity Check (0.0% Mock Rate)</button>
           <button class="llm-tab-btn" id="tabLlmRag" onclick="switchLlmTab('rag')">💬 Ask LLM (Interactive RAG)</button>
         </div>
 
@@ -2221,21 +2221,21 @@ def main():
     </section>
 
     <!-- ==========================================================================
-         STAGE 5: SCIENTIFIC ABLATIONS & REAL-WORLD ROBUSTNESS (NEW)
+         STAGE 5: SCIENTIFIC ABLATIONS & SIMULATED DOMAIN STRESS (NEW)
          ========================================================================== -->
     <section id="ablation">
       <div class="section-head">
         <div class="section-icon-well">🧪</div>
         <div class="section-title-wrap">
-          <h2>Stage 5: Scientific Ablation Study & Real-World Domain Robustness</h2>
-          <p>Progressive Architecture Ablations, Cascading Error Propagation, and Authentic Field Validation</p>
+          <h2>Stage 5: Ablation Execution &amp; Simulated Domain Stress</h2>
+          <p>End-to-End Ablation Matrix (`run_ablation_study.py`), Synthetic Scenario Sweep, and Track B Stress Clips</p>
         </div>
       </div>
 
       <!-- Progressive Pipeline Ablation Table -->
       <div class="ablation-table-wrap">
         <h3 style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--fg-heading); margin-bottom:12px;">
-          Progressive Pipeline Architecture Ablation Benchmark (Pipelines A–D)
+          End-to-End Pipeline Ablation Execution (outputs/reports/ablation_study_results.json: htdemucs + mock ASR)
         </h3>
         <table class="ablation-table">
           <thead>
@@ -2243,10 +2243,10 @@ def main():
               <th>Pipeline Variant</th>
               <th>Stage 1 SI-SDR</th>
               <th>Stage 2 DER</th>
-              <th>Stage 3 WER</th>
-              <th>Stage 4 Hallucination</th>
+              <th>Stage 3 WER (Mock)</th>
+              <th>Stage 4 Entity Rate</th>
               <th>Total RTF</th>
-              <th>Acoustic Behavior / Failure Mode</th>
+              <th>Recorded Execution Behavior</th>
             </tr>
           </thead>
           <tbody>
@@ -2255,36 +2255,36 @@ def main():
               <td>—</td>
               <td>—</td>
               <td style="color:var(--accent-red); font-weight:700;">100.0%</td>
-              <td style="color:var(--accent-red); font-weight:700;">Catastrophic</td>
+              <td>N/A (Bypassed)</td>
               <td>0.279</td>
-              <td>Attention Collapse: CTC repetition loops on concurrent speech</td>
+              <td>No BSS, Diarization, or LLM (`mock_mode=True` stub)</td>
             </tr>
             <tr>
               <td><strong>Pipeline B: Separation Only</strong></td>
               <td>-8.52 dB</td>
               <td>—</td>
               <td style="color:var(--accent-red); font-weight:700;">100.0%</td>
-              <td>High</td>
+              <td>N/A (Bypassed)</td>
               <td>1.024</td>
-              <td>Permutation ambiguity without turn boundary attribution</td>
+              <td>Default `htdemucs` separation + mock ASR (no diarization)</td>
             </tr>
             <tr>
-              <td><strong>Pipeline C: Diarization Only</strong></td>
-              <td>—</td>
+              <td><strong>Pipeline C: Traditional Diarized</strong></td>
+              <td>-8.52 dB</td>
               <td style="color:var(--accent-red);">42.53%</td>
               <td style="color:var(--accent-red); font-weight:700;">100.0%</td>
-              <td>Moderate</td>
+              <td>N/A (Bypassed)</td>
               <td>0.555</td>
-              <td>Cross-talk contamination inside overlapping speech blocks</td>
+              <td>Default `htdemucs` + 192-d spectral clustering + mock ASR</td>
             </tr>
             <tr class="highlight-row">
-              <td><strong>Pipeline D: Full Proposed System</strong></td>
-              <td style="color:var(--accent-emerald);">+21.77 dB</td>
-              <td style="color:var(--accent-emerald);">9.20%</td>
-              <td style="color:var(--accent-emerald);">21.88%</td>
+              <td><strong>Pipeline D: Full Proposed (`run_ablation_study.py`)</strong></td>
+              <td>-8.52 dB</td>
+              <td>42.53%</td>
+              <td>100.0%</td>
               <td style="color:var(--accent-emerald); font-weight:700;">0.00%</td>
-              <td style="color:var(--accent-blue);">0.075</td>
-              <td>Decoupled BSS + Hyperspherical Diarization + Guardrails</td>
+              <td>0.558</td>
+              <td>Default `htdemucs` + MockLLM Contract 5 (cf. Conv-TasNet + Vakyansh on `mix_01`: +21.76 dB Δ / 9.20% DER / 51.57% WER)</td>
             </tr>
           </tbody>
         </table>
@@ -2292,49 +2292,49 @@ def main():
         <div class="threshold-callout">
           <div style="font-size:24px;">⚠️</div>
           <div>
-            <strong style="color:var(--fg-heading); font-size:13px;">Critical Acoustic Breakdown Threshold (\u0394 SI-SDR<sub>crit</sub> = +4.2 dB):</strong>
+            <strong style="color:var(--fg-heading); font-size:13px;">Exploratory Synthetic Scenario Sweep (`EXP-2.1`–`EXP-2.7`, Stress Point +4.2 dB):</strong>
             <p style="font-size:12px; color:var(--muted); margin-top:2px;">
-              Empirical correlation reveals that when Stage 1 separation gain drops below +4.2 dB, Stage 2 DER degrades quadratically and Stage 3 WER collapses above 80%, triggering cascading hallucinations in unguardrailed LLMs (r = -0.977).
+              Across seven predefined synthetic scenario points in `scripts/run_ablation_study.py` (separate from end-to-end execution above, n = 7, r = -0.977 for SI-SDR vs DER and r = -0.969 vs WER), scenario `EXP-2.5` (4.2 dB SI-SDR, 28.9% DER, 42.7% WER, 5.8% hallucination) marks an exploratory stress boundary rather than an empirical breakdown proof.
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Real-World Domain Robustness Cards -->
+      <!-- Simulated Domain Robustness Cards -->
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
         <div class="telemetry-card-soft" style="text-align:left;">
-          <span class="card-pill-tag">Domain 1 • Broadcast</span>
-          <h4 style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--fg-heading); margin:8px 0 4px;">AIR Formal Studio News</h4>
-          <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Acoustic Environment: High SNR (>45 dB), read speech, studio booth.</p>
+          <span class="card-pill-tag">Domain 1 • Simulated Studio News</span>
+          <h4 style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--fg-heading); margin:8px 0 4px;">Simulated Studio News (`speaker_D`)</h4>
+          <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Synthetic RMS-normalized clip (`air_formal_news_01.wav`, High SNR &gt;45 dB).</p>
           <div style="font-family:var(--font-mono); font-size:12px; line-height:1.7;">
             <div>• Measured SNR: <span class="t-green">47.07 dB</span></div>
-            <div>• Diarization DER: <span class="t-green">0.00%</span> (Perfect single speaker)</div>
-            <div>• Bilingual WER: <span class="t-yellow">92.5%</span> (Devanagari normalization mismatch)</div>
-            <div>• Hallucination: <span class="t-green">0.00%</span> (Factual entity recall)</div>
+            <div>• Diarization DER: <span class="t-green">0.00%</span> (Single speaker matched)</div>
+            <div>• Nominal vs Spoken WER: <span class="t-yellow">92.68% manifest</span> (57.14% WER / 0.00% CER on 14 spoken words; 27 unuttered/divergent words, 30 edit deletions)</div>
+            <div>• Mock Entity Check: <span class="t-green">0.00%</span> (Template entity fidelity)</div>
           </div>
         </div>
 
         <div class="telemetry-card-soft" style="text-align:left;">
-          <span class="card-pill-tag">Domain 2 • Studio Panel</span>
-          <h4 style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--fg-heading); margin:8px 0 4px;">AIR Spontaneous Debate</h4>
-          <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Acoustic Environment: Multi-talker table mic, rapid Hinglish interruptions.</p>
+          <span class="card-pill-tag">Domain 2 • Simulated Studio Panel</span>
+          <h4 style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--fg-heading); margin:8px 0 4px;">Simulated Panel Debate (`A, F, G`)</h4>
+          <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Synthetic 3-talker overlay (`air_spontaneous_panel_01.wav`) + room noise.</p>
           <div style="font-family:var(--font-mono); font-size:12px; line-height:1.7;">
             <div>• Measured SNR: <span class="t-green">35.59 dB</span></div>
             <div>• Diarization DER: <span class="t-yellow">58.70%</span> (k*=1 cluster collapse under cross-talk)</div>
-            <div>• Bilingual WER: <span class="t-green">57.78%</span> (Overcoming overlap)</div>
-            <div>• Hallucination: <span class="t-green">0.00%</span> (100% Attribution integrity)</div>
+            <div>• Bilingual WER: <span class="t-yellow">57.78%</span> (Hinglish multi-talker stress)</div>
+            <div>• Mock Entity Check: <span class="t-green">0.00%</span> (Attribution structure check)</div>
           </div>
         </div>
 
         <div class="telemetry-card-soft" style="text-align:left;">
-          <span class="card-pill-tag">Domain 3 • Telephony</span>
-          <h4 style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--fg-heading); margin:8px 0 4px;">Project Vaani Rural Phone-In</h4>
-          <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Acoustic Environment: 2G/3G Cellular channel, 300–3400 Hz bandpass, dialectal.</p>
+          <span class="card-pill-tag">Domain 3 • Simulated Telephony</span>
+          <h4 style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--fg-heading); margin:8px 0 4px;">Simulated Cellular Call (`speaker_E`)</h4>
+          <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">4th-order Butterworth 300–3400 Hz bandpass (`vaani_rural_call_01.wav`) + 100 Hz hum.</p>
           <div style="font-family:var(--font-mono); font-size:12px; line-height:1.7;">
-            <div>• Measured SNR: <span class="t-yellow">21.14 dB</span> (Near critical boundary)</div>
-            <div>• Bandpass Concentration: <span class="t-cyan">90.2%</span> (Severe HF loss)</div>
-            <div>• Script Disparity: <span class="t-yellow">72.7%</span> Hindi vs <span class="t-red">100.0%</span> Latin</div>
-            <div>• Hallucination: <span class="t-green">0.00%</span> (LLM Entity rescue)</div>
+            <div>• Measured SNR: <span class="t-yellow">21.14 dB</span> (Simulated 18 dB target + filter)</div>
+            <div>• Cellular Band Ratio: <span class="t-cyan">84.9%–90.2%</span> (HF attenuation)</div>
+            <div>• Overall / Script WER: <span class="t-yellow">62.96%</span> (66.7% Hindi vs 100% Latin)</div>
+            <div>• Mock Entity Check: <span class="t-green">0.00%</span> (0 candidate/unsupported mismatch)</div>
           </div>
         </div>
       </div>
@@ -2359,8 +2359,8 @@ def main():
             <img src="./assets/plots/domain_wer_cer_comparison.png" alt="Real-World Domain WER/CER Comparison" onerror="this.src='./docs/assets/plots/domain_wer_cer_comparison.png'">
           </div>
           <div class="figure-meta">
-            <h4>Fig 1: Real-World Domain WER & CER</h4>
-            <p>Comparative acoustic performance across AIR News, AIR Debate, and Project Vaani rural telephony.</p>
+            <h4>Fig 1: Simulated Domain WER &amp; CER</h4>
+            <p>Comparative acoustic performance across simulated formal news, 3-speaker panel debate, and cellular bandpass stress clips.</p>
           </div>
         </div>
 
@@ -2529,13 +2529,13 @@ def main():
         spec: "{spec_a}",
         duration: 9.536,
         sub: "Female Hinglish + Male Hindi (25% Overlap, 0 dB SIR)",
-        metrics: "+21.8 dB SI-SDR Gain | 0.075 RTF",
+        metrics: "+21.76 dB ΔSI-SDR (mix_01) | 0.089 RTF",
         nameMix: "Mixture: 2-Speaker Controlled Audio",
         nameSpk0: "Stem 01: Speaker 1 (Female Hinglish)",
         nameSpk1: "Stem 02: Speaker 2 (Male Hindi)",
-        metricSpk0: "+21.8 dB SI-SDR (Isolated)",
-        metricSpk1: "+21.8 dB SI-SDR (Isolated)",
-        descMix: "Controlled training/benchmark mixture with 25% overlap",
+        metricSpk0: "21.77 dB Out (+21.76 dB ΔSI-SDR, mix_01)",
+        metricSpk1: "21.77 dB Out (+21.76 dB ΔSI-SDR, mix_01)",
+        descMix: "Controlled benchmark mixture (controlled_mix_01, 25% overlap)",
         lanes: [
           {{ id: "SPEAKER_00", label: "Female Hinglish", color: "#3B82F6", turns: [{{ start: 0.0, end: 5.72, dur: 5.72, pctLeft: 0, pctWidth: 59.9, text: "SPEAKER 00: Female Hinglish (0.00s – 5.72s)" }}] }},
           {{ id: "SPEAKER_01", label: "Male Hindi", color: "#8B5CF6", turns: [{{ start: 3.32, end: 9.54, dur: 6.22, pctLeft: 34.8, pctWidth: 65.2, text: "SPEAKER 01: Male Hindi (3.32s – 9.54s)" }}] }}
@@ -2555,18 +2555,18 @@ def main():
             rtf: "0.174 RTF"
           }},
           proposed: {{
-            tag: "Proposed • Decoupled Separation-Aware",
+            tag: "Proposed • Conv-TasNet + Vakyansh Hindi ASR",
             tagClass: "good",
-            text: "<b>SPEAKER 00 (Female Hinglish • Stem 01):</b><br>&ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01 (Male Hindi • Stem 02):</b><br>&ldquo;यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं&rdquo;",
-            wer: "21.88% WER (-64.4% Error Reduction)",
-            rtf: "0.082 RTF"
+            text: "<b>SPEAKER 00 (Female Hinglish • Stem 01):</b><br>&ldquo;उन्हें दिन तक रीहाब करना होगा और उसके बाद उनका फिटनेस फैस लिया जाएगा&rdquo;<br><br><b>SPEAKER 01 (Male Hindi • Stem 02):</b><br>&ldquo;ये एक वॉइस ऑडियोडेटा सेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस एआई के प्रशिक्षणके&rdquo;",
+            wer: "51.57% WER (-34.71 pp vs Naive | 44.66% CER)",
+            rtf: "0.194 RTF"
           }},
           gt: {{
-            tag: "Ground Truth Human Reference",
+            tag: "Ground Truth Manifest Reference",
             tagClass: "gt",
             text: "<b>SPEAKER 00:</b> &ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01:</b> &ldquo;यह एक वॉइस ऑडियो डेटासेट है जिसे आप AI प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं&rdquo;",
             wer: "Reference (0.00% WER)",
-            rtf: "Human Validated"
+            rtf: "Manifest Validated"
           }}
         }},
         llm: {{
@@ -2610,14 +2610,14 @@ def main():
         spk1: "{spk1_b}",
         spec: "{spec_b}",
         duration: 13.02,
-        sub: "AIR Spontaneous Panel Debate (3 Concurrent Speakers)",
-        metrics: "Live Broadcast Separation | 0.082 RTF",
-        nameMix: "Mixture: 3-Speaker Panel Debate",
+        sub: "Simulated Panel Debate (Synthetic Track A Stems, 3 Speakers)",
+        metrics: "58.70% DER (3-Spk Stress) | 0.722 RTF",
+        nameMix: "Mixture: 3-Speaker Simulated Debate",
         nameSpk0: "Stem 01: Host & Guest 2 (Interleaved)",
         nameSpk1: "Stem 02: Guest 1 [तारीख के दिन...]",
         metricSpk0: "0.0s–4.7s Host • 6.8s–12.5s Guest 2",
         metricSpk1: "3.8s–8.4s (&ldquo;तारीख के दिन मेरे स्वामी जाएंगे...&rdquo;)",
-        descMix: "Authentic studio broadcast debate with 2 overlap collision zones",
+        descMix: "Simulated 3-speaker panel mix (from Track A stems) with 2 overlap zones",
         lanes: [
           {{ id: "SPEAKER_00", label: "Host (Stem 01)", color: "#3B82F6", turns: [{{ start: 0.0, end: 4.71, dur: 4.71, pctLeft: 0, pctWidth: 36.2, text: "SPEAKER 00: Host (0.00s – 4.71s)" }}] }},
           {{ id: "SPEAKER_01", label: "Guest 1 (Stem 02)", color: "#8B5CF6", turns: [{{ start: 3.8, end: 8.43, dur: 4.63, pctLeft: 29.2, pctWidth: 35.6, text: "SPEAKER 01: Guest 1 (3.80s – 8.43s)" }}] }},
@@ -2633,31 +2633,31 @@ def main():
         ],
         asr: {{
           naive: {{
-            tag: "Baseline • Catastrophic Collapse",
+            tag: "Baseline • Unseparated Track B Mix",
             tagClass: "bad",
-            text: "उन्हें दस दिन तक तारीख के दिन मेरे स्वामी जाएंगे और ले स्मार्टफोन में विशेष तौर से...",
-            wer: "78.4% WER (Severe Cross-Talk)",
-            rtf: "0.220 RTF"
+            text: "Unseparated 3-speaker mix collapsed to 1 cluster (58.70% DER; 15 subs, 13 dels in Stage 5 baseline run).",
+            wer: "62.22% WER (50.54% CER)",
+            rtf: "0.108 RTF"
           }},
           proposed: {{
-            tag: "Proposed • Decoupled Separation-Aware",
+            tag: "Proposed • Decoupled Separation + Vakyansh",
             tagClass: "good",
-            text: "<b>SPEAKER 00 (Host):</b><br>&ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01 (Guest 1):</b><br>&ldquo;इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी&rdquo;<br><br><b>SPEAKER 02 (Guest 2):</b><br>&ldquo;smartphone में विशेष तौर से इसी काम के लिए बने hardware और software का इस्तेमाल किया गया है&rdquo;",
-            wer: "57.78% WER (Overcoming Interleaved Debate)",
+            text: "<b>SPEAKER 00 (Host):</b><br>&ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01 (Guest 1):</b><br>&ldquo;इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी&rdquo;<br><br><b>SPEAKER 02 (Guest 2):</b><br>&ldquo;smartphone में विशेष तौर से इसी काम के लिए बने hardware और software का इस्तेमाल किया गया है&rdquo;<br><span style='font-size:12px;color:var(--muted)'>(Illustrative turn-aligned reference layout; Stage 5 proposed cascade scored 57.78% WER / 51.61% CER with ERR_BSS_02)</span>",
+            wer: "57.78% WER (51.61% CER)",
             rtf: "0.722 RTF"
           }},
           gt: {{
-            tag: "Ground Truth Human Reference",
+            tag: "Ground Truth Manifest Reference",
             tagClass: "gt",
             text: "<b>SPEAKER 00:</b> &ldquo;उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा&rdquo;<br><br><b>SPEAKER 01:</b> &ldquo;इस योजना के अंतर्गत सभी महिलाओं को विशेष वित्तीय सहायता दी जाएगी&rdquo;<br><br><b>SPEAKER 02:</b> &ldquo;smartphone में विशेष तौर से इसी काम के लिए बने hardware और software का इस्तेमाल किया गया है&rdquo;",
-            wer: "Broadcast Ground Truth",
-            rtf: "Human Validated"
+            wer: "Manifest Ground Truth",
+            rtf: "Manifest Validated"
           }}
         }},
         llm: {{
-          summary: "Live broadcast panel discussion featuring 3 speakers on economic welfare and hardware integration. The Host introduces protocol timelines, Guest 1 outlines targeted financial assistance schemes for women, and Guest 2 explains hardware/software co-design optimizations for smartphones.",
-          topics: ["Broadcast Studio Debate", "Economic Welfare Schemes", "Hardware/Software Co-Design", "Mobile Smartphone Architecture"],
-          tags: ["AIR debate", "financial assistance", "hardware software", "panel discussion", "smartphone", "welfare scheme"],
+          summary: "Simulated 3-speaker panel discussion constructed from Track A stems on rehabilitation, welfare, and smartphone hardware. The Host introduces protocol timelines, Guest 1 outlines financial assistance schemes for women, and Guest 2 explains hardware/software co-design in smartphones.",
+          topics: ["Simulated Panel Debate", "Economic Welfare Schemes", "Hardware/Software Co-Design", "Mobile Smartphone Architecture"],
+          tags: ["simulated debate", "financial assistance", "hardware software", "panel discussion", "smartphone", "welfare scheme"],
           findings: [
             {{ spk: "SPEAKER_00", color: "#3B82F6", text: "Opens broadcast panel introducing formal protocol timelines and assessment criteria." }},
             {{ spk: "SPEAKER_01", color: "#8B5CF6", text: "Outlines specialized financial assistance welfare framework targeted towards women beneficiaries." }},
@@ -2673,9 +2673,9 @@ def main():
             session_id: "air_spontaneous_panel_01",
             total_speakers: 3,
             duration_seconds: 13.02,
-            domain: "broadcast_debate",
-            executive_summary: "Live broadcast panel discussion featuring 3 distinct participants discussing public welfare and smartphone technologies.",
-            primary_topics: ["Broadcast Studio Debate", "Economic Welfare Schemes", "Smartphone Architecture"],
+            domain: "simulated_panel_debate",
+            executive_summary: "Simulated 3-speaker panel discussion from Track A stems featuring welfare and smartphone technology topics.",
+            primary_topics: ["Simulated Panel Debate", "Economic Welfare Schemes", "Smartphone Architecture"],
             speaker_attributed_findings: [
               {{"speaker_id": "SPEAKER_00", "finding": "Opening panel remarks and protocol introduction."}},
               {{"speaker_id": "SPEAKER_01", "finding": "Specialized financial aid scheme for women."}},
@@ -2692,42 +2692,42 @@ def main():
         spk1: "{spk1_c}",
         spec: "{spec_c}",
         duration: 8.30,
-        sub: "Project Vaani Rural Phone-In Call (2G/3G Cellular Narrowband)",
+        sub: "Simulated Cellular Channel (300–3400 Hz Bandpass on speaker_E)",
         metrics: "Narrowband Attenuation (-6.3 dB HF) | 0.708 RTF",
-        nameMix: "Mixture: Rural Telephone Call",
-        nameSpk0: "Stem 01: Rural Caller (Bandpassed)",
-        nameSpk1: "Stem 02: Telephony Background Residual",
+        nameMix: "Mixture: Simulated Narrowband Call",
+        nameSpk0: "Stem 01: Filtered Caller (Bandpassed)",
+        nameSpk1: "Stem 02: Telephony Residual (ERR_BSS_02)",
         metricSpk0: "300–3400 Hz Cellular Bandpass Filtered",
-        metricSpk1: "Acoustic line noise & channel artifacts",
-        descMix: "In-the-wild agricultural advisory call recorded over 2G/3G mobile network",
+        metricSpk1: "0.54% phantom residual stem energy",
+        descMix: "Simulated 2G/3G cellular channel stress test (300–3400 Hz bandpass on Track A stem)",
         lanes: [
-          {{ id: "SPEAKER_00", label: "Rural Caller", color: "#3B82F6", turns: [{{ start: 0.0, end: 8.30, dur: 8.30, pctLeft: 0, pctWidth: 100.0, text: "SPEAKER 00: Rural Caller (0.00s – 8.30s)" }}] }}
+          {{ id: "SPEAKER_00", label: "Rural Caller", color: "#3B82F6", turns: [{{ start: 0.0, end: 8.30, dur: 8.30, pctLeft: 0, pctWidth: 100.0, text: "SPEAKER 00: Filtered Caller (0.00s – 8.30s)" }}] }}
         ],
         overlapOverlay: {{ left: "0%", width: "0%", label: "Single-Speaker Telephony Channel" }},
         turns: [
-          {{ turn: "#01", spk: "SPEAKER_RURAL_CALLER", sub: "Rural Caller (Solo)", interval: "0.00s – 8.30s", dur: "8.30s", nature: "Cellular Narrowband Speech", tagColor: "#2563eb", seekTime: 0.0, channel: "mix" }}
+          {{ turn: "#01", spk: "SPEAKER_RURAL_CALLER", sub: "Filtered Caller (Solo)", interval: "0.00s – 8.30s", dur: "8.30s", nature: "Cellular Narrowband Speech", tagColor: "#2563eb", seekTime: 0.0, channel: "mix" }}
         ],
         asr: {{
           naive: {{
-            tag: "Baseline • Severe Acoustic Distortion",
+            tag: "Baseline • Unseparated Narrowband Mix",
             tagClass: "bad",
-            text: "जिसके बाद रूस की तरफ जाने वाली... ले जाने से मना कर दिया गया था",
-            wer: "62.96% WER (Severe HF Loss)",
-            rtf: "0.190 RTF"
+            text: "Unseparated 300–3400 Hz bandpass clip (no ERR_BSS_02 split): 7 subs, 2 dels in Stage 5 baseline run.",
+            wer: "33.33% WER (34.78% CER)",
+            rtf: "0.094 RTF"
           }},
           proposed: {{
-            tag: "Proposed • Single-Speaker Bypass Filtered",
+            tag: "Proposed • Forced 2-Source Split (ERR_BSS_02)",
             tagClass: "good",
-            text: "<b>SPEAKER_RURAL_CALLER (Project Vaani Field Recording):</b><br>&ldquo;जिसके बाद रूस की तरफ़ जाने वाली non-stop flight के लिए carry bag में कोई भी liquid पदार्थ ले जाने से मना कर दिया गया था।&rdquo;",
-            wer: "62.96% WER (72.7% Hindi vs 100.0% Latin)",
+            text: "<b>SPEAKER_RURAL_CALLER (Manifest Text • Simulated Bandpass):</b><br>&ldquo;जिसके बाद रूस की तरफ़ जाने वाली non-stop flight के लिए carry bag में कोई भी liquid पदार्थ ले जाने से मना कर दिया गया था।&rdquo;<br><span style='font-size:12px;color:var(--muted)'>(Forced K=2 Conv-TasNet split triggered ERR_BSS_02 on mono audio, degrading WER from 33.33% to 62.96%)</span>",
+            wer: "62.96% WER (66.7% Hindi | 100.0% Latin)",
             rtf: "0.708 RTF"
           }},
           gt: {{
-            tag: "Ground Truth Human Reference",
+            tag: "Ground Truth Manifest Reference",
             tagClass: "gt",
             text: "&ldquo;जिसके बाद रूस की तरफ़ जाने वाली non-stop flight के लिए carry bag में कोई भी liquid पदार्थ ले जाने से मना कर दिया गया था।&rdquo;",
-            wer: "Field Telephone Ground Truth",
-            rtf: "Human Validated"
+            wer: "Manifest Ground Truth",
+            rtf: "Manifest Validated"
           }}
         }},
         llm: {{
@@ -3041,7 +3041,7 @@ def main():
             </div>
           </div>
           <div style="background:rgba(16, 185, 129, 0.08); border-left:4px solid var(--accent-emerald); padding:14px; border-radius:8px; font-size:13px; color:var(--fg-heading);">
-            <strong>Structural Guardrail Enforcement:</strong> Outputs are validated via Pydantic Contract 5 against strict Jinja2 prompt constraints. Post-generation AST checks inspect every named entity, ensuring zero speculative hallucinations.
+            <strong>Structural Guardrail Enforcement:</strong> Outputs are validated via Pydantic Contract 5 with Jinja2 prompt templates and regex/keyword entity checks (evaluated offline using <code>MockLLMProvider</code>; live LLM API generalization remains unbenchmarked).
           </div>
         `;
       }} else if (currentLlmTab === 'rag') {{
@@ -3097,7 +3097,7 @@ def main():
         ]
       }},
       B: {{
-        title: "Track B: AIR Spontaneous Panel Debate (3 Concurrent Speakers)",
+        title: "Track B: Simulated Panel Debate (3 Concurrent Speakers)",
         suggestedQuestions: [
           "What assistance scheme was announced?",
           "What was said about smartphones and hardware?",
@@ -3141,7 +3141,7 @@ def main():
         ]
       }},
       C: {{
-        title: "Track C: Project Vaani Rural Phone-In Call (2G/3G Cellular Narrowband)",
+        title: "Track C: Simulated Cellular Channel (300–3400 Hz Narrowband)",
         suggestedQuestions: [
           "What are the flight baggage restrictions?",
           "Which country's non-stop flight was mentioned?",
@@ -3268,7 +3268,7 @@ def main():
 
       matches.sort((a, b) => b.score - a.score);
 
-      // Strict Negative Guardrail Threshold (Zero Hallucination Guarantee)
+      // Negative Grounding Guardrail Threshold (Rule-Based Entity Check)
       if (matches.length === 0 || matches[0].score < 1.5) {{
         return {{
           grounded: false,
@@ -3327,7 +3327,7 @@ def main():
                 I can answer factual questions about who spoke what, rehabilitation criteria, financial assistance schemes, technology specs, and flight restrictions based <i>strictly</i> on the verified source audio transcript.
               </div>
               <div style="font-size:12px; color:var(--muted); margin-top:4px;">
-                🛡️ Zero-Hallucination Policy: Queries regarding unmentioned entities will trigger negative grounding guardrails.
+                🛡️ Rule-Based Grounding Policy: Queries regarding unmentioned entities will trigger negative grounding guardrails.
               </div>
             </div>
           </div>
@@ -3523,18 +3523,18 @@ def main():
 ==============================================================================================================
 STAGE 1 BLIND SOURCE SEPARATION BENCHMARK (CONV-TASNET VS. META'S DEMUCS)
 ==============================================================================================================
-Mixture ID                         | Baseline SI-SDR | Conv-TasNet SI-SDR | Conv-TasNet Gain | Conv-TasNet RTF
+Mixture ID                         | Baseline SI-SDR | Conv-TasNet Out | ΔSI-SDR Gain  | Conv-TasNet RTF
 --------------------------------------------------------------------------------------------------------------
-controlled_mix_01_pairAD_ov25_sir0 |        +0.01 dB |          21.77 dB  |        +21.76 dB |           0.095
-controlled_mix_02_pairAD_ov50_sir0 |        -0.05 dB |          19.84 dB  |        +19.89 dB |           0.082
-controlled_mix_03_pairAD_ov50_sir6 |        -0.06 dB |          20.22 dB  |        +20.27 dB |           0.059
-controlled_mix_04_pairBC_ov25_sir0 |        -0.01 dB |           4.81 dB  |         +4.81 dB |           0.072
-controlled_mix_05_pairBC_ov50_sir0 |        +0.04 dB |           5.92 dB  |         +5.88 dB |           0.080
-controlled_mix_06_pairBC_ov50_sir-6|        +0.04 dB |          20.15 dB  |        +20.11 dB |           0.060
+controlled_mix_01_pairAD_ov25_sir0 |        +0.01 dB |       21.77 dB  |     +21.76 dB |           0.089
+controlled_mix_02_pairAD_ov50_sir0 |        -0.05 dB |       19.84 dB  |     +19.89 dB |           0.086
+controlled_mix_03_pairAD_ov50_sir6 |        -0.06 dB |       20.21 dB  |     +20.27 dB |           0.082
+controlled_mix_04_pairBC_ov25_sir0 |        -0.01 dB |        4.81 dB  |      +4.81 dB |           0.086
+controlled_mix_05_pairBC_ov50_sir0 |        +0.04 dB |        5.92 dB  |      +5.88 dB |           0.098
+controlled_mix_06_pairBC_ov50_sir_n|        +0.04 dB |       20.15 dB  |     +20.11 dB |           0.100
 --------------------------------------------------------------------------------------------------------------
-OVERALL AVERAGE                    |        -0.00 dB |          15.45 dB  |       <span class="t-green">+15.45 dB</span> |           0.075 (13.3x)
+OVERALL AVERAGE                    |       -0.003 dB |       15.45 dB  |    <span class="t-green">+15.45 dB</span> |     0.090 (11.1x)
 ==============================================================================================================
-[✓] Conv-TasNet achieves +15.45 dB mean SI-SDR gain, outperforming Demucs by 24 dB on multi-talker separation.`,
+[✓] Conv-TasNet reaches 15.45 dB mean SI-SDR (+15.45 dB ΔSI-SDR), vs Demucs -8.60 dB mean (-8.595 dB Δ, 0.561 RTF).`,
 
       stage2: `$ .venv/bin/python scripts/evaluate_stage2_diarization.py
 ==============================================================================================================
@@ -3560,31 +3560,32 @@ Empirical Finding:
 =============================================================================================================
 STAGE 3: REGIONAL & CODE-SWITCHED ASR BENCHMARK (MILESTONE M6)
 =============================================================================================================
-Primary Model : AI4Bharat IndicWav2Vec (Harveenchadha/vakyansh-wav2vec2-hindi-him-4200)
+Primary Model : Vakyansh Hindi Wav2Vec2 (Harveenchadha/vakyansh-wav2vec2-hindi-him-4200, CPU)
 Acoustic Test : controlled_mix_01_pairAD_ov25_sir0.wav (Duration: 9.54s)
 
 [Condition 1: Naive Raw Mixture ASR]
   • Hypothesis Transcript: "s उ s न् s ह s ें s s द s ि s न s s त s क s s र s ी s ह..."
   • Character Error Rate : <span class="t-red">100.28% CER</span>
   • Word Error Rate      : <span class="t-red">86.28% WER</span>
-  • Failure Diagnosis    : Autoregressive attention repetition loop collapse
+  • Failure Diagnosis    : Repetition/spacing noise & cross-talk garbling
 
 [Condition 2: Raw Audio with Stage 2 Diarization Slicing]
-  • Mean Bilingual WER   : <span class="t-yellow">70.78% WER</span>
+  • Mean Bilingual WER   : <span class="t-yellow">70.78% WER</span> (65.64% CER, 0.1536 RTF)
   • Failure Diagnosis    : Cross-talk acoustic contamination in overlap window
 
-[Condition 3: Proposed Separation-Aware Decoupled Pipeline]
-  • Speaker 00 Transcript: "उन्हें दस दिन तक rehab करना होगा और उसके बाद उनका fitness test लिया जाएगा"
-  • Speaker 01 Transcript: "यह एक वॉइस ऑडियो डेटासेट है जिसे आप ai प्रशिक्षण उद्देश्यों के लिए उपयोग कर सकते हैं"
-  • Mean Bilingual WER   : <span class="t-green">21.88% WER (-64.40% Absolute Error Reduction)</span>
-  • ASR Real-Time Factor : <span class="t-cyan">0.082 RTF (12.2x faster than real-time)</span>`,
+[Condition 3: Proposed Separation-Aware Decoupled Pipeline (Conv-TasNet + Vakyansh)]
+  • Speaker 00 Transcript: "उन्हें दिन तक रीहाब करना होगा और उसके बाद उनका फिटनेस फैस लिया जाएगा" (26.67% WER)
+  • Speaker 01 Transcript: "ये एक वॉइस ऑडियोडेटा सेट है जिसका उपयोग आप आर्टिफिशियल इंटेलिजेंस एआई के प्रशिक्षणके" (76.47% WER)
+  • Mean Bilingual WER   : <span class="t-green">51.57% WER (-34.71 pp Reduction | 44.66% CER)</span>
+  • ASR Real-Time Factor : <span class="t-cyan">0.1936 RTF (5.17x faster than real-time)</span>`,
 
       stage4: `$ .venv/bin/python scripts/evaluate_stage4_llm.py
 =============================================================================================================
 STAGE 4: SEMANTIC POST-PROCESSING & STRUCTURAL GUARDRAILS EVALUATION (MILESTONE M7)
 =============================================================================================================
-Evaluation Suite Summary:
-  • Mean Hallucination Rate      : <span class="t-green">0.00%</span> (0 ungrounded entities across all test scenarios)
+Evaluation Provider : MockLLMProvider (Offline Deterministic Schema & Guardrail Benchmark)
+Evaluation Suite Summary (2 Scenarios: mix_01, mix_04):
+  • Mean Hallucination Rate      : <span class="t-green">0.00%</span> (0 ungrounded entities under rule check)
   • Mean Attribution Integrity   : <span class="t-green">100.00%</span> (All turns mapped strictly to valid speakers)
   • Mean ROUGE-1 F1 Alignment    : <span class="t-cyan">0.6374</span>
   • Mean ROUGE-L F1 Alignment    : <span class="t-cyan">0.6231</span>
@@ -3594,44 +3595,48 @@ Evaluation Suite Summary:
 =============================================================================================================
 STAGE 5: CROSS-STAGE ERROR PROPAGATION & PROGRESSIVE ABLATIONS (MILESTONE M9)
 =============================================================================================================
-Pipeline Variant      | Mean SI-SDR | Mean DER | Mean WER | Hallucination | Status
+Note: M9 runner uses Demucs + spectral/MockASR (mock WER 100.0%). Stage 1-3 neural suite reaches +15.45 dB / 23.97% DER / 51.57% WER.
+
+Pipeline Variant      | Mean SI-SDR | Mean DER | Mock WER | Halluc. (Mock) | Status
 -------------------------------------------------------------------------------------------------------------
-Pipeline A (Naive)    |         N/A |      N/A |  100.00% |  Catastrophic | Attention Collapse
-Pipeline B (Sep Only) |    -8.52 dB |      N/A |  100.00% |          High | Permutation Ambiguity
-Pipeline C (Diar Only)|         N/A |   42.53% |  100.00% |      Moderate | Cross-Talk Bleed
-Pipeline D (Proposed) |   +21.77 dB |    9.20% |   21.88% |         0.00% | <span class="t-green">OPTIMAL CASCADE</span>
+Pipeline A (Naive)    |         N/A |      N/A |  100.00% |            N/A | Raw Mixture + Mock ASR
+Pipeline B (Sep Only) |    -8.52 dB |      N/A |  100.00% |            N/A | Demucs + Permutation Risk
+Pipeline C (Diar Only)|    -8.52 dB |   42.53% |  100.00% |            N/A | Spectral Diar on Raw Mix
+Pipeline D (Dem+Mock) |    -8.52 dB |   42.53% |  100.00% |          0.00% | <span class="t-yellow">0.5581 RTF (Demucs + Mock)</span>
 -------------------------------------------------------------------------------------------------------------
-Critical Acoustic Threshold (SI-SDR_crit): <span class="t-yellow">+4.2 dB</span> (Below this, cascading failure occurs).`,
+Synthetic EXP-2.1..2.7 Sweep (r(SI-SDR, WER) = -0.969): <span class="t-yellow">Critical inflection ~+4.2 dB SI-SDR</span>.`,
 
       realworld: `$ .venv/bin/python scripts/run_real_world_validation.py
 =============================================================================================================
-STAGE 5: REAL-WORLD INDIAN AUDIO VALIDATION & DOMAIN ROBUSTNESS (MILESTONE M11)
+STAGE 5: SIMULATED REAL-WORLD STRESS VALIDATION & DOMAIN BOUNDARIES (MILESTONE M11)
 =============================================================================================================
-Domain                  | Duration | SNR (dB) | DER (%) | WER (%) | Cellular Bandpass Ratio
+Stress Scenario         | Duration | SNR (dB) | DER (%) | WER (%) | Cellular Bandpass Ratio
 -------------------------------------------------------------------------------------------------------------
-AIR Formal Studio News  |    6.00s | 47.07 dB |   0.00% |  92.68% |  0.902 (Clean Studio)
-AIR Spontaneous Debate  |   13.02s | 35.59 dB |  58.70% |  57.78% |  0.884 (3 Concurrent Talkers)
-Project Vaani Rural Call|    8.30s | 21.14 dB |   0.65% |  62.96% |  0.902 (2G/3G Cellular Narrowband)
+Simulated Formal News   |    6.00s | 47.07 dB |   0.00% |  92.68% | 0.902 (Spoken 14-word: 57.14% WER / 0.00% CER)
+Simulated Panel Debate  |   13.02s | 35.59 dB |  58.70% |  57.78% | 0.450 (3 Concurrent Track A Stems)
+Simulated Cellular Call |    8.30s | 21.14 dB |   0.65% |  62.96% | 0.849 (300-3400 Hz Filter, ERR_BSS_02)
 -------------------------------------------------------------------------------------------------------------
 Domain Findings:
-  • Devanagari Hindi Script WER: 72.73% | Latin Hinglish Token WER: 100.00%
+  • Mean Devanagari Hindi WER: 72.71% | Mean Latin Hinglish Token WER: 100.00%
   • High-frequency cellular roll-off above 3.5 kHz: -6.3 dB attenuation.
-  • Stage 4 LLM Guardrails correctly recover domain entities with 0.00% hallucination.`,
+  • ERR_BSS_02 triggered on all 3 Track B clips when K=2 Conv-TasNet ran unbypassed.`,
 
-      pytest: `$ .venv/bin/python -m pytest tests/ -v
+      pytest: `$ pytest tests/ -v
 ================================================== test session starts ==================================================
-platform linux -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
-rootdir: /workspace/Audio-Engineering
-collected 97 items
+platform darwin -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
+rootdir: /Users/vanshsharma/Documents/AI Project
+collected 127 items
 
 tests/test_ablation.py (7 tests) ........................................ <span class="t-green">PASSED</span>
-tests/test_asr.py (10 tests) ............................................ <span class="t-green">PASSED</span>
+tests/test_asr.py (34 tests) ............................................ <span class="t-green">PASSED</span>
 tests/test_audio_io.py (6 tests) ........................................ <span class="t-green">PASSED</span>
 tests/test_benchmarking.py (6 tests) .................................... <span class="t-green">PASSED</span>
 tests/test_bss_metrics.py (4 tests) ..................................... <span class="t-green">PASSED</span>
+tests/test_code_switch_analyzer.py (4 tests) ............................ <span class="t-green">PASSED</span>
 tests/test_core.py (3 tests) ............................................ <span class="t-green">PASSED</span>
 tests/test_dataset_integrity.py (4 tests) ............................... <span class="t-green">PASSED</span>
 tests/test_diarization.py (6 tests) ..................................... <span class="t-green">PASSED</span>
+tests/test_export_benchmark_tables.py (2 tests) ......................... <span class="t-green">PASSED</span>
 tests/test_final_deliverables.py (5 tests) .............................. <span class="t-green">PASSED</span>
 tests/test_llm.py (10 tests) ............................................ <span class="t-green">PASSED</span>
 tests/test_mixture_generator.py (4 tests) ............................... <span class="t-green">PASSED</span>
@@ -3641,7 +3646,7 @@ tests/test_real_world_validation.py (7 tests) ........................... <span 
 tests/test_separation.py (5 tests) ...................................... <span class="t-green">PASSED</span>
 tests/test_separation_metrics.py (5 tests) .............................. <span class="t-green">PASSED</span>
 
-=========================================== <span class="t-green">97 passed in 77.40s (100% Pass Rate)</span> ===========================================`
+===================================== <span class="t-green">127 passed in 62.01s (100% Pass Rate)</span> ======================================`
     }};
 
     function switchTerminal(tab) {{
