@@ -65,12 +65,12 @@ This repository implements a modular, mathematically rigorous, multi-stage speec
 
 Across 12 systematic engineering milestones, the pipeline was benchmarked over **Track A (Controlled Synthetic Mixtures)** and **Track B (In-The-Wild All India Radio & Project Vaani Recordings)**:
 
-* **Blind Source Separation (Stage 1)**: Achieved **$+15.45\text{ dB}$ mean SI-SDR improvement** (peaking at **$+21.76\text{ dB}$**) using **Conv-TasNet** over raw overlapping speech, resolving permutation confusion via Hungarian-optimized Permutation Invariant Training (PIT). Hybrid Demucs was evaluated as a music baseline ($-8.60\text{ dB}$ SI-SDR on speech).
-* **Speaker Diarization (Stage 2)**: Reduced mean Diarization Error Rate across nine controlled mixtures from **$40.52\%$ to $23.97\%$** (a $16.55\%$ absolute reduction) with automated speaker count ($K$) discovery via the Eigengap heuristic on pyannote embeddings, achieving $0.0\%\text{–}0.7\%$ on clean single-speaker field clips.
-* **Bilingual ASR Recovery (Stage 3)**: Reduced Word Error Rate on overlapping bilingual speech from **$86.28\%$ (monolithic attention collapse) down to $51.57\%$** using Vakyansh Hindi Wav2Vec2 CTC decoding with Unicode NFKC normalization.
-* **Critical Acoustic Breakdown Threshold**: Empirically proved that below **$\text{SI-SDR}_{\text{crit}} = +4.20\text{ dB}$**, downstream ASR word error rates and diarization errors cascade catastrophically ($r = -0.977$ with DER, $r = -0.969$ with WER).
-* **Factual Hallucination Elimination (Stage 4)**: Engineered 4 negative prompt guardrails and runtime Pydantic v2 schemas that enforce valid JSON structure and speaker-attributed entity grounding, backed by an in-memory BM25 conversational retrieval engine.
-* **High-Throughput Computation**: Real-Time Factor (RTF) of **$0.075$** on Apple Silicon GPU and **$0.49\text{–}0.69$** on standard 8-core CPU ($1.4\times\text{–}2.0\times$ faster than realtime).
+* **Blind Source Separation (Stage 1)**: Achieved **$+15.45\text{ dB}$ mean SI-SDR improvement** (peaking at **$+21.76\text{ dB}$**, baseline $0.00\text{ dB}$, mean absolute output $15.45\text{ dB}$) using **Conv-TasNet** over raw overlapping speech, resolving permutation confusion via Hungarian-optimized Permutation Invariant Training (PIT). Hybrid Demucs was evaluated as a comparator baseline ($-8.60\text{ dB}$ output SI-SDR and $-8.60\text{ dB}$ $\Delta$SI-SDR due to music stem mismatch).
+* **Speaker Diarization (Stage 2)**: Reduced mean Diarization Error Rate across nine controlled mixtures from **$40.52\%$ to $23.97\%$** (a $16.55\%$ absolute reduction; GMM baseline: $55.51\%$) with automated speaker count ($k^*$) discovery via the Eigengap heuristic on 192-d native acoustic-statistics projection embeddings, achieving $0.0\%\text{–}0.7\%$ on clean single-speaker field clips.
+* **Bilingual ASR Recovery (Stage 3)**: Reduced Word Error Rate on overlapping bilingual speech from **$86.28\%$ (monolithic attention collapse) down to $51.57\%$** (CER $44.66\%$) using Vakyansh Hindi Wav2Vec2 CTC decoding with Unicode NFKC normalization.
+* **Exploratory Breakdown Threshold Analysis**: In an exploratory scenario sweep across 7 configured synthetic conditions ($n=7$, `EXP-2.1`–`EXP-2.7`), observed an acoustic stress boundary at **$\text{SI-SDR}_{\text{crit}} = +4.20\text{ dB}$**, below which downstream WER exceeds $40\%$ and diarization error cascades ($r = -0.977$ with DER, $r = -0.969$ with WER).
+* **Factual Grounding Guardrails (Stage 4)**: Evaluated under a deterministic offline stub (`MockLLMProvider`), achieving $0.0\%$ unsupported entity rate across rule-constrained templates with runtime Pydantic v2 schemas and an in-memory BM25 conversational retrieval engine.
+* **High-Throughput Computation**: Real-Time Factor (RTF) of **$0.075$** on Apple Silicon GPU and **$0.49\text{–}0.69$** on standard 8-core CPU ($1.4\times\text{–}2.0\times$ faster than realtime; Diarization alone runs at $\text{RTF} = 0.006$).
 
 ### Empirical Benchmark Summary
 
@@ -133,7 +133,7 @@ Audio-Engineering/
 │   ├── diarization/                  # Neural speaker embeddings & spectral clustering
 │   ├── asr/                          # AI4Bharat IndicWav2Vec, Whisper, text normalization
 │   └── llm/                          # Swappable LLM providers, Jinja2 prompts, guardrails, RAG engine
-└── tests/                            # 84 automated unit and integration tests (100% passing)
+└── tests/                            # 127 automated unit and integration tests (100% passing)
 ```
 
 ---
@@ -211,7 +211,7 @@ python scripts/plot_sisdr_comparison.py
   - `outputs/first_eval_demo/final_report.json`
 
 #### 2. Track A: Speaker Diarization Benchmark (Milestone M5)
-Evaluates spectral clustering on pyannote embeddings against unseparated spectral and GMM baselines across 9 controlled mixtures:
+Evaluates spectral clustering on 192-d native acoustic embeddings against unseparated spectral and GMM baselines across 9 controlled mixtures:
 ```bash
 python scripts/evaluate_stage2_diarization.py
 ```
@@ -231,7 +231,7 @@ python scripts/evaluate_downstream_asr.py
 - **Primary Input**: `data/controlled_eval_suite/synthetic_mixtures/controlled_mix_01_pairAD_ov25_sir0.wav`
 - **Expected Output Artifacts**:
   - `outputs/reports/stage3_asr_report.md` (Raw WER: $86.28\%$, Diarized: $70.78\%$, Separated+Diarized: $51.57\%$, CER $44.66\%$)
-  - `outputs/first_eval_demo/downstream_asr_evaluation.json` (Whisper-tiny: $55.8\%\text{ WER}$)
+  - `outputs/first_eval_demo/downstream_asr_evaluation.json` (Whisper-tiny: 100.0% WER repetition loop on raw mixture; 55.8% on isolated single-speaker baseline)
 
 #### 4. Cross-Stage Error Propagation & Progressive Ablation Study (Milestone M9)
 Executes the progressive pipeline ablation (Pipelines A, B, C, D) and formal error cascading simulation across 7 configured acoustic stress scenarios (`EXP-2.1` to `EXP-2.7`):
@@ -349,13 +349,19 @@ This project is released under the **MIT License**.
 The evaluation benchmarks in this repository are divided into two distinct tracks:
 
 - **Track A: Controlled Synthetic Benchmark**
-  - Synthesized from clean reference stems (`speaker_A_female_hinglish`, `speaker_B_male_hinglish`, `speaker_C_male_hindi`, `speaker_D_female_hindi`) recorded for conversational Hindi and Hinglish evaluation.
-  - Mixed at calibrated overlap ratios ($\Omega \in \{25\%, 50\%, 75\%\}$) and Signal-to-Interference Ratios ($\text{SIR} \in \{-6, 0, +6\}\text{ dB}$), with additive noise conditions (10 dB SNR). Stems and synthetic mixtures are provided under CC-BY 4.0 for non-commercial academic research.
+  - Synthesized from clean reference stems across 7 human speakers (`speaker_A` through `speaker_G`, including Hindi, Hinglish, and Indic accents).
+  - Mixed at calibrated overlap ratios ($\Omega \in \{25\%, 50\%, 75\%\}$) and Signal-to-Interference Ratios ($\text{SIR} \in \{-6, 0, +6\}\text{ dB}$), with additive noise conditions (10 dB SNR). Stems and synthetic mixtures are provided under educational fair use for non-commercial academic research.
 
 - **Track B: In-the-Wild Field Audio Suite**
-  - `air_formal_news_01.wav` (6.0 s): Studio Hindi news bulletin excerpt from All India Radio (AIR). High SNR (47.1 dB). Manifest reference note: the clip covers 13 spoken words; the extended manifest text contains 41 words across two sentences, making the true spoken WER 38.5% (vs. 92.7% nominal alignment WER due to truncation).
-  - `air_spontaneous_panel_01.wav` (13.0 s): Broadcast panel discussion excerpt from All India Radio (AIR) with 3 speakers and spontaneous overlapping debate (SNR 35.6 dB). Used under fair-use educational and research provisions.
-  - `vaani_rural_call_01.wav` (8.3 s): Rural telephonic speech excerpt from [Project Vaani](https://vaani.iisc.ac.in/) (IISc Bangalore, ARTPARK, and Google). Bandwidth: 300–3400 Hz cellular channel, SNR 21.1 dB. Used in accordance with Project Vaani open research dataset reuse terms.
+  - `air_formal_news_01.wav` (6.0 s): Studio Hindi news bulletin excerpt from All India Radio (AIR, SNR 47.1 dB). Manifest reference note: the clip covers 13 spoken words; the extended manifest text contains 41 words across two sentences, making the true spoken WER 38.5% (independently verified from audio by authors Kushal Gupta, Dorothy, and Vansh Sharma) vs. 92.7% nominal alignment WER due to truncation (30 deletions).
+  - `air_spontaneous_panel_01.wav` (13.0 s): Broadcast panel discussion excerpt from All India Radio (AIR) with 3 speakers and spontaneous overlapping debate (SNR 35.6 dB, DER 58.7%, WER 57.8%). Used under fair dealing educational and research provisions.
+  - `vaani_rural_call_01.wav` (8.3 s): Rural telephonic speech excerpt from [Project Vaani](https://vaani.iisc.ac.in/) (IISc Bangalore, ARTPARK, and Google). Bandwidth: 300–3400 Hz cellular channel, SNR 21.1 dB, DER 0.7%, WER 63.0%. Used in accordance with Project Vaani CC-BY-4.0 open research terms.
+  - Tracked Audio: All 3 real-world `.wav` benchmark files are verified tracked in git (`data/real_world_eval_suite/`).
+
+### 8.3 Benchmark Artifact Versioning & Git Commit Hash
+The quantitative experimental benchmarks reported in this repository and the corresponding final academic paper correspond to verified Git commit:
+- **Authoritative Benchmark Commit**: `26a5319` (Branch: `main`)
+- **Evaluation Environment**: macOS / WSL2 Ubuntu, Python 3.12, PyTorch 2.2+, Torchaudio 2.2+, 127/127 passing pytest suite.
 
 ### 8.3 Academic Citation
 If you use this work or its error propagation methodologies in your academic research, please cite:
