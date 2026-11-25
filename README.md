@@ -147,7 +147,7 @@ Audio-Engineering/
 
 ### 1. Clone & Set Up Virtual Environment
 ```bash
-git clone https://github.com/vansh-bit/Audio-Engineering.git
+git clone https://github.com/LearnerKg23/Audio-Engineering.git
 cd Audio-Engineering
 
 python3 -m venv .venv
@@ -329,7 +329,7 @@ print(f"Guardrail Status: {rag_answer.guardrail_status}")
 
 ## 7. Interactive Showcase & Web Audio Demonstrator
 
-- **Live Application**: [https://vansh-bit.github.io/Audio-Engineering/](https://vansh-bit.github.io/Audio-Engineering/) (or local [`docs/index.html`](docs/index.html))
+- **Live Application**: [https://learnerkg23.github.io/Audio-Engineering/](https://learnerkg23.github.io/Audio-Engineering/) (or local [`docs/index.html`](docs/index.html))
 
 Explore:
 - Interactive A/B waveform and audio players comparing Raw Overlapping Mixtures against Clean Stems.
@@ -365,7 +365,7 @@ If you use this work or its error propagation methodologies in your academic res
   title = {Advanced Computational Speech Engineering: A Multi-Stage "Who Spoke What and When" Audio Processing Pipeline},
   year = {2026},
   publisher = {GitHub},
-  howpublished = {\url{https://github.com/vansh-bit/Audio-Engineering}}
+  howpublished = {\url{https://github.com/LearnerKg23/Audio-Engineering}}
 }
 ```
 
