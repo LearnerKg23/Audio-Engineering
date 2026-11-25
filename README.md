@@ -193,6 +193,87 @@ python -m src --input data/real_world_eval_suite/air_spontaneous_panel_01.wav \
               --ask "What announcement was made regarding financial assistance for women?"
 ```
 
+### Benchmark & Experiment Reproduction Guide
+
+All empirical results, ablation matrices, and benchmark tables reported in the four-page academic paper and documentation can be reproduced using the standalone evaluation scripts below:
+
+#### 1. Track A: Blind Source Separation Benchmark (Milestone M2)
+Evaluates Conv-TasNet (`CONVTASNET_BASE_LIBRI2MIX`) and Hybrid Demucs (`htdemucs`) across the 6 controlled two-speaker mixtures under permutation-invariant training (PIT Hungarian matching):
+```bash
+python scripts/evaluate_stage1_separation.py
+python scripts/plot_sisdr_comparison.py
+```
+- **Configuration**: `configs/default_config.yaml` (`separation` section)
+- **Primary Inputs**: `data/controlled_eval_suite/synthetic_mixtures/controlled_mix_01` through `06`
+- **Expected Output Artifacts**:
+  - `outputs/first_eval_demo/stage1_separation_results.json` (Conv-TasNet mean $\Delta$SI-SDR: $+15.45\text{ dB}$, peak $+21.76\text{ dB}$; Demucs: $-8.60\text{ dB}$)
+  - `outputs/first_eval_demo/sisdr_model_comparison_barchart.png`
+  - `outputs/first_eval_demo/final_report.json`
+
+#### 2. Track A: Speaker Diarization Benchmark (Milestone M5)
+Evaluates spectral clustering on pyannote embeddings against unseparated spectral and GMM baselines across 9 controlled mixtures:
+```bash
+python scripts/evaluate_stage2_diarization.py
+```
+- **Configuration**: `configs/default_config.yaml` (`diarization` section: window 1.5s, step 0.5s, collar 0.25s)
+- **Primary Inputs**: `data/controlled_eval_suite/synthetic_mixtures/` (`controlled_mix_01` through `09`)
+- **Expected Output Artifacts**:
+  - `outputs/reports/stage2_diarization_evaluation.json` (Raw spectral DER: $40.52\%$, GMM DER: $55.51\%$, Separated DER: $23.97\%$)
+
+#### 3. Track A: Downstream Indic & Code-Switched ASR Evaluation (Milestone M6)
+Evaluates downstream ASR accuracy across naive mixture, raw+diarized, and full separated+diarized pipeline on the primary bilingual clip:
+```bash
+python scripts/evaluate_stage3_asr.py
+# Optional Whisper-tiny comparator:
+python scripts/evaluate_downstream_asr.py
+```
+- **Configuration**: `configs/default_config.yaml` (`asr` section: Vakyansh Hindi Wav2Vec2 CTC greedy decoding)
+- **Primary Input**: `data/controlled_eval_suite/synthetic_mixtures/controlled_mix_01_pairAD_ov25_sir0.wav`
+- **Expected Output Artifacts**:
+  - `outputs/reports/stage3_asr_report.md` (Raw WER: $86.28\%$, Diarized: $70.78\%$, Separated+Diarized: $51.57\%$, CER $44.66\%$)
+  - `outputs/first_eval_demo/downstream_asr_evaluation.json` (Whisper-tiny: $55.8\%\text{ WER}$)
+
+#### 4. Cross-Stage Error Propagation & Progressive Ablation Study (Milestone M9)
+Executes the progressive pipeline ablation (Pipelines A, B, C, D) and formal error cascading simulation across 7 configured acoustic stress scenarios (`EXP-2.1` to `EXP-2.7`):
+```bash
+python scripts/run_ablation_study.py
+```
+- **Configuration**: `configs/llm_guardrails.yaml`, `src/llm/prompts/post_processing_prompt.jinja`
+- **Primary Inputs**: Track A fixtures and synthetic degradation grid
+- **Expected Output Artifacts**:
+  - `outputs/reports/error_propagation_study.md` (Acoustic breakdown threshold at $+4.2\text{ dB}$, correlations $r = -0.977$ for SI-SDR vs DER, $r = -0.969$ for SI-SDR vs WER)
+  - `outputs/reports/ablation_study_results.json`
+
+#### 5. System Computational Benchmarking & Profiling (Milestone M10)
+Profiles isolated stage latencies, memory footprint, and RTF scaling curves across 15s, 30s, 60s, and 120s fixtures:
+```bash
+python scripts/run_system_benchmark.py
+# Or launch interactive Jupyter notebook:
+jupyter notebook notebooks/01_system_benchmark.ipynb
+```
+- **Configuration**: `configs/default_config.yaml` (`system` section)
+- **Primary Inputs**: `data/benchmark_fixtures/benchmark_audio_{15s,30s,60s,120s}.wav`
+- **Expected Output Artifacts**:
+  - `outputs/benchmarks/benchmark_summary.json` (Isolated 30s RTF $0.697$, scaling 30s RTF $0.490$)
+  - `outputs/benchmarks/stage_latency_breakdown.png`
+  - `outputs/benchmarks/rtf_scaling_curves.png`
+  - `outputs/benchmarks/memory_profile_waterfall.png`
+
+#### 6. Track B: Real-World In-The-Wild Domain Robustness (Milestone M11)
+Stress-tests the full pipeline on uncurated All India Radio studio news, broadcast debate, and Project Vaani rural phone recordings:
+```bash
+python scripts/run_real_world_validation.py
+```
+- **Configuration**: `configs/default_config.yaml` (Track B defaults)
+- **Manifest**: `data/manifests/real_world_manifest.json`
+- **Expected Output Artifacts**:
+  - `outputs/real_world_validation/real_world_validation_results.json` (News DER $0.0\%$, Panel DER $58.7\%$, Vaani WER $63.0\%$)
+  - `outputs/reports/real_world_domain_robustness_report.md`
+  - `outputs/real_world_validation/domain_wer_cer_comparison.png`
+  - `outputs/real_world_validation/diarization_and_snr_robustness.png`
+  - `outputs/real_world_validation/code_switching_accuracy.png`
+  - `outputs/real_world_validation/acoustic_stress_radar.png`
+
 ### Python API Integration
 
 ```python
@@ -248,7 +329,7 @@ print(f"Guardrail Status: {rag_answer.guardrail_status}")
 
 ## 7. Interactive Showcase & Web Audio Demonstrator
 
-- **Live Application**: [https://learnerkg23.github.io/Audio-Engineering/](https://learnerkg23.github.io/Audio-Engineering/) (or local [`docs/index.html`](docs/index.html))
+- **Live Application**: [https://vansh-bit.github.io/Audio-Engineering/](https://vansh-bit.github.io/Audio-Engineering/) (or local [`docs/index.html`](docs/index.html))
 
 Explore:
 - Interactive A/B waveform and audio players comparing Raw Overlapping Mixtures against Clean Stems.

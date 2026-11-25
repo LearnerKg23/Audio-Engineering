@@ -8,10 +8,15 @@ Generates demonstration audio artifacts in outputs/first_eval_demo/.
 
 import json
 from pathlib import Path
+import sys
 import time
 import numpy as np
 import soundfile as sf
 import torch
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from evaluation.bss_metrics import evaluate_separation_pit
 from src.core.audio_io import load_audio
@@ -30,7 +35,7 @@ def main():
     with open(manifest_file, "r", encoding="utf-8") as f:
         manifest = json.load(f)
 
-    mixtures = manifest["mixtures"]
+    mixtures = [m for m in manifest["mixtures"] if m.get("num_speakers", 2) == 2 and "overlap_ratio_target" in m][:6]
     demo_out_dir = Path("outputs/first_eval_demo")
     demo_out_dir.mkdir(parents=True, exist_ok=True)
 
